@@ -1,0 +1,40 @@
+@use '../../../sass/abstracts/variables' as *;
+
+.formActions {
+   margin-top: 1.8rem;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-evenly;
+}
+
+.header  {
+   width: 100%;
+   border-bottom: 1px solid lightblue;
+   padding: 0.5rem;
+
+   h3 {
+      // color: rgb(43, 120, 156);
+      color: $color-primary-variant;
+      font-size: 1.7rem;
+   }
+}
+
+.flexContainer {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+
+.splitForm {
+   .datePicker {
+      border: none;
+      cursor: pointer;
+   }
+
+   p {
+      color: $color-dark;
+   }
+}
+
+
+

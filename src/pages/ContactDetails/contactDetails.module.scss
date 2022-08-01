@@ -1,0 +1,71 @@
+@use '../../../sass/abstracts/variables' as *;
+
+.gridContainer {
+    padding: 1rem;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 'datos-generales cursos-inscritos saldos-pendientes'
+                         'recurringDebts recurringDebts etiquetas'
+                         'debts debts debts';
+
+    .card {
+        padding: 1.5rem;
+        margin: 1.8rem 0;
+
+        p {
+            font-size: 1rem;
+        }
+
+        .totalsFlexContainer {
+            display: flex;
+            justify-content: space-around;
+            gap: 1.3rem;
+        }
+
+        .totals h4 {
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .totals p {
+            font-size: 1.8rem;
+        }
+
+        .due {
+            color: $color-danger;
+        }
+    }
+
+    .cardHeader {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+        }
+    }
+
+    .iconCard {
+        font-size: 3rem;
+        color: $color-primary;
+    }
+
+    .recurringDebts {
+        grid-area: recurringDebts;
+    }
+
+    .personTags {
+        grid-area: etiquetas;
+    }
+
+    .debts {
+        grid-area: debts;
+
+        .debtsFlexContainer {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
