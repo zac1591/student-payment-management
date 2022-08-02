@@ -5,7 +5,7 @@ import Card from "../../components/Card/Card";
 import styles from "./contactDetails.module.scss";
 
 function ContactDetails() {
-	const contacts = useSelector(state => state.lead.leads);
+	const contacts = useSelector(({ lead }) => lead.leads);
 	const params = useParams();
 	//useParams return a string
 	const selectedContact = contacts.find(({ id }) => id == params.userId);
