@@ -2,15 +2,15 @@ import Card from "../Card/Card";
 import styles from "./insightCard.module.scss";
 
 function InsightCard({ icon, title, amount, percentage }) {
-	const spanClasses = title.toLocaleLowerCase().includes("expenses")
+	const spanClasses = title.toLocaleLowerCase().includes("deudas")
 		? styles.expenses
-		: title.toLocaleLowerCase().includes("income")
+		: title.toLocaleLowerCase().includes("pagados")
 		? styles.income
 		: "";
 
-	const circleClasses = title.toLocaleLowerCase().includes("expenses")
+	const circleClasses = title.toLocaleLowerCase().includes("deudas")
 		? styles.circleExpenses
-		: title.toLocaleLowerCase().includes("income")
+		: title.toLocaleLowerCase().includes("pagados")
 		? styles.circleIncome
 		: styles.circleSales;
 	return (

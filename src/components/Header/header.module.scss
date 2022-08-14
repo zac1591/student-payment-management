@@ -1,9 +1,11 @@
+@use "../../../sass/abstracts/variables" as *;
+@use "../../../sass/abstracts/mixins" as m;
+
 .header {
   position: relative;
   width: 100%;
   height: 55px;
-  background-color: #2e3f50;
-  color: #fff;
+  color: rgb(92, 92, 92);
   padding: 0 1.5rem;
 
   display: flex;
@@ -16,6 +18,28 @@
   display: flex;
   flex-direction: row;
   gap: 1rem;
+
+  .top {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .profile {
+    display: flex;
+    gap: 2rem;
+    text-align: right;
+
+    .profile-photo {
+      @include m.profile-photo;
+      cursor: pointer;
+    }
+
+    .text-muted {
+      color: $color-info-dark;
+    }
+  }
 
   .accountMenuMainContainer {
     position: relative;

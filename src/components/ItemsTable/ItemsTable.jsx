@@ -6,13 +6,12 @@ import { useSelector } from "react-redux";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 //components
 import Checkbox from "../Checkbox/Checkbox";
+//styles
+import styles from "./itemsTable.module.scss";
 
-import { COLUMNS } from "../../COLUMNS";
-import styles from "./leadsTable.module.scss";
-
-function LeadsTable() {
+function ItemsTable({ COLUMNS }) {
 	const leadsFromState = useSelector(state => state.lead.leads);
-	const columns = useMemo(() => COLUMNS, []);
+	const columns = useMemo(() => COLUMNS, [COLUMNS]);
 	const data = useMemo(() => leadsFromState, [leadsFromState]);
 	const navigate = useNavigate();
 
@@ -162,4 +161,4 @@ function LeadsTable() {
 	);
 }
 
-export default LeadsTable;
+export default ItemsTable;

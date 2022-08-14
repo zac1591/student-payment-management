@@ -13,8 +13,9 @@ function NothingToSee() {
 	};
 	return (
 		<section className={styles.wrapper}>
-			<h3>Nothing to see here</h3>
-			<Button onClick={goBackHomeHandler}>Go Back Home</Button>
+			<Button small onClick={goBackHomeHandler}>
+				Go Back Home
+			</Button>
 		</section>
 	);
 }

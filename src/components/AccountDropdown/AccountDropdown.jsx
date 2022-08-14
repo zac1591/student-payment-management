@@ -11,9 +11,7 @@ function AccountDropdown() {
 					alt="User profile"
 				/>
 				<div className={styles["user-info"]}>
-					<span className={styles["user-info-name"]}>
-						Scarlett Johanson
-					</span>
+					<span className={styles["user-info-name"]}>Arina Johanson</span>
 					<span className={styles["user-info-email"]}>
 						sjhanson@gmail.com
 					</span>

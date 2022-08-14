@@ -1,7 +1,9 @@
 import { useState } from "react";
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
 import CreateContact from "../../components/CreateContact/CreateContact";
-import LeadsTable from "../../components/LeadsTable/LeadsTable";
+import ItemsTable from "../../components/ItemsTable/ItemsTable";
+import { COLUMNS } from "../../table-columns/CONTACTS_COLUMNS";
+import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
 import styles from "./contacts.module.scss";
 
 function Contacts() {
@@ -15,12 +17,17 @@ function Contacts() {
 			{createContact && (
 				<CreateContact onHideCreateContact={hideCreateContactHandler} />
 			)}
-			<ActiveMenu
-				createButtonLabel="Create contact"
-				onShowCreateContact={showCreateContactHandler}
-			/>
-			<div className={styles.contactsList}>
-				<LeadsTable />
+
+			<div className={styles.pageFlex}>
+				<MenuDashboard />
+				<div className={styles.contactsList}>
+					<ActiveMenu
+						createButtonLabel="Create contact"
+						onShowCreateContact={showCreateContactHandler}
+						currentPageTitle="Contactos"
+					/>
+					<ItemsTable COLUMNS={COLUMNS} />
+				</div>
 			</div>
 		</section>
 	);

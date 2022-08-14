@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ReactDatePicker from "react-datepicker";
 
 //redux
@@ -18,14 +17,6 @@ import styles from "./CreateContact.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
 function CreateContact({ onHideCreateContact }) {
-	//state for datepicker component
-	/*temporal solution*/
-	const [dob, setDob] = useState(new Date());
-	const [initialPayment, setInitialPayment] = useState(new Date());
-	const [lastPayment, setLastPayment] = useState(new Date());
-
-	/*Ends temporal solution*/
-
 	// const [startDate, setStartDate] = useState({ fields: {} });
 
 	// const dateChangeHandler = (datePickerName, dateValue) => {
@@ -54,12 +45,13 @@ function CreateContact({ onHideCreateContact }) {
 			first_name: data.firstName,
 			last_name: data.lastName,
 			email: data.email,
-			phone_number: data.phoneNumber,
+			phone_number: data.phone,
+			scholarship: data.scholarship,
 		};
 
 		console.log(data);
-		// dispatch(addLead(leadData));
-		// event.target.reset();
+		dispatch(addLead(leadData));
+		event.target.reset();
 		onHideCreateContact();
 	};
 
@@ -74,24 +66,24 @@ function CreateContact({ onHideCreateContact }) {
 					<div className={styles.splitForm}>
 						<Input
 							label="Nombre"
-							name="nombre"
-							id="nombre"
+							name="firstName"
+							id="firstName"
 							register={register}
 							required
 							type="text"
 						/>
 						<Input
 							label="Apellido"
-							name="Apellido"
-							id="apellido"
+							name="lastName"
+							id="lastName"
 							register={register}
 							required
 							type="text"
 						/>
 						<Input
 							label="DUI"
-							name="dui"
-							id="dui"
+							name="personalId"
+							id="personalId"
 							register={register}
 							required
 							type="text"
@@ -99,32 +91,32 @@ function CreateContact({ onHideCreateContact }) {
 
 						<Input
 							label="Teléfono"
-							name="telefono"
-							id="telefono"
+							name="phone"
+							id="phone"
 							register={register}
 							required
 							type="text"
 						/>
 						<Input
 							label="Correo"
-							name="correo"
-							id="correo"
+							name="email"
+							id="email"
 							register={register}
 							required
 							type="email"
 						/>
 						<Input
 							label="País"
-							name="pais"
-							id="pais"
+							name="country"
+							id="country"
 							register={register}
 							required
 							type="text"
 						/>
 						<Input
 							label="Dirección"
-							name="direccion"
-							id="direccion"
+							name="address"
+							id="address"
 							register={register}
 							required
 							type="text"
@@ -133,8 +125,8 @@ function CreateContact({ onHideCreateContact }) {
 					<div className={styles.splitForm}>
 						<Input
 							label="Departamento"
-							name="departamento"
-							id="departamento"
+							name="department"
+							id="department"
 							register={register}
 							required
 							type="text"
@@ -142,7 +134,7 @@ function CreateContact({ onHideCreateContact }) {
 
 						<p>Fecha de Nacimiento</p>
 						<Controller
-							name="fechaNacimiento"
+							name="dateOfBirth"
 							control={control}
 							rules={{ required: true }}
 							render={({ field }) => (
@@ -162,22 +154,22 @@ function CreateContact({ onHideCreateContact }) {
 
 						<RadioButton
 							label="Genero"
-							name="genero"
+							name="gender"
 							register={register}
 							id="genero"
 							options={{ masculino: "masculino", femenino: "femenino" }}
 						/>
 						<RadioButton
 							label="Becado"
-							name="becado"
+							name="scholarship"
 							register={register}
-							id="becado"
+							id="scholarship"
 							options={{ si: "si", no: "no" }}
 						/>
 
 						<p>Fecha de Primera Cuota</p>
 						<Controller
-							name="fechaPrimeraCuota"
+							name="firstPaymentDate"
 							control={control}
 							rules={{ required: true }}
 							render={({ field }) => (
@@ -196,7 +188,7 @@ function CreateContact({ onHideCreateContact }) {
 						/>
 						<p>Fecha de la Última Cuota</p>
 						<Controller
-							name="fechaUltimaCuota"
+							name="lastPaymentDate"
 							control={control}
 							rules={{ required: true }}
 							render={({ field }) => (
@@ -216,8 +208,8 @@ function CreateContact({ onHideCreateContact }) {
 
 						<Input
 							label="Cursos Suscrito"
-							name="cursoSuscrito"
-							id="cursoSuscrito"
+							name="enrolledCourse"
+							id="enrolledCourse"
 							register={register}
 							required
 							type="text"

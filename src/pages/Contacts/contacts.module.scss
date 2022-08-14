@@ -1,17 +1,22 @@
 .contacts {
 	width: 100%;
 	height: auto;
-	margin: 0 auto;
+	// margin: 0 auto;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	// justify-content: center;
 	align-items: center;
-}
 
-.contactsList {
-	width: 100%;
-	max-width: 1200px;
-	height: auto;
-	// border: 1px solid #dfe3eb;
-	overflow-x: auto;
+	.contactsList {
+		width: 80%;
+		height: auto;
+		overflow-x: auto;
+	}
+
+
+	.pageFlex {
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+	}
 }

@@ -6,21 +6,21 @@ export const COLUMNS = [
     sticky: "left"
   },
   {
-    Header: "First Name",
+    Header: "Nombre",
     accessor: "first_name",
     sticky: "left"
   },
   {
-    Header: "Last Name",
+    Header: "Apellido",
     accessor: "last_name",
     sticky: "left"
   },
   {
-    Header: "Email",
+    Header: "Correo",
     accessor: "email"
   },
   {
-    Header: "Phone",
+    Header: "Teléfono",
     accessor: "phone_number"
   },
   {

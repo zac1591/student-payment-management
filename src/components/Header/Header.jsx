@@ -2,12 +2,9 @@ import { useState } from "react";
 
 //routing
 import { Link } from "react-router-dom";
-//icons
-import { FaRegUserCircle } from "react-icons/fa";
-import { IoSettingsOutline } from "react-icons/io5";
-import { AiOutlineBell } from "react-icons/ai";
+//assets
+import ProfilePic from "../../assets/profile-arina.jpg";
 //components
-import Navigation from "../Navigation/Navigation";
 import AccountDropdown from "../AccountDropdown/AccountDropdown";
 
 //styles
@@ -17,29 +14,39 @@ function Header() {
 	const [showMenu, setShowMenu] = useState(false);
 
 	const showMenuHandler = () =>
-		setShowMenu((prevShowMenuState) => !prevShowMenuState);
+		setShowMenu(prevShowMenuState => !prevShowMenuState);
 	return (
 		<div className={styles.header}>
-			<Navigation />
+			<h1>Bubbly</h1>
 			<div className={styles.navActions}>
-				<AiOutlineBell style={{ fontSize: "1.5rem" }} />
+				<div className={styles.top}>
+					<Link to="user-preferences">
+						<span className="material-icons-sharp active">settings</span>
+					</Link>
 
-				<Link to="user-preferences">
-					<IoSettingsOutline
-						style={{ fontSize: "1.5rem", color: "#fff" }}
-					/>
-				</Link>
-
-				<div
-					className={styles.accountMenuMainContainer}
-					onClick={showMenuHandler}
-				>
-					<button className={styles.accountMenuBtn}>
-						<FaRegUserCircle
-							style={{ fontSize: "1.5rem", color: "#fff" }}
-						/>
-					</button>
-					{showMenu && <AccountDropdown />}
+					{/* <div className={styles["theme-toggler"]}>
+						<span className="material-icons-sharp active">
+							light_mode
+						</span>
+						<span className="material-icons-sharp"> dark_mode </span>
+					</div> */}
+					<div className={styles.profile}>
+						<div className={styles.info}>
+							<p>
+								Hey, <b>Arina</b>
+							</p>
+							<small className={styles["text-muted"]}>Admin</small>
+						</div>
+						<div
+							className={styles.accountMenuMainContainer}
+							onClick={showMenuHandler}
+						>
+							<div className={styles["profile-photo"]}>
+								<img src={ProfilePic} alt="" />
+							</div>
+							{showMenu && <AccountDropdown />}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

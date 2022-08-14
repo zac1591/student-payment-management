@@ -1,11 +1,6 @@
-import { useEffect } from "react";
-
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import {
-	onAuthStateChangedListener,
-	createUserDocumentFromAuth,
-} from "./utils/firebase/firebase.utils";
 
 //components
 import Header from "./components/Header/Header";
@@ -17,21 +12,13 @@ import Contacts from "./pages/Contacts/Contacts";
 import UserPreferences from "./pages/UserPreferences/UserPreferences";
 import ContactDetails from "./pages/ContactDetails/ContactDetails";
 import Authentication from "./pages/Authentication/Authentication";
+import Debts from "./pages/Debts/Debts";
+import Groups from "./pages/Groups/Groups";
 
-//temporal context
-import UserProvider from "./store/UserProvider";
 import NothingToSee from "./pages/NothingToSee/NothingToSee";
 
 
 function App() {
-
-	// useEffect(() => {
-	// 	const unsuscribe = onAuthStateChangedListener(user => {
-	// 		if (user) {
-	// 			createUserDocumentFromAuth(user);
-	// 		}
-	// 	});
-	// }, []);
 	return (
 		<BrowserRouter>
 			<Header />
@@ -42,9 +29,10 @@ function App() {
 					<Route path="sign-in" element={<SignIn />} />
 					<Route path="sign-up" element={<SignUp />} />
 				</Route>
-
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/contacts/:userId" element={<ContactDetails />} />
+				<Route path="/groups" element={<Groups />} />
+				<Route path="/debts" element={<Debts />} />
 				<Route path="/user-preferences" element={<UserPreferences />} />
 				<Route path="*" element={<NothingToSee />} />
 			</Routes>

@@ -1,9 +1,9 @@
+import { Link } from "react-router-dom";
+
 //components
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
 import InsightCard from "../../components/InsightCard/InsightCard";
 import AnalyticsAlerts from "../../components/AnalyticsAlerts/AnalyticsAlerts";
-
-import ProfilePic from "../../assets/profile-arina.jpg";
 
 //styles
 import styles from "./dashboard.module.scss";
@@ -21,19 +21,19 @@ function Dashboard() {
 				<div className={styles.insights}>
 					<InsightCard
 						icon="analytics"
-						title="Total Sales"
+						title="Total Alumnos"
 						amount="25,024"
 						percentage="81"
 					/>
 					<InsightCard
 						icon="bar_chart"
-						title="Total Expenses"
+						title="Total Deudas"
 						amount="14,160"
 						percentage="62"
 					/>
 					<InsightCard
 						icon="stacked_line_chart"
-						title="Total Income"
+						title="Total Pagados"
 						amount="25,024"
 						percentage="44"
 					/>
@@ -74,38 +74,16 @@ function Dashboard() {
 							</tr>
 						</tbody>
 					</table>
-					<a href="#">Show All</a>
+					<Link to="">Show All</Link>
 				</section>
 			</main>
 			<div className={styles.right}>
-				<div className={styles.top}>
-					<button id="menu-btn">
-						<span className="material-icons-sharp"> menu </span>
-					</button>
-					<div className={styles["theme-toggler"]}>
-						<span className="material-icons-sharp active">
-							light_mode
-						</span>
-						<span className="material-icons-sharp"> dark_mode </span>
-					</div>
-					<div className={styles.profile}>
-						<div className={styles.info}>
-							<p>
-								Hey, <b>Arina</b>
-							</p>
-							<small className={styles["text-muted"]}>Admin</small>
-						</div>
-						<div className={styles["profile-photo"]}>
-							<img src={ProfilePic} alt="" />
-						</div>
-					</div>
-				</div>
 				<RecentUpdates />
 				<AnalyticsAlerts />
 				<div className={styles["add-product"]}>
 					<div>
 						<span className="material-icons-sharp"> add </span>
-						<h3>Add Product</h3>
+						<h3>Add User</h3>
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,14 @@
+.debts {
+
+    .flexPage {
+        width: 100%;
+		display: flex;
+		justify-content: space-around;
+    }
+
+    .mainContentPage {
+        width: 80%;
+		height: auto;
+		overflow-x: auto;
+    }
+}
