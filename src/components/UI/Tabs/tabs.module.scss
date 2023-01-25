@@ -1,0 +1,30 @@
+.Tabs {
+    width: 80%;
+    height: auto;
+    min-height: 400px;
+    background: #38cef0;
+    margin: 3.5rem auto 1.5rem;
+    padding: 2rem 1rem;
+    color: #e8f0f2;
+    border-radius: 2rem;
+    @media (max-width: 769px) {
+      padding: 2rem 0;
+    }
+  }
+  
+  /* Tab Navigation */
+  ul.nav {
+    width: 60%;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #39a2db;
+    border-radius: 2rem;
+    padding-left: 0px;
+    @media (max-width: 768px) {
+      width: 90%;
+    }
+  }
+
+  

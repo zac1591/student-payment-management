@@ -2,7 +2,7 @@ import ReactDatePicker from "react-datepicker";
 
 //redux
 import { useDispatch } from "react-redux";
-import { addLead } from "../../redux/lead/lead.actions";
+import { contactsActions } from "../../store/contacts/contactsSlice";
 //react hook form
 import { useForm, Controller } from "react-hook-form";
 
@@ -42,6 +42,7 @@ function CreateContact({ onHideCreateContact }) {
 		// const buttonName = event.target.getAttribute("id");
 
 		const leadData = {
+			id: Math.random() * 100,
 			first_name: data.firstName,
 			last_name: data.lastName,
 			email: data.email,
@@ -50,7 +51,7 @@ function CreateContact({ onHideCreateContact }) {
 		};
 
 		console.log(data);
-		dispatch(addLead(leadData));
+		dispatch(contactsActions.addLead(leadData));
 		event.target.reset();
 		onHideCreateContact();
 	};

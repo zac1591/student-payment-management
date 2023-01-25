@@ -32,5 +32,10 @@ export const COLUMNS = [
     Header: "Cuota Mensual Asignada",
     accessor: "assigned_monthly_payment"
   },
+  {
+    Header: "Acciones",
+    accessor: "actions",
+    disableFilters: true
+  }
   
 ];

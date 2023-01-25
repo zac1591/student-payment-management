@@ -1,19 +1,30 @@
 import { useMemo } from "react";
+//react router
 import { useNavigate } from "react-router-dom";
-//redux
-import { useSelector } from "react-redux";
+
 //react table
-import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
+import {
+	useTable,
+	usePagination,
+	useSortBy,
+	useRowSelect,
+	useGlobalFilter,
+} from "react-table";
 //components
 import Checkbox from "../Checkbox/Checkbox";
+import GlobalFilter from "../GlobalFilter/GlobalFilter";
+//redux
+import { useDispatch } from "react-redux";
+import { contactsActions } from "../../store/contacts/contactsSlice";
+import { processingSelectedFlatRows } from "../../store/contacts/contactsSlice";
 //styles
 import styles from "./itemsTable.module.scss";
 
-function ItemsTable({ COLUMNS }) {
-	const leadsFromState = useSelector(state => state.lead.leads);
+function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 	const columns = useMemo(() => COLUMNS, [COLUMNS]);
-	const data = useMemo(() => leadsFromState, [leadsFromState]);
+	const data = useMemo(() => stateData, [stateData]);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const {
 		getTableProps,
@@ -29,10 +40,12 @@ function ItemsTable({ COLUMNS }) {
 		pageCount,
 		setPageSize,
 		state,
+		setGlobalFilter,
 		prepareRow,
 		selectedFlatRows,
 	} = useTable(
 		{ columns, data },
+		useGlobalFilter,
 		useSortBy,
 		usePagination,
 		useRowSelect,
@@ -45,7 +58,10 @@ function ItemsTable({ COLUMNS }) {
 							<Checkbox {...getToggleAllRowsSelectedProps()} />
 						),
 						Cell: ({ row }) => (
-							<Checkbox {...row.getToggleRowSelectedProps()} />
+							<Checkbox
+								{...row.getToggleRowSelectedProps()}
+								onClick={onSelectContact}
+							/>
 						),
 					},
 					...columns,
@@ -55,18 +71,47 @@ function ItemsTable({ COLUMNS }) {
 	);
 
 	const selectedRowHandler = row => {
-		// console.log(selectedFlatRows.map((row) => row.values));
-		// console.log(row.values);
 		navigate(`/contacts/${row.values.id}`, { replace: true });
 	};
 
+	// dispatch(contactsActions.onSelectFlatRows(originalRowData));
+	// console.log(originalRowData);
+
+	// dispatch(processingSelectedFlatRows(selectedFlatRows));
+
+	// useEffect(() => {
+	// 	dispatch(contactsActions.onSelectFlatRows(memoizedSelectedFlatRows), []);
+	// }, [memoizedSelectedFlatRows]);
+	// console.log(selectedFlatRows);
+
+	//getting cell value to enable first name and last name to be clickable and navigate to the contacts details componet
+	const getCellValue = cell => {
+		// console.log(cell.row.values);
+		const selectedRowId = cell.row.values.id;
+		if (
+			cell.column.Header === "Nombre" ||
+			cell.column.Header === "Apellido"
+		) {
+			navigate(`/${navigatesTo}/${selectedRowId}`, { replace: true });
+		}
+	};
+
+	/*
+		if a row is selected:
+			1. Show component with options to perform within current row
+			2. Capture data from current row and pass it on to components that needs it
+			3. More than one row selected? Show bulk options only such as delete all rows or export them out
+	*/
+
 	//initialState: { pageIndex: 2 } this line of code will allow us to render our page to the specified index, it goes inside the first argument where we pass in our columns and data
 
-	const { pageIndex, pageSize } = state;
+	const { pageIndex, pageSize, globalFilter } = state;
+
 	console.log("running table");
 
 	return (
 		<>
+			<GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 			<table className={styles.table} {...getTableProps()}>
 				<thead>
 					{headerGroups.map(headerGroup => (
@@ -97,11 +142,11 @@ function ItemsTable({ COLUMNS }) {
 						prepareRow(row);
 						return (
 							<tr {...row.getRowProps()}>
-								{row.cells.map(cell => {
+								{row.cells.map((cell, j) => {
 									return (
 										<td
 											{...cell.getCellProps()}
-											onClick={() => selectedRowHandler(cell.row)}
+											onClick={() => getCellValue(cell)}
 										>
 											{cell.render("Cell")}
 										</td>
@@ -112,7 +157,7 @@ function ItemsTable({ COLUMNS }) {
 					})}
 				</tbody>
 			</table>
-			<div style={{ marginTop: "1rem" }}>
+			<div className={styles.pagination}>
 				<span>
 					Page{" "}
 					<strong>{`${pageIndex + 1} of ${pageOptions.length} `}</strong>

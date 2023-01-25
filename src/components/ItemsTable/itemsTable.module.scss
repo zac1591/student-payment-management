@@ -1,7 +1,7 @@
 @use "../../../sass//abstracts/variables" as *;
 
 .table {
-	margin: 2rem auto;
+	margin: 1rem auto;
 	background: $color-white;
 	width: 100%;
 	border-radius: $card-border-radius;
@@ -14,14 +14,32 @@
 		box-shadow: none;
 	}
 
-	tbody td {
+
+	tbody tr, td {
 		height: 2.8rem;
 		border-bottom: 1px solid $color-light;
 		color: $color-dark-variant;
 		cursor: pointer;
+		transition: ease 200ms;
+
+		&:hover {
+			background-color: $color-background;
+			font-weight: bold;
+			border: none;
+		}
 	}
 
 	tr:last-child td {
 		border-bottom: none;
 	}
+}
+
+.hoverToOpen {
+	background-color: $color-primary;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
 }

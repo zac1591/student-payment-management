@@ -1,17 +1,37 @@
 @use '../../../sass/abstracts/variables' as *;
 
 .gridContainer {
+    position: relative;
+    // background-color: rgba(30, 143, 255, 0.466);
     padding: 1rem;
     display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas: 'datos-generales cursos-inscritos saldos-pendientes'
-                         'recurringDebts recurringDebts etiquetas'
-                         'debts debts debts';
+    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    // justify-items: center;
+    grid-template-areas:'go-back-arrow . menu-section menu-section' 
+                        'datos-generales balances messages messages'
+                         'courses history messages messages'
+                         'subscriptions  history messages messages';
+
+
+    .goBackArrow {
+        width: 8%;
+        grid-area: go-back-arrow;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+    }
 
     .card {
         padding: 1.5rem;
-        margin: 1.8rem 0;
+        // margin: 1.8rem 0;
+        transition: all 250ms ease;
+        background: #fff;
+
+        &:hover {
+            box-shadow: none;
+        }
 
         p {
             font-size: 1rem;
@@ -37,13 +57,43 @@
         }
     }
 
+    .generalData {
+        width: $card-width;
+        grid-area: datos-generales;
+    }
+
+    .courses {
+        width: $card-width;
+        grid-area: courses;
+    }
+
+    .subscriptions {
+        width: $card-width;
+        grid-area: subscriptions;
+    }
+
+    .balances {
+        width: $card-width;
+        grid-area: balances;
+    }
+
+    .history {
+        width: $card-width;
+        grid-area: history;
+    }
+
     .cardHeader {
+        margin-bottom: 1rem;
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 1.5rem;
+        // background-color: tomato;
 
         h2 {
             font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-transform: uppercase;
         }
     }
 
@@ -52,20 +102,50 @@
         color: $color-primary;
     }
 
-    .recurringDebts {
-        grid-area: recurringDebts;
+    .messagesArea {
+        position: relative;
+        grid-area: messages;
+        overflow-y: auto;
+        height: 80vh;
+        
+        
+        
+        background: /* Shadow covers */
+        linear-gradient(rgb(80, 80, 80) 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */
+        radial-gradient(50% 0, farthest-side, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(50% 100%, farthest-side, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
+        background: /* Shadow covers */
+        linear-gradient(white 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%, /* Shadows */
+        radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
+        background-repeat: no-repeat;
+        // background-color: white;
+        background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+        /* Opera doesn't support this in the shorthand */
+        background-attachment: local, local, scroll, scroll;
+
     }
 
-    .personTags {
-        grid-area: etiquetas;
+    .messagesGrid {
+        position: relative;
+            
+       
     }
 
-    .debts {
-        grid-area: debts;
+    .addNoteButton {
+        position: fixed;
+        right: 3rem;
+        bottom: 3rem;
+        font-size: 3.8rem;
+        transition: all ease-in-out 0.2s;
+        opacity: .7;
+        cursor: pointer;
 
-        .debtsFlexContainer {
-            display: flex;
-            justify-content: space-between;
+        &:hover {
+            opacity: 1;
         }
     }
+
+    .rotate {
+        transform: rotate(0.135turn);
+    }
+
 }

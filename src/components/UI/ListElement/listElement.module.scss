@@ -1,0 +1,14 @@
+@use '../../../../sass/abstracts/variables' as *;
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px $color-info-light;
+    margin-bottom: 10px;
+
+    span {
+        font-size: 1rem;
+        color: $color-dark-variant;
+    }
+}

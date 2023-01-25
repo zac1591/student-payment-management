@@ -20,7 +20,7 @@
 			bottom: -1px;
 			height: 100%;
 			width: 100%;
-			border-bottom: 3px solid #63bcf0;
+			border-bottom: 2px solid #63bcf0;
 			transform: translateX(-100%);
 			transition: transform 0.3s ease;
 		}
@@ -32,7 +32,7 @@
 		font-family: inherit;
 		padding-top: 20px;
 		padding-left: 1px;
-		padding-bottom: 13px;
+		padding-bottom: 5px;
 		border: none;
 		outline: none;
 		border-radius: 5px;
@@ -76,7 +76,7 @@
 	bottom: 5px;
 	left: 0px;
 	transition: all ease 0.3s;
-	color: $color-dark;
+	color: $color-info-dark;
 }
 
 

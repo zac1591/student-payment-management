@@ -46,10 +46,6 @@ function MenuDashboard() {
 					</span>
 					<h3>Reports</h3>
 				</Link>
-				<Link to="/user-preferences">
-					<span className="material-icons-sharp">settings</span>
-					<h3>Settings</h3>
-				</Link>
 				<Link to="">
 					<span className="material-icons-sharp">add</span>
 					<h3>Agregar Usuario</h3>

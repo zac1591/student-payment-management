@@ -1,8 +1,13 @@
 import styles from "./card.module.scss";
 
-function Card({ children, className }) {
+function Card({ children, className, ...otherProps }) {
 	const classes = `${styles.card} ${className}`;
-	return <div className={classes}>{children}</div>;
+
+	return (
+		<div className={classes} {...otherProps}>
+			{children}
+		</div>
+	);
 }
 
 export default Card;

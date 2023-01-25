@@ -6,10 +6,10 @@ import Button from "../Button/Button";
 import Input from "../Input/Input";
 
 //firebase
-import {
-	createAuthUserWithEmailAndPassword,
-	createUserDocumentFromAuth,
-} from "../../utils/firebase/firebase.utils";
+// import {
+// 	createAuthUserWithEmailAndPassword,
+// 	createUserDocumentFromAuth,
+// } from "../../utils/firebase/firebase.utils";
 
 //assets
 import sampleImg from "../../assets/background-img-6.jpeg";
@@ -52,27 +52,27 @@ function SignUp() {
 		}
 
 		//is the entered email and password already authenticated?
-		try {
-			const { user } = await createAuthUserWithEmailAndPassword(
-				email,
-				password
-			);
-			console.log(user);
-			//create a user document from what this returns
-			await createUserDocumentFromAuth(user, { displayName });
-			event.target.reset();
-		} catch (error) {
-			switch (error.code) {
-				case "auth/email-already-in-use":
-					alert("Cannot create user, email already in use");
-					break;
-				case "auth/weak-password":
-					alert("Password should be at least 6 characters");
-					break;
-				default:
-					console.log("User creation encountered an error", error);
-			}
-		}
+		// try {
+		// 	const { user } = await createAuthUserWithEmailAndPassword(
+		// 		email,
+		// 		password
+		// 	);
+		// 	console.log(user);
+		// 	//create a user document from what this returns
+		// 	await createUserDocumentFromAuth(user, { displayName });
+		// 	event.target.reset();
+		// } catch (error) {
+		// 	switch (error.code) {
+		// 		case "auth/email-already-in-use":
+		// 			alert("Cannot create user, email already in use");
+		// 			break;
+		// 		case "auth/weak-password":
+		// 			alert("Password should be at least 6 characters");
+		// 			break;
+		// 		default:
+		// 			console.log("User creation encountered an error", error);
+		// 	}
+		// }
 	};
 
 	return (

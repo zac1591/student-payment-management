@@ -1,0 +1,41 @@
+@use '../../../../sass/abstracts/variables' as *;
+
+ li {
+    width: 50%;
+    // padding: 1rem;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.7s;
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+  }
+  
+  /*Extend support for many tabs*/
+//    li {
+//     width: 50%;
+//     padding: 1rem;
+//     list-style: none;
+//     text-align: center;
+//     cursor: pointer;
+//     transition: all 0.7s;
+//   }
+  
+  li:first-child {
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+  }
+  
+  li:last-child {
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+  
+  li:hover {
+    background: rgba(50, 224, 196, 0.25);
+  }
+  
+  li.active {
+    background: $color-primary;
+    color: #fff;
+  }

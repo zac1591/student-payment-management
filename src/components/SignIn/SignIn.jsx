@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import {
-	signInWithGooglePopup,
-	createUserDocumentFromAuth,
-	signInAuthUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utils";
+// import {
+// 	signInWithGooglePopup,
+// 	createUserDocumentFromAuth,
+// 	signInAuthUserWithEmailAndPassword,
+// } from "../../utils/firebase/firebase.utils";
 
 //components
 import Button from "../Button/Button";
@@ -26,35 +26,35 @@ function SignIn() {
 			password: "",
 		},
 	});
-	const logGoogleUserHandler = async () => {
-		await signInWithGooglePopup();
-	};
+	// const logGoogleUserHandler = async () => {
+	// 	await signInWithGooglePopup();
+	// };
 
-	const loginHandler = async (data, event) => {
-		event.preventDefault();
-		console.log(data);
-		const { email, password } = await data;
+	// const loginHandler = async (data, event) => {
+	// 	event.preventDefault();
+	// 	console.log(data);
+	// 	const { email, password } = await data;
 
-		try {
-			const { user } = await signInAuthUserWithEmailAndPassword(
-				email,
-				password
-			);
+	// 	try {
+	// 		const { user } = await signInAuthUserWithEmailAndPassword(
+	// 			email,
+	// 			password
+	// 		);
 
-			event.target.reset();
-		} catch (error) {
-			switch (error.code) {
-				case "auth/wrong-password":
-					alert("The entered password is incorrect");
-					break;
-				case "auth/user-not-found":
-					alert("No user asociated with this email");
-					break;
-				default:
-					console.log(error);
-			}
-		}
-	};
+	// 		event.target.reset();
+	// 	} catch (error) {
+	// 		switch (error.code) {
+	// 			case "auth/wrong-password":
+	// 				alert("The entered password is incorrect");
+	// 				break;
+	// 			case "auth/user-not-found":
+	// 				alert("No user asociated with this email");
+	// 				break;
+	// 			default:
+	// 				console.log(error);
+	// 		}
+	// 	}
+	// };
 	return (
 		<>
 			<div className={styles.box}>
@@ -65,7 +65,7 @@ function SignIn() {
 						</h1>
 					</header>
 					<h1 className={styles.headerLogin}>Log in</h1>
-					<form onSubmit={handleSubmit(loginHandler)}>
+					<form onSubmit={handleSubmit(() => {})}>
 						<Input
 							label="Email"
 							id="email"
@@ -91,11 +91,7 @@ function SignIn() {
 							<div className={styles.divider}>
 								<h5>Or</h5>
 							</div>
-							<Button
-								type="button"
-								isGoogleSignIn
-								onClick={logGoogleUserHandler}
-							>
+							<Button type="button" isGoogleSignIn onClick={() => {}}>
 								Sign in with Google
 							</Button>
 						</div>

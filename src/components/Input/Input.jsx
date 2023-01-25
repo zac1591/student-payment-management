@@ -1,6 +1,16 @@
 import styles from "./Input.module.scss";
 
-const Input = ({ label, type, register, required, name, id, className }) => {
+const Input = ({
+	label,
+	type,
+	register,
+	required,
+	name,
+	id,
+	className,
+	onChange,
+	...otherProps
+}) => {
 	const customClass = className ? className : "";
 	return (
 		<div className={`${styles.formControl} ${customClass}`}>
@@ -15,6 +25,8 @@ const Input = ({ label, type, register, required, name, id, className }) => {
 				type={type}
 				id={id}
 				required={required}
+				onChange={onChange}
+				{...otherProps}
 			/>
 			<label htmlFor={id} className={styles.labelTag}>
 				<span className={styles.contentTag}>{label}</span>

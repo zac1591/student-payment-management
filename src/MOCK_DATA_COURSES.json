@@ -1,30 +1,24 @@
 [
     {
         "id": "c1",
-        "courseName": "Soporte Vital Avanzado del Trauma Prehospitalario (PHTLS)",
-        "members": [
-            { "id": "u1", "name": "Emma de Bermingham" },
-            { "id": "u2", "name": "Grassiel Boh" },
-            { "id": "u3", "name": "Katherine Gómez" }
-        ],
-        "createdDate": "09-Apr-2022"
+        "course_name": "Soporte Vital Avanzado del Trauma Prehospitalario (PHTLS)",
+        "members": ["Grissel", "Alessandra"],
+        "creation_date": "09-Apr-2022"
     },
     {
-        "id": "c1",
-        "courseName": "Soporte Vital Cardiovascular Avanzado (ACLS)",
+        "id": "c2",
+        "course_name": "Soporte Vital Cardiovascular Avanzado (ACLS)",
         "members": [
-            { "id": "u1", "name": "Alessandra Kohl" },
-            { "id": "u2", "name": "Tiffany Jensen" },
-            { "id": "u3", "name": "Tabata Smith" }
+            
         ],
-        "createdDate": "17-Sep-2022"
+        "creation_date": "17-Sep-2022"
     },
     {
-        "id": "c1",
-        "courseName": "Soporte Vital Básico (BLS)",
+        "id": "c3",
+        "course_name": "Soporte Vital Básico (BLS)",
         "members": [
-            { "id": "u1", "name": "Scarlett Johanson" }
+           
         ],
-        "createdDate": "04-May-2023"
+        "creation_date": "04-May-2023"
     }
 ]

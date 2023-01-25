@@ -13,7 +13,8 @@ export const COLUMNS = [
     {
       Header: "Miembros",
       accessor: "members",
-      sticky: "left"
+      sticky: "left",
+      Cell: ({value}) => value.length
     },
     {
       Header: "Fecha de Creación",
