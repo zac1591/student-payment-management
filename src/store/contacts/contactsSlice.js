@@ -15,18 +15,11 @@ const contactsSlice = createSlice({
       state.contacts = [...state.contacts, action.payload]
     },
     onSelectFlatRows(state, action) {
-      state.currentSelectedFlatRows =  [action.payload]
+      state.currentSelectedFlatRows =  [...action.payload]
     }
   }
 })
 
-//thunk, for some reason is not working as it should, Analyze this code later
-export const processingSelectedFlatRows = (selectedFlatRow) => {
-  return (dispatch) => {
-    const selectedRows =  selectedFlatRow.map(row => row.values)
-    dispatch(selectedRows)
-  }
-}
 
 export default contactsSlice.reducer;
 export const contactsActions = contactsSlice.actions;

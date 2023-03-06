@@ -29,7 +29,7 @@ function MenuDashboard() {
 				</Link>
 				<Link to="/debts">
 					<span className="material-icons-sharp">receipt_long</span>
-					<h3>Deudas</h3>
+					<h3>Finanzas</h3>
 				</Link>
 				<Link to="">
 					<span className="material-icons-sharp"> mail_outline </span>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 //react router
 import { useNavigate } from "react-router-dom";
 //components
@@ -56,8 +57,8 @@ function Contacts() {
 				<MenuDashboard />
 				<div className={styles.contactsList}>
 					<ActiveMenu
-						createButtonLabel="Create contact"
-						onShowCreateContact={showCreateContactHandler}
+						buttonLabel="Crear Contacto"
+						onShowItem={showCreateContactHandler}
 						currentPageTitle="Contactos"
 					/>
 					{showContactsOption && (

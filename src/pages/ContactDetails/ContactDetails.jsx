@@ -8,9 +8,9 @@ import GoBack from "../../components/GoBack/GoBack";
 import ClosableTag from "../../components/ClosableTag/ClosableTag";
 import MessageCard from "../../components/MessageCard/MessageCard";
 import AddNote from "../../components/AddNote/AddNote";
+import Tabs from "../../components/UI/Tabs/Tabs";
 
 import styles from "./contactDetails.module.scss";
-import Tabs from "../../components/UI/Tabs/Tabs";
 
 const today = new Date();
 console.log(today.toLocaleString());
@@ -226,11 +226,37 @@ const MOCK_DATA = [
 	},
 ];
 
+//Temporaty mock data
+const payments = [
+	{
+		id: crypto.randomUUID(),
+		description: "Some payment description",
+		amount: "150",
+	},
+	{
+		id: crypto.randomUUID(),
+		description: "Some other description",
+		amount: "400",
+	},
+];
+
+const debts = [
+	{
+		id: crypto.randomUUID(),
+		description: "Some debts description",
+		amount: "200",
+	},
+	{
+		id: crypto.randomUUID(),
+		description: "Some other description",
+		amount: "300",
+	},
+];
+
 const tabsConfig = [
 	{
 		id: crypto.randomUUID(),
 		title: "Pagos",
-		component: "nameOfThecomponent",
 	},
 	{
 		id: crypto.randomUUID(),
@@ -259,7 +285,7 @@ function ContactDetails() {
 	return (
 		<section className={styles.gridContainer}>
 			<GoBack className={styles.goBackArrow} onClick={goBackHandler} />
-			<div
+			{/* <div
 				style={{
 					display: "flex",
 					gridArea: "menu-section",
@@ -269,7 +295,7 @@ function ContactDetails() {
 				<span>Información General</span>
 				<span>Notas</span>
 				<span>tercera opcion</span>
-			</div>
+			</div> */}
 			<Card className={`${styles.card} ${styles.generalData}`}>
 				<div className={styles.cardHeader}>
 					<span className={`material-icons-sharp ${styles.iconCard}`}>
@@ -328,7 +354,51 @@ function ContactDetails() {
 				<Tabs
 					className={styles.historyTabs}
 					TabNavItemConfig={tabsConfig}
+					entries={{ payments, debts }}
 				/>
+				{/* <div className={`${styles.historyTabs} ${styles.tabs}`}>
+					<ul className={styles.nav}>
+						{tabsConfig.map(navEl => (
+							<TabNavItem
+								key={navEl.id}
+								title={navEl.title}
+								id={navEl.id}
+								activeTab={activeTab}
+								setActiveTab={setActiveTab}
+							/>
+						))}
+					</ul>
+
+					<div className={styles.outlet}>
+						<TabContent id={tabsConfig[0].id} activeTab={activeTab}>
+							{payments.map(payment => (
+								<ListElement
+									key={payment.id}
+									description={payment.description}
+									amount={payment.amount}
+								/>
+							))}
+						</TabContent>
+						<TabContent id={tabsConfig[1].id} activeTab={activeTab}>
+							{debts.map(debt => (
+								<ListElement
+									key={debt.id}
+									description={debt.description}
+									amount={debt.amount}
+								/>
+							))}
+						</TabContent>
+						<TabContent id={tabsConfig[2].id} activeTab={activeTab}>
+							{[...payments, ...debts].map(element => (
+								<ListElement
+									key={element.id}
+									description={element.description}
+									amount={element.amount}
+								/>
+							))}
+						</TabContent>
+					</div>
+				</div> */}
 			</Card>
 			<div className={styles.messagesArea}>
 				<div className={styles.messagesGrid}>

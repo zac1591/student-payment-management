@@ -16,7 +16,6 @@ import GlobalFilter from "../GlobalFilter/GlobalFilter";
 //redux
 import { useDispatch } from "react-redux";
 import { contactsActions } from "../../store/contacts/contactsSlice";
-import { processingSelectedFlatRows } from "../../store/contacts/contactsSlice";
 //styles
 import styles from "./itemsTable.module.scss";
 
@@ -70,21 +69,13 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 		}
 	);
 
-	const selectedRowHandler = row => {
-		navigate(`/contacts/${row.values.id}`, { replace: true });
-	};
+	// const selectedRowHandler = row => {
+	// 	navigate(`/contacts/${row.values.id}`, { replace: true });
+	// };
 
-	// dispatch(contactsActions.onSelectFlatRows(originalRowData));
-	// console.log(originalRowData);
+	// dispatch(contactsActions.onSelectFlatRows(selectedFlatRows));
 
-	// dispatch(processingSelectedFlatRows(selectedFlatRows));
-
-	// useEffect(() => {
-	// 	dispatch(contactsActions.onSelectFlatRows(memoizedSelectedFlatRows), []);
-	// }, [memoizedSelectedFlatRows]);
-	// console.log(selectedFlatRows);
-
-	//getting cell value to enable first name and last name to be clickable and navigate to the contacts details componet
+	//getting cell value to enable first name and last name to be clickable and navigate to the contacts details component
 	const getCellValue = cell => {
 		// console.log(cell.row.values);
 		const selectedRowId = cell.row.values.id;
@@ -108,6 +99,7 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 	const { pageIndex, pageSize, globalFilter } = state;
 
 	console.log("running table");
+	console.log(selectedFlatRows);
 
 	return (
 		<>

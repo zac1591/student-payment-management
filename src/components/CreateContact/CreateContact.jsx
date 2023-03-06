@@ -219,10 +219,18 @@ function CreateContact({ onHideCreateContact }) {
 				</div>
 
 				<div className={styles.formActions}>
-					<Button inverted small type="submit" id="create-contact">
+					<Button
+						btnStylesConf={{ inverted: "inverted", small: "small" }}
+						type="submit"
+						id="create-contact"
+					>
 						Crear contácto
 					</Button>
-					<Button small type="button" onClick={onHideCreateContact}>
+					<Button
+						btnStylesConf={{ small: "small" }}
+						type="button"
+						onClick={onHideCreateContact}
+					>
 						Cancelar
 					</Button>
 				</div>
