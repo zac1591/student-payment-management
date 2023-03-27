@@ -3,7 +3,7 @@ export const COLUMNS = [
     Header: "Id",
     accessor: "id",
     disableFilters: true,
-    sticky: "left"
+    sticky: "left",
   },
   {
     Header: "Nombre",

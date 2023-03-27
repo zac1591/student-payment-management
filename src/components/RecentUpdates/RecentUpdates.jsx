@@ -9,11 +9,11 @@ import ProfileUpdate4 from "../../assets/profile-4.jpg";
 //styles
 import styles from "./recentUpdates.module.scss";
 
-function RecentUpdates() {
+function RecentUpdates({ title }) {
 	const updateMessage = "received his order of Night lion tech GPS drone";
 	return (
 		<div className={styles.recentUpdates}>
-			<h2>Recent Updates</h2>
+			<h2>{title}</h2>
 
 			<div className={styles.updates}>
 				<RecentUpdate

@@ -1,21 +1,33 @@
 import Card from "../Card/Card";
 import styles from "./insightCard.module.scss";
 
-function InsightCard({ icon, title, amount, percentage }) {
-	const spanClasses = title.toLocaleLowerCase().includes("deudas")
-		? styles.expenses
-		: title.toLocaleLowerCase().includes("pagados")
-		? styles.income
-		: "";
+const iconClasses = {
+	success: styles.success,
+	warning: styles.warning,
+	danger: styles.danger,
+	normal: ''
+};
 
+type PropsTypes = {
+	icon: string;
+	title: string;
+	amount: string;
+	percentage: string;
+	color: 'normal'| 'success' | 'warning' | 'danger';
+}
+
+function InsightCard({ icon, title, amount, percentage, color }: PropsTypes) {
 	const circleClasses = title.toLocaleLowerCase().includes("deudas")
 		? styles.circleExpenses
 		: title.toLocaleLowerCase().includes("pagados")
 		? styles.circleIncome
 		: styles.circleSales;
+		
 	return (
 		<Card className={styles.cardInsight}>
-			<span className={`material-icons-sharp ${spanClasses}`}>{icon}</span>
+			<span className={`material-icons-sharp ${iconClasses[color]}`}>
+				{icon}
+			</span>
 			<div className={styles.middle}>
 				<div className={styles.left}>
 					<h3>{title}</h3>

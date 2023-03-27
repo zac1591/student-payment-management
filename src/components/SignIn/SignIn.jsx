@@ -91,7 +91,11 @@ function SignIn() {
 							<div className={styles.divider}>
 								<h5>Or</h5>
 							</div>
-							<Button type="button" isGoogleSignIn onClick={() => {}}>
+							<Button
+								type="button"
+								btnStylesConf={{ google: "google" }}
+								onClick={() => {}}
+							>
 								Sign in with Google
 							</Button>
 						</div>

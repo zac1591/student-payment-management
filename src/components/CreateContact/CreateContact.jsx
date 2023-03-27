@@ -58,9 +58,9 @@ function CreateContact({ onHideCreateContact }) {
 
 	//onClick={handleSubmit(submitButtonHandler)}
 	return (
-		<Modal>
+		<Modal className={styles.modal}>
 			<div className={styles.header}>
-				<h3>Nuevo Alumno</h3>
+				<h3>Nuevo Contácto</h3>
 			</div>
 			<form onSubmit={handleSubmit(submitButtonHandler)}>
 				<div className={styles.flexContainer}>
@@ -133,25 +133,27 @@ function CreateContact({ onHideCreateContact }) {
 							type="text"
 						/>
 
-						<p>Fecha de Nacimiento</p>
-						<Controller
-							name="dateOfBirth"
-							control={control}
-							rules={{ required: true }}
-							render={({ field }) => (
-								<ReactDatePicker
-									{...field}
-									placeholderText="Seleccionar fecha"
-									selected={field.value}
-									onChange={e => field.onChange(e)}
-									peekNextMonth
-									showMonthDropdown
-									showYearDropdown
-									dropdownMode="select"
-									className={styles.datePicker}
-								/>
-							)}
-						/>
+						<div className={styles.formControl}>
+							<p>Fecha de Nacimiento</p>
+							<Controller
+								name="dateOfBirth"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { value, onChange, ...rest } }) => (
+									<ReactDatePicker
+										{...rest}
+										placeholderText="Seleccionar fecha"
+										selected={value}
+										onChange={e => onChange(e)}
+										peekNextMonth
+										showMonthDropdown
+										showYearDropdown
+										dropdownMode="select"
+										className={styles.datePicker}
+									/>
+								)}
+							/>
+						</div>
 
 						<RadioButton
 							label="Genero"
@@ -168,44 +170,48 @@ function CreateContact({ onHideCreateContact }) {
 							options={{ si: "si", no: "no" }}
 						/>
 
-						<p>Fecha de Primera Cuota</p>
-						<Controller
-							name="firstPaymentDate"
-							control={control}
-							rules={{ required: true }}
-							render={({ field }) => (
-								<ReactDatePicker
-									{...field}
-									placeholderText="Seleccionar fecha"
-									selected={field.value}
-									onChange={e => field.onChange(e)}
-									peekNextMonth
-									showMonthDropdown
-									showYearDropdown
-									dropdownMode="select"
-									className={styles.datePicker}
-								/>
-							)}
-						/>
-						<p>Fecha de la Última Cuota</p>
-						<Controller
-							name="lastPaymentDate"
-							control={control}
-							rules={{ required: true }}
-							render={({ field }) => (
-								<ReactDatePicker
-									{...field}
-									placeholderText="Seleccionar fecha"
-									selected={field.value}
-									onChange={e => field.onChange(e)}
-									peekNextMonth
-									showMonthDropdown
-									showYearDropdown
-									dropdownMode="select"
-									className={styles.datePicker}
-								/>
-							)}
-						/>
+						<div className={styles.formControl}>
+							<p>Fecha de Primera Cuota</p>
+							<Controller
+								name="firstPaymentDate"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { value, onChange, ...rest } }) => (
+									<ReactDatePicker
+										{...rest}
+										placeholderText="Seleccionar fecha"
+										selected={value}
+										onChange={e => onChange(e)}
+										peekNextMonth
+										showMonthDropdown
+										showYearDropdown
+										dropdownMode="select"
+										className={styles.datePicker}
+									/>
+								)}
+							/>
+						</div>
+						<div className={styles.formControl}>
+							<p>Fecha de la Última Cuota</p>
+							<Controller
+								name="lastPaymentDate"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { value, onChange, ...rest } }) => (
+									<ReactDatePicker
+										{...rest}
+										placeholderText="Seleccionar fecha"
+										selected={value}
+										onChange={e => onChange(e)}
+										peekNextMonth
+										showMonthDropdown
+										showYearDropdown
+										dropdownMode="select"
+										className={styles.datePicker}
+									/>
+								)}
+							/>
+						</div>
 
 						<Input
 							label="Cursos Suscrito"
@@ -220,11 +226,15 @@ function CreateContact({ onHideCreateContact }) {
 
 				<div className={styles.formActions}>
 					<Button
-						btnStylesConf={{ inverted: "inverted", small: "small" }}
+						btnStylesConf={{
+							inverted: "inverted",
+							small: "small",
+							success: "success",
+						}}
 						type="submit"
 						id="create-contact"
 					>
-						Crear contácto
+						Guardar
 					</Button>
 					<Button
 						btnStylesConf={{ small: "small" }}

@@ -35,10 +35,7 @@ function AddNote() {
 						className={styles.inputColor}
 					/>
 					<div className="form actions">
-						<Button
-							btnStylesConf={{ small: "small" }}
-							otherProps={{ type: "submit" }}
-						>
+						<Button btnStylesConf={{ small: "small" }} type="submit">
 							Agregar
 						</Button>
 					</div>

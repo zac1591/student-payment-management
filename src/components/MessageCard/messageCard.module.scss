@@ -22,8 +22,8 @@
     grid-auto-rows: auto;
     gap: 1rem;
     width: 100%;
-    position: relative;
-    z-index: -1;
+    // position: relative;
+    // z-index: -1;
 
     .cardHeader {
         display: flex;
@@ -100,13 +100,34 @@
     box-shadow: none;
 }
 
+.cardFooter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 5px;
+    width: 100%;
+
+    small {
+        color: $color-info-dark;
+    }
+
+    .empty {
+        color: $color-primary;
+        font-size: 1rem;
+    }
+
+    .viewAttachment {
+        color: $color-primary;
+        font-size: 0.7rem;
+        cursor: pointer;   
+    }
+}
+
 .marginTopOneRem {
     margin-top: 1.5rem;
 }
 
 .card {
-    position: relative;
-    z-index: 4;
     background: #fff;
     border-radius: 1rem;
 

@@ -7,7 +7,7 @@ import AvatarImg from "../../assets/profile-3.jpg";
 
 import styles from "./messageCard.module.scss";
 
-function MessageCard({ messageTitle, message, date, time, day }) {
+function MessageCard({ messageTitle, message, date, time, day, attachment }) {
 	const [isShowHeaderDate, setIsShowHeaderDate] = useState(true);
 
 	useEffect(() => {
@@ -44,6 +44,16 @@ function MessageCard({ messageTitle, message, date, time, day }) {
 					</div>
 					<div className="cardContent">
 						<div className={styles.greyBox}>{message}</div>
+					</div>
+					<div className={styles.cardFooter}>
+						<small>Archivo Adjunto</small>
+						{attachment ? (
+							<i className={styles.viewAttachment}>Ver</i>
+						) : (
+							<span className={`material-icons-sharp ${styles.empty}`}>
+								block
+							</span>
+						)}
 					</div>
 				</Card>
 			</div>

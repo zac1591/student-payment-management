@@ -1,14 +1,23 @@
-.debts {
+.container {
+    display: grid;
+	width: 96%;
+	margin: 0 auto;
+	gap: 1.8rem;
+	grid-template-columns: 14rem auto 20rem;
 
-    .flexPage {
-        width: 100%;
-		display: flex;
-		justify-content: space-around;
+    main {
+        margin-top: 1.4rem;
+        .insights {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1.6rem;
+		}
+
+    }
+   
+    .rightSide {
+        margin-top: 1.4rem;
     }
 
-    .mainContentPage {
-        width: 80%;
-		height: auto;
-		overflow-x: auto;
-    }
+    
 }

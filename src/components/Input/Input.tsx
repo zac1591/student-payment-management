@@ -1,4 +1,20 @@
+
+import { ChangeEvent } from "react";
+import { UseFormRegister } from 'react-hook-form'
+//types
+import { Group } from "../../types";
 import styles from "./Input.module.scss";
+
+type propTypes = {
+	label: string,
+	type: string,
+	register: UseFormRegister<Group>,
+	required: string,
+	name: string,
+	id: string,
+	className?: string,
+	onChange?: (e: ChangeEvent<HTMLInputElement> | null) => void,
+};
 
 const Input = ({
 	label,
@@ -10,7 +26,7 @@ const Input = ({
 	className,
 	onChange,
 	...otherProps
-}) => {
+}: propTypes) => {
 	const customClass = className ? className : "";
 	return (
 		<div className={`${styles.formControl} ${customClass}`}>
@@ -24,11 +40,11 @@ const Input = ({
 				})}
 				type={type}
 				id={id}
-				required={required}
+				required
 				onChange={onChange}
 				{...otherProps}
 			/>
-			<label htmlFor={id} className={styles.labelTag}>
+			<label htmlFor={id as string} className={styles.labelTag}>
 				<span className={styles.contentTag}>{label}</span>
 			</label>
 		</div>

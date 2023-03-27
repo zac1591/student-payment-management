@@ -1,17 +1,18 @@
 @use '../../../sass/abstracts/variables' as *;
 
 .button {
-  min-width: 165px;
+  min-width: 100px;
   width: auto;
-  height: 50px;
+  height: 36px;
   letter-spacing: 0.5px;
-  line-height: 30px;
-  padding: 0 35px 0 35px;
-  font-size: 15px;
+  line-height: 3;
+  padding: 0 1rem 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
   background-color: inherit;
   color: $color-primary;
   border: 1px solid $color-primary;
-  border-radius: 20px;
+  border-radius: 30px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -20,6 +21,7 @@
   &:hover {
     color: #fff;
     background-color: $color-primary;
+    border: 1px solid $color-primary;
   }
 
   &.google-sign-in {
@@ -39,13 +41,25 @@
 
     &:hover {
       background-color: $color-primary-variant;
+      border: 1px solid $color-primary-variant;
       color: white;
+    }
+  }
+
+  &.success {
+    background-color: $color-success;
+    color: #fff;
+    border: 1px solid $color-success;
+
+    &:hover {
+      background-color: $color-success-variant;
+      border: 1px solid $color-success-variant;
     }
   }
 
   &.small {
     min-width: 90px;
-    height: 40px;
-    line-height: 35px;
+    height: 36px;
+    line-height: 2.3;
   }
 }

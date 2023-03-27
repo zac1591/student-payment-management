@@ -3,3 +3,4 @@ declare module '*.scss' {
     export default content
 }
 
+declare module 'redux-logger'

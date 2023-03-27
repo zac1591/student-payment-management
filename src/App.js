@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -6,6 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
+import GeneralSettings from "./components/GeneralSettings/GeneralSettings";
+import Security from "./components/Security/Security";
 //pages
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Contacts from "./pages/Contacts/Contacts";
@@ -14,7 +15,6 @@ import ContactDetails from "./pages/ContactDetails/ContactDetails";
 import Authentication from "./pages/Authentication/Authentication";
 import Debts from "./pages/Debts/Debts";
 import Groups from "./pages/Groups/Groups";
-
 import NothingToSee from "./pages/NothingToSee/NothingToSee";
 
 
@@ -34,7 +34,11 @@ function App() {
 				<Route path="/contacts/:userId" element={<ContactDetails />} />
 				<Route path="/groups" element={<Groups />} />
 				<Route path="/debts" element={<Debts />} />
-				<Route path="/user-preferences" element={<UserPreferences />} />
+
+				<Route path="/user-preferences" element={<UserPreferences />} >
+					<Route path="general-settings" element={<GeneralSettings />} />
+					<Route path='security' element={<Security />} />
+				</Route>
 				<Route path="*" element={<NothingToSee />} />
 			</Routes>
 		</BrowserRouter>

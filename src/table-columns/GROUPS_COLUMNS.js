@@ -6,20 +6,34 @@ export const COLUMNS = [
       sticky: "left"
     },
     {
-      Header: "Nombre del Programa",
-      accessor: "course_name",
+      Header: "Nombre del Grupo",
+      accessor: "groupName",
       sticky: "left"
     },
     {
       Header: "Miembros",
       accessor: "members",
       sticky: "left",
-      Cell: ({value}) => value.length
     },
     {
-      Header: "Fecha de Creación",
-      accessor: "creation_date"
+      Header: "Descripción",
+      accessor: "description"
+    },
+    {
+      Header: "Precio",
+      accessor: "price"
+    },
+    {
+      Header: "Fecha de Inicio",
+      accessor: "startDate"
+    },
+    {
+      Header: "Fecha de finalización",
+      accessor: "endDate"
+    },
+    {
+      Header: "Horario",
+      accessor: "schedule"
     },
     
   ];
-  

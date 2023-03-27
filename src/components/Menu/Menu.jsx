@@ -21,13 +21,16 @@ function MainMenu() {
 			<div className={styles.scrollable}>
 				<div className={styles.navigation}>
 					<span className={styles.navigationTitle}>Your Preferences</span>
-					<NavLink className={activeLink} to="/overview">
+					<NavLink
+						className={activeLink}
+						to="/user-preferences/general-settings"
+					>
 						General
 					</NavLink>
 					<NavLink className={activeLink} to="/actividad">
 						Notification
 					</NavLink>
-					<NavLink className={activeLink} to="/patients">
+					<NavLink className={activeLink} to="/user-preferences/security">
 						Security
 					</NavLink>
 					<span className={styles.navigationTitle}>Account and Setup</span>

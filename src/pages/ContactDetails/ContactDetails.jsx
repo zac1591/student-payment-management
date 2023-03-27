@@ -26,6 +26,7 @@ const MOCK_DATA = [
 		date: f.format(today),
 		time: "12:35 pm",
 		day: "Tuesday",
+		attachment: "some-path-to-attachment",
 		finances: {
 			payments: [
 				{
@@ -60,6 +61,7 @@ const MOCK_DATA = [
 		date: f.format(today),
 		time: "9:50 am",
 		day: "Today",
+		attachment: "",
 		finances: {
 			payments: [
 				{
@@ -94,6 +96,7 @@ const MOCK_DATA = [
 		date: f.format(today),
 		time: "11:20 am",
 		day: "Monday",
+		attachment: "",
 		finances: {
 			payments: [
 				{
@@ -128,6 +131,7 @@ const MOCK_DATA = [
 		date: f.format(today),
 		time: "11:20 am",
 		day: "today",
+		attachment: "some-path-to-attachment",
 		finances: {
 			payments: [
 				{
@@ -162,6 +166,7 @@ const MOCK_DATA = [
 		date: f.format(today),
 		time: "11:20 am",
 		day: "today",
+		attachment: "some-path-to-attachment",
 		finances: {
 			payments: [
 				{
@@ -197,6 +202,7 @@ const MOCK_DATA = [
 		date: f.format(today),
 		time: "11:20 am",
 		day: "today",
+		attachment: "",
 		finances: {
 			payments: [
 				{
@@ -276,6 +282,7 @@ function ContactDetails() {
 
 	//useParams returns a string
 	const selectedContact = contacts.find(({ id }) => id === +params.userId);
+	console.log(selectedContact);
 
 	const { first_name, last_name, phone_number, email, personal_id } =
 		selectedContact;
@@ -410,6 +417,7 @@ function ContactDetails() {
 							date={message.date}
 							time={message.time}
 							day={message.day}
+							attachment={message.attachment}
 						/>
 					))}
 

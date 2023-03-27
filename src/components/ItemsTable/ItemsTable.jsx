@@ -77,7 +77,7 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 
 	//getting cell value to enable first name and last name to be clickable and navigate to the contacts details component
 	const getCellValue = cell => {
-		// console.log(cell.row.values);
+		console.log(cell.row.values);
 		const selectedRowId = cell.row.values.id;
 		if (
 			cell.column.Header === "Nombre" ||

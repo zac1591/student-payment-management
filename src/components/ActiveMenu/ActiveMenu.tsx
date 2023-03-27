@@ -3,7 +3,7 @@ import styles from "./ActiveMenu.module.scss";
 
 type propsTypes = {
 	buttonLabel: string,
-	onShowItem: () => {},
+	onShowItem: () => void,
 	currentPageTitle: string
 }
 
@@ -12,13 +12,13 @@ function ActiveMenu({ buttonLabel, onShowItem, currentPageTitle }: propsTypes) {
 		<div className={styles.activeMenu}>
 			<h1>{currentPageTitle}</h1>
 			<div className={styles.activeMenuActions}>
-				<Button btnStylesConf={{small: 'small'}} otherProps={{type: 'button'}}>
-					Actions
+				<Button btnStylesConf={{small: 'small'}} type="submit">
+					Acciones
 				</Button>
-				<Button  btnStylesConf={{small: 'small'}} otherProps={{type: 'button'}}>
+				<Button  btnStylesConf={{small: 'small'}} type='button'>
 					Import
 				</Button>
-				<Button btnStylesConf={{small: 'small', inverted: 'inverted'}} otherProps={{type: 'button'}} onClick={onShowItem}>
+				<Button btnStylesConf={{small: 'small', inverted: 'inverted'}} type='button' onClick={onShowItem}>
 					{buttonLabel}
 				</Button>
 			</div>

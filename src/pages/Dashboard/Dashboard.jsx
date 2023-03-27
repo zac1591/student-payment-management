@@ -11,7 +11,7 @@ import RecentUpdates from "../../components/RecentUpdates/RecentUpdates";
 
 function Dashboard() {
 	return (
-		<div className={styles.container}>
+		<section className={styles.container}>
 			<MenuDashboard />
 			<main>
 				<h1>Dashboard</h1>
@@ -21,21 +21,24 @@ function Dashboard() {
 				<div className={styles.insights}>
 					<InsightCard
 						icon="analytics"
-						title="Total Alumnos"
+						title="Total Clientes"
 						amount="25,024"
 						percentage="81"
+						color="normal"
 					/>
 					<InsightCard
 						icon="bar_chart"
 						title="Total Deudas"
 						amount="14,160"
 						percentage="62"
+						color="danger"
 					/>
 					<InsightCard
 						icon="stacked_line_chart"
 						title="Total Pagados"
 						amount="25,024"
 						percentage="44"
+						color="success"
 					/>
 				</div>
 
@@ -77,8 +80,8 @@ function Dashboard() {
 					<Link to="">Show All</Link>
 				</section>
 			</main>
-			<div className={styles.right}>
-				<RecentUpdates />
+			<aside className={styles.rightSide}>
+				<RecentUpdates title="Pagos Recientes" />
 				<AnalyticsAlerts />
 				<div className={styles["add-product"]}>
 					<div>
@@ -86,8 +89,8 @@ function Dashboard() {
 						<h3>Add User</h3>
 					</div>
 				</div>
-			</div>
-		</div>
+			</aside>
+		</section>
 	);
 }
 

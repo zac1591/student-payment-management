@@ -1,22 +1,12 @@
-.groups {
-	width: 100%;
-	height: auto;
-	// margin: 0 auto;
-	display: flex;
-	flex-direction: column;
-	// justify-content: center;
-	align-items: center;
+.container {
+	display: grid;
+	width: 96%;
+	margin: 0 auto;
+	gap: 1.8rem;
+	grid-template-columns: 14rem auto;
 
-	.groupsList {
-		width: 80%;
-		height: auto;
-		overflow-x: auto;
+	main {
+		margin-top: 1.4rem;
 	}
 
-
-	.pageFlex {
-		width: 100%;
-		display: flex;
-		justify-content: space-around;
-	}
 }

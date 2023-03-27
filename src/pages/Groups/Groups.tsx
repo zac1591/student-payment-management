@@ -1,3 +1,6 @@
+import { useState } from "react";
+
+//components
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
 import ItemsTable from "../../components/ItemsTable/ItemsTable";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
@@ -5,8 +8,9 @@ import { COLUMNS } from "../../table-columns/GROUPS_COLUMNS";
 
 //redux
 import { useSelector } from "react-redux";
-
+//styles
 import styles from "./groups.module.scss";
+import CreateGroup from "../../components/CreateGroup/CreateGroup";
 
 /*
 What do I need to create a new groups?
@@ -23,24 +27,31 @@ What do I need to create a new groups?
 
 */
 
+
 function Groups() {
+	const [isShowingModal, setIsShowingModal] = useState(false)
 	const groupsFromState = useSelector(({ groups }) => groups.groups);
+
+	const onShowModal: () => void =  () => setIsShowingModal(true)
+	const onHideModal: () => void =  () => setIsShowingModal(false)
 	return (
-		<section className={styles.groups}>
-			<div className={styles.pageFlex}>
+		<section className={styles.container}>
+			{ isShowingModal && <CreateGroup onHideCreateContact={onHideModal} />}
+			
 				<MenuDashboard />
-				<div className={styles.groupsList}>
+				<main>
 					<ActiveMenu
-						createButtonLabel="Crear Grupo"
+						buttonLabel="Crear Grupo"
 						currentPageTitle="Grupos"
+						onShowItem={onShowModal}
 					/>
 					<ItemsTable
 						COLUMNS={COLUMNS}
 						stateData={groupsFromState}
 						navigatesTo="groups"
 					/>
-				</div>
-			</div>
+				</main>
+
 		</section>
 	);
 }
