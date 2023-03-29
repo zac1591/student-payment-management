@@ -1,15 +1,14 @@
 
 import { ChangeEvent } from "react";
-import { UseFormRegister } from 'react-hook-form'
-//types
-import { Group } from "../../types";
+import { FieldValues, UseFormRegister } from 'react-hook-form'
+
 import styles from "./Input.module.scss";
 
 type propTypes = {
 	label: string,
 	type: string,
-	register: UseFormRegister<Group>,
-	required: string,
+	register: any,
+	required: boolean,
 	name: string,
 	id: string,
 	className?: string,
@@ -32,10 +31,10 @@ const Input = ({
 		<div className={`${styles.formControl} ${customClass}`}>
 			<input
 				{...register(name, {
-					required: "This field is required",
+					required: "Este campo es requerido",
 					minLength: {
 						value: 1,
-						message: "Minimum length is 1 character",
+						message: "Mínimo de caractéres es 1",
 					},
 				})}
 				type={type}

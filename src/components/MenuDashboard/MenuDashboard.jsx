@@ -27,24 +27,24 @@ function MenuDashboard() {
 					<span className="material-icons-sharp">groups</span>
 					<h3>Grupos</h3>
 				</Link>
-				<Link to="/debts">
+				<Link to="/finances">
 					<span className="material-icons-sharp">receipt_long</span>
 					<h3>Finanzas</h3>
 				</Link>
 				<Link to="">
 					<span className="material-icons-sharp"> mail_outline </span>
-					<h3>Messages</h3>
+					<h3>Tickets</h3>
 					<span className={styles["message-count"]}>26</span>
 				</Link>
-				<Link to="">
+				{/* <Link to="">
 					<span className="material-icons-sharp">inventory</span>
 					<h3>Products</h3>
-				</Link>
+				</Link> */}
 				<Link to="">
 					<span className="material-icons-sharp">
 						report_gmailerrorred
 					</span>
-					<h3>Reports</h3>
+					<h3>Reportes</h3>
 				</Link>
 				<Link to="">
 					<span className="material-icons-sharp">add</span>
@@ -53,7 +53,7 @@ function MenuDashboard() {
 
 				<Link to="/authentication/sign-in">
 					<span className="material-icons-sharp"> logout </span>
-					<h3>Logout</h3>
+					<h3>Cerrar Sesión</h3>
 				</Link>
 			</div>
 		</aside>

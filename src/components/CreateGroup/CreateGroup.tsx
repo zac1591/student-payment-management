@@ -94,7 +94,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							name="groupName"
 							id="groupName"
 							register={register}
-							required='required'
+							required
 							type="text"
 						/>
 						<Input
@@ -102,7 +102,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							name="description"
 							id="description"
 							register={register}
-							required='required'
+							required
 							type="text"
 						/>
 						<Input
@@ -110,7 +110,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							name="members"
 							id="members"
 							register={register}
-							required='required'
+							required
 							type="text"
 						/>
 
@@ -119,7 +119,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							name="price"
 							id="price"
 							register={register}
-							required='required'
+							required
 							type="number"
 						/>
 					</div>
@@ -172,7 +172,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							name="schedule"
 							id="schedule"
 							register={register}
-							required='required'
+							required
 							type="text"
 						/>
 					</div>

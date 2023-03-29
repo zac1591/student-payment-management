@@ -1,13 +1,17 @@
 @use "../../../sass/abstracts/variables" as *;
 
 .recentUpdates {
-	margin-top: 1rem;
+	margin-top: 1.2rem;	
+	width: 100%;
+	height: 324.6px;
+	// background: tomato;
 
 	h2 {
 		margin-bottom: 0.8rem;
 	}
 
 	.updates {
+		width: 100%;
 		background: $color-white;
 		padding: $card-padding;
 		border-radius: $card-border-radius;
@@ -17,5 +21,6 @@
 		&:hover {
 			box-shadow: none;
 		}
+
 	}
 }

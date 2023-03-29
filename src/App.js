@@ -13,7 +13,7 @@ import Contacts from "./pages/Contacts/Contacts";
 import UserPreferences from "./pages/UserPreferences/UserPreferences";
 import ContactDetails from "./pages/ContactDetails/ContactDetails";
 import Authentication from "./pages/Authentication/Authentication";
-import Debts from "./pages/Debts/Debts";
+import Finances from "./pages/Finances/Finances";
 import Groups from "./pages/Groups/Groups";
 import NothingToSee from "./pages/NothingToSee/NothingToSee";
 
@@ -33,7 +33,7 @@ function App() {
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/contacts/:userId" element={<ContactDetails />} />
 				<Route path="/groups" element={<Groups />} />
-				<Route path="/debts" element={<Debts />} />
+				<Route path="/finances" element={<Finances />} />
 
 				<Route path="/user-preferences" element={<UserPreferences />} >
 					<Route path="general-settings" element={<GeneralSettings />} />
