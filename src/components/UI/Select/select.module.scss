@@ -1,0 +1,9 @@
+@use "../../../../sass/abstracts/variables" as *;
+
+.select {
+    font-size: 1rem;
+    border: none;
+    background: none;
+    color: $color-primary;
+    outline: none  ;
+}

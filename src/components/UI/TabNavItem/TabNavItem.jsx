@@ -8,7 +8,9 @@ const TabNavItem = ({ id, title, activeTab, setActiveTab }) => {
 	return (
 		<li
 			onClick={handleClick}
-			className={activeTab === id ? styles.active : ""}
+			className={`${styles.tabNavItem} ${
+				activeTab === id ? styles.active : ""
+			}`}
 			style={{ fontSize: "0.9rem" }}
 		>
 			{title}

@@ -1,6 +1,12 @@
+import { ReactNode } from "react";
 import styles from "./card.module.scss";
 
-function Card({ children, className, ...otherProps }) {
+type CardProps = {
+	children: ReactNode,
+	className: String,
+};
+
+function Card({ children, className, ...otherProps }: CardProps) {
 	const classes = `${styles.card} ${className}`;
 
 	return (

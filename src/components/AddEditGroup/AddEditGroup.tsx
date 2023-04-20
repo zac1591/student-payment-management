@@ -1,44 +1,51 @@
+import { useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
-
 //redux
-import { useDispatch } from "react-redux";
-import { groupsActions } from "../../store/groups/groupsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
+import { addGroup, submitEditedData } from "../../store/groups/groupsSlice";
 //react hook form
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-
 //component
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Modal from "../Modal/Modal";
-
 //types
 import { Group } from "../../types";
-
-// import CustomDatePicker from "../CustomDatePicker/CustomDatePicker";
+//utils
+import { strToDate } from "../../utils/utils";
 //styles
-import styles from "./createGroup.module.scss";
+import styles from "./addEditGroup.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
 
 type groupProps = {
-	onHideCreateContact: () => void
+	onHideCreateGroup: () => void,
+	editMode: boolean,
+	groupId?: string
 }
 
-function CreateGroup({ onHideCreateContact }: groupProps) {
-	const dispatch = useDispatch();
+function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
+	const toEditGroup = useAppSelector(({ groups }) => groupId ? groups.groups[groupId] : null)
+	const dispatch = useAppDispatch();
+	// const toEditGroup = useAppSelector(({ groups }) => groups.isEditing)
 	const {
 		register,
 		handleSubmit,
 		control,
+		setValue,
 		formState: { errors },
 		reset,
 	} = useForm<Group>();
 
-	const submitButtonHandler:SubmitHandler<Group>  = (data, event: React.BaseSyntheticEvent<object, any, any> | undefined) => {
+	const submitHandler:SubmitHandler<Group>  = (data, event: React.BaseSyntheticEvent<object, any, any> | undefined) => {
 		event?.preventDefault();
 		// const buttonName = event.target.getAttribute("id");
 
-		const groupData: Group = {
+		return editMode ? updateGroup(data) : createGroup(data)
+	}
+
+	const createGroup = (data: Group) => {
+		const groupData = {
 			id: crypto.randomUUID(),
 			groupName: data.groupName,
 			description: data.description,
@@ -51,12 +58,27 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 
 		console.log(`El tipo de data es ${typeof groupData}`);
 		console.log(groupData);
-		// dispatch(groupsActions.addGroup(groupData));
-		event?.target.reset();
-		onHideCreateContact();
+		dispatch(addGroup(groupData));
+		reset()
+		onHideCreateGroup();
 	}
 
+	const updateGroup = (data: Group) => {
+		// console.log(data)
+		dispatch(submitEditedData(data))
+		reset()
+		onHideCreateGroup();
+	}
 
+	//if form component is being used for editing an entry
+	useEffect(() => {
+		if(editMode && toEditGroup !== null) {
+			//set state with the given object and make the form aware of it so we can populate the to be edited data.
+	
+			//geting data from store
+			(Object.keys(toEditGroup) as Array<keyof Group>).forEach(field => setValue(field, toEditGroup[field]));
+		}
+	}, [])
 
 	//onClick={handleSubmit(submitButtonHandler)}
 
@@ -82,11 +104,11 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 	// }
 
 	return (
-		<Modal className={styles.modal} onHideCart={onHideCreateContact}>	
+		<Modal className={styles.modal} onHideCart={onHideCreateGroup}>	
 			<div className={styles.header}>
-				<h3>Nuevo Grupo</h3>
+				<h3>{editMode ? 'Editar Grupo': 'Nuevo Grupo'}</h3>
 			</div>
-			<form onSubmit={handleSubmit(submitButtonHandler)}>
+			<form onSubmit={handleSubmit(submitHandler)}>
 				<div className={styles.flexContainer}>
 					<div className={styles.splitForm}>
 						<Input
@@ -97,6 +119,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							required
 							type="text"
 						/>
+						<small>{errors.groupName?.message}</small>
 						<Input
 							label="Descripción"
 							name="description"
@@ -105,6 +128,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							required
 							type="text"
 						/>
+						<small>{errors.description?.message}</small>
 						<Input
 							label="Agregar miembros"
 							name="members"
@@ -113,7 +137,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							required
 							type="text"
 						/>
-
+						<small>{errors.members?.message}</small>
 						<Input
 							label="Precio"
 							name="price"
@@ -122,6 +146,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 							required
 							type="number"
 						/>
+						<small>{errors.price?.message}</small>
 					</div>
 					<div className={styles.splitForm}>
 						<div className={styles.formControl}>
@@ -134,7 +159,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 									<ReactDatePicker
 										{...rest}
 										placeholderText="Seleccionar fecha"
-										selected={value}
+										selected={strToDate(value)}
 										onChange={e => onChange(e)}
 										peekNextMonth
 										showMonthDropdown
@@ -156,7 +181,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 									<ReactDatePicker
 										{...rest}
 										placeholderText="Seleccionar fecha"
-										selected={value}
+										selected={strToDate(value)}
 										onChange={e => onChange(e)}
 										peekNextMonth
 										showMonthDropdown
@@ -189,7 +214,7 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 					<Button
 						btnStylesConf={{ small: "small" }}
                         type='button'
-						onClick={onHideCreateContact}
+						onClick={onHideCreateGroup}
 					>
 						Cancelar
 					</Button>
@@ -199,4 +224,4 @@ function CreateGroup({ onHideCreateContact }: groupProps) {
 	);
 }
 
-export default CreateGroup;
+export default AddEditGroup;

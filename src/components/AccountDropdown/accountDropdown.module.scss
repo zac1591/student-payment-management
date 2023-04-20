@@ -11,6 +11,10 @@
    left: -250px;
    width: 290px;
    z-index: 10;
+
+   -webkit-box-shadow: 2px 4px 10px 3px #dddddd;
+-moz-box-shadow: 2px 4px 10px 3px #dddddd;
+box-shadow: 2px 4px 10px 3px #dddddd;
    
 
    .userPreferences {

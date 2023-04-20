@@ -21,14 +21,36 @@
             .header {
                 display: flex;
                 flex-direction: row;
+				align-items: center;
                 gap: 1rem;
-                align-items: center;
+                align-content: center;
                 margin-bottom: 0.8rem;
+
+				.nav {
+					width: 60%;
+					margin: 0 auto;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					border: 1px solid #39a2db;
+					border-radius: 2rem;
+					padding-left: 0px;
+					@media (max-width: 768px) {
+					width: 90%;
+					}
+				}
             }
 
-            span:nth-child(3) {
-                color: $color-primary;
-            }
+			.outlet {
+				label {
+					font-size: 1rem;
+					color: $color-dark-variant;
+				}
+
+				.input {
+					width: 10%;
+				}
+			}
 
             h2 {
 				flex-grow: 1;
@@ -37,6 +59,7 @@
             form {
                 display: flex;
                 flex-direction: row;
+				justify-content: space-between;
             }
 
 

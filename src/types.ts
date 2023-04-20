@@ -1,12 +1,19 @@
 export type Group = {
-	id: string | number,
+	// [index: string]: string | number | string[],
+	id: string,
 	groupName: string,
 	description: string,
-	members: string[],
 	price: number,
-	startDate: Date,
-	endDate: Date,
+	members: string[],
+	startDate: string,
+	endDate:  string,
 	schedule: string,
 	
 }
 
+export type masive = {
+	grupos: string,
+	importe: string,
+	importe_amount: string
+
+}

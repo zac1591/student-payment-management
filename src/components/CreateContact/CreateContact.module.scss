@@ -2,7 +2,7 @@
 
 .modal {
    width: 60%;
-   top: 7%; 
+   top: 5%; 
    left: 19%;
    transform: translate(20%, -19%);
    max-height: 80vh;
@@ -49,12 +49,13 @@
 
 .flexContainer {
    display: flex;
-   gap: 5rem;
+   gap: 3rem;
    justify-content: space-between;
    flex-wrap: wrap;
    justify-content: space-around;
    @media screen and (min-width: 1200px) {
         flex-wrap: nowrap;
+        width: 100%;
    }
 }
 

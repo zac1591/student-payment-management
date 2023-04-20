@@ -2,15 +2,14 @@ import { useState } from "react";
 
 //components
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
-import ItemsTable from "../../components/ItemsTable/ItemsTable";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
-import { COLUMNS } from "../../table-columns/GROUPS_COLUMNS";
 
 //redux
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/storeHooks";
 //styles
 import styles from "./groups.module.scss";
-import CreateGroup from "../../components/CreateGroup/CreateGroup";
+import AddEditGroup from "../../components/AddEditGroup/AddEditGroup";
+import GroupCard from "../../components/GroupCard/GroupCard";
 
 /*
 What do I need to create a new groups?
@@ -23,21 +22,20 @@ What do I need to create a new groups?
 7. Price
 8. starting and end date
 9. schedule
-
-
 */
 
 
 function Groups() {
-	const [isShowingModal, setIsShowingModal] = useState(false)
-	const groupsFromState = useSelector(({ groups }) => groups.groups);
+	const [isShowingModal, setIsShowingModal] = useState(false);
+	const groupsFromState = useAppSelector(({ groups }) => groups.groups);
 
-	const onShowModal: () => void =  () => setIsShowingModal(true)
-	const onHideModal: () => void =  () => setIsShowingModal(false)
+	const onShowModal: () => void = () => setIsShowingModal(true)
+	const onHideModal: () => void = () => setIsShowingModal(false)
+
+
 	return (
 		<section className={styles.container}>
-			{ isShowingModal && <CreateGroup onHideCreateContact={onHideModal} />}
-			
+			{ isShowingModal && <AddEditGroup onHideCreateGroup={onHideModal} editMode={false} />}
 				<MenuDashboard />
 				<main>
 					<ActiveMenu
@@ -45,13 +43,23 @@ function Groups() {
 						currentPageTitle="Grupos"
 						onShowItem={onShowModal}
 					/>
-					<ItemsTable
-						COLUMNS={COLUMNS}
-						stateData={groupsFromState}
-						navigatesTo="groups"
-					/>
-				</main>
 
+					<div className={styles.kanvanContainer}>
+						{ Object.values(groupsFromState).map( group => (
+							<GroupCard key={group.id} groupProps = {{
+								id: group.id,
+								groupName: group.groupName,
+								description: group.description,
+								startDate: group.startDate,
+								endDate: group.endDate,
+								members: group.members,
+								price: group.price,
+								schedule: group.schedule
+								}}
+							/>
+						)) }
+					</div>
+				</main>
 		</section>
 	);
 }

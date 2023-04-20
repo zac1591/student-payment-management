@@ -14,7 +14,7 @@ import {
 import Checkbox from "../Checkbox/Checkbox";
 import GlobalFilter from "../GlobalFilter/GlobalFilter";
 //redux
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/storeHooks";
 import { contactsActions } from "../../store/contacts/contactsSlice";
 //styles
 import styles from "./itemsTable.module.scss";
@@ -23,7 +23,7 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 	const columns = useMemo(() => COLUMNS, [COLUMNS]);
 	const data = useMemo(() => stateData, [stateData]);
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const {
 		getTableProps,

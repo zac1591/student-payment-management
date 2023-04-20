@@ -1,3 +1,4 @@
+import { BaseSyntheticEvent, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 //components
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
@@ -7,16 +8,40 @@ import InsightCard from "../../components/InsightCard/InsightCard";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
 import RecentUpdates from "../../components/RecentUpdates/RecentUpdates";
 import DebtUpdate from "../../components/DebtUpdate/DebtUpdate";
+import TabNavItem from "../../components/UI/TabNavItem/TabNavItem";
+import TabContent from "../../components/UI/TabContent/TabContent";
+import Select from "../../components/UI/Select/Select";
 
+//types
+import { masive } from "../../types";
+//styles
 import styles from "./finances.module.scss";
 
+const tabsConfig = [
+	{
+		id: crypto.randomUUID(),
+		title: "Individual",
+	},
+	{
+		id: crypto.randomUUID(),
+		title: "Masiva",
+	},
+];
+
+
 function Finances() {
+	const [activeTab, setActiveTab] = useState(tabsConfig[0].id);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
-	} = useForm();
+	} = useForm<masive>();
+
+	const submitHandler = (data: masive, e: BaseSyntheticEvent<object, any, any> | undefined) => {
+		e?.preventDefault()
+		console.log(data)
+	}
 	return (
 		<section className={styles.container}>
 			<MenuDashboard />
@@ -55,27 +80,72 @@ function Finances() {
 				<div className={styles.recentEntries}>
 					<div className={styles.header}>
 						<h2>Estado de Cuenta</h2>
-						<span>Individual</span>
-						<span>Masiva</span>
+						<ul className={styles.nav}>
+							{tabsConfig.map(navEl => (
+								<TabNavItem
+								key={navEl.id}
+								title={navEl.title}
+								id={navEl.id}
+								activeTab={activeTab}
+								setActiveTab={setActiveTab}
+							/>
+							))}
+						</ul>
 					</div>
-					<form action="" style={{marginBottom: '1.4rem'}}>
-						<Input 
-							label="Nombre" 
-							type="text" 
-							id="name" 
-							name="nombre" 
-							register={register} 
-							required 
-						/>
-						<Button btnStylesConf={{small: 'small'}}>
-							<div style={{display: 'flex', gap: '0.5rem', padding: '0 0.5rem', alignItems: 'center'}}>
-							Generar
-							<span className="material-icons-sharp" style={{fontSize: '1.1rem'}}>
-								leaderboard
-							</span>
-							</div>
-						</Button>
-					</form>
+					<div className={styles.outlet}>
+						<TabContent id={tabsConfig[0].id} activeTab={activeTab}>
+							<form action="" style={{marginBottom: '1.4rem'}} onSubmit={e => e.preventDefault()}>
+								<Input 
+									label="Nombre" 
+									type="text" 
+									id="name" 
+									name="nombre" 
+									register={register} 
+									required 
+								/>
+								<Button btnStylesConf={{small: 'small'}}>
+									<div style={{display: 'flex', gap: '0.5rem', padding: '0 0.5rem', alignItems: 'center'}}>
+									Buscar
+									<span className="material-icons-sharp" style={{fontSize: '1.1rem'}}>
+										leaderboard
+									</span>
+									</div>
+								</Button>
+							</form>
+						</TabContent>
+						<TabContent id={tabsConfig[1].id} activeTab={activeTab}>
+							<form action="" onSubmit={handleSubmit(submitHandler)}>
+								<div>
+								<label htmlFor="groups">Grupos</label>
+								<Select register={register} id='grupos' name='grupos'>
+									<option value="pem">PEM</option>
+									<option value="rem">REM</option>
+									<option value="phtls">PHTLS</option>
+								</Select>
+								</div>
+
+								<div>
+								<label htmlFor="importe">Importe</label>
+								<Select register={register} id='importe' name='importe'>
+									<option  value='mayor_a'>Mayor a</option>
+									<option  value='menor_a'>Menor a</option>
+									<option  value='igual_a'>Igual a</option>
+								</Select>
+								</div>
+								<Input
+									className={styles.input} 
+									label="Monto" 
+									type="text" 
+									id="amount" 
+									name="amount" 
+									register={register}
+									required 
+								/>
+								<Button type='submit' btnStylesConf={{small: 'small'}}>Buscar</Button>
+							</form>
+						</TabContent>
+					</div>
+					
 					<table className={styles.table}>
 						<thead>
 							<tr>

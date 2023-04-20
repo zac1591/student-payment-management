@@ -1,16 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from '../index';
-// import MOCK_DATA_GROUPS from '../../MOCK_DATA_GROUPS.json'
+// import type { RootState } from '../index';
 import { grupos } from "../../mock";
 import {Group} from '../../types'
 
 
 type GroupSliceType = {
-    groups: Group[]
+    groups: Record<string, Group>, 
 }
 
 const INITIAL_STATE: GroupSliceType = {
-    groups: grupos
+    groups: grupos,
 }
 
 const groupsSlice = createSlice({
@@ -18,19 +17,22 @@ const groupsSlice = createSlice({
     initialState: INITIAL_STATE,
     reducers: {
         addGroup(state, action: PayloadAction<Group>) {
-            state.groups = [action.payload, ...state.groups]
+            state.groups = { ...state.groups, [action.payload.id]: action.payload }
         },
-        editGroup(state, action: PayloadAction<Group>) {
-            const id = state.groups.findIndex(item => action.payload.id === item.id)
-            console.log(id)
+        submitEditedData(state, action: PayloadAction<Group>) {
+            console.log(action.payload)
+            //Identify the right object to PUT new data into the existing object
+            state.groups = { ...state.groups, [action.payload.id]: action.payload }
         },
-        removeGroup() {
+        removeGroup(state, action: PayloadAction<string>) {
             /*group should not be removed if:
                 1. outstanding balance is present in one or more students unless admin overrides this setting by providing a password
             */
+            const id = state.groups[action.payload].id;
+            delete(state.groups[id])
         }
     }
 })
 
 export default groupsSlice.reducer
-export const groupsActions = groupsSlice.actions;
+export const { addGroup, removeGroup, submitEditedData } = groupsSlice.actions;
