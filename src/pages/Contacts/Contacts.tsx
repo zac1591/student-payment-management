@@ -15,14 +15,15 @@ import { COLUMNS } from "../../table-columns/CONTACTS_COLUMNS";
 import styles from "./contacts.module.scss";
 //redux
 import { useAppSelector } from "../../hooks/storeHooks";
+// import ContactsTable from "../../components/ContactsTable/ContactsTable";
 
 function Contacts() {
 	const leadsFromState = useAppSelector(state => state.contacts.contacts);
 	const [createContact, setCreateContact] = useState(false);
 	const [showContactsOption, setShowContactsOption] = useState(false);
-	const currentFlatRow = useAppSelector(
-		state => state.contacts.currentSelectedFlatRows
-	);
+	// const currentFlatRow = useAppSelector(
+	// 	state => state.contacts.currentSelectedFlatRows
+	// );
 
 	const navigate = useNavigate();
 
@@ -50,7 +51,7 @@ function Contacts() {
 	return (
 		<section className={styles.container}>
 			{createContact && (
-				<CreateContact onHideCreateContact={hideCreateContactHandler} />
+				<CreateContact onHideCreateContact={hideCreateContactHandler} editMode={false} />
 			)}
 
 			<MenuDashboard />
@@ -69,6 +70,7 @@ function Contacts() {
 					navigatesTo="contacts"
 					onSelectContact={selectContactHandler}
 				/>
+				{/* <ContactsTable columns={COLUMNS} stateData={leadsFromState} navigatesTo='contacts' onSelectContact={selectContactHandler} /> */}
 			</main>
 		</section>
 	);

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/storeHooks";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -276,15 +276,15 @@ const tabsConfig = [
 
 function ContactDetails() {
 	const [showAddNewMessage, setIsShowAddNewMessage] = useState(false);
-	const contacts = useSelector(({ contacts }) => contacts.contacts);
+	const contacts = useAppSelector(({ contacts }) => contacts.contacts);
 	const params = useParams();
 	const navigate = useNavigate();
 
 	//useParams returns a string
-	const selectedContact = contacts.find(({ id }) => id === +params.userId);
+	const selectedContact = contacts.find(({ id }) => id === params.userId);
 	console.log(selectedContact);
 
-	const { first_name, last_name, phone_number, email, personal_id } =
+	const { firstName, lastName, phoneNumber, email, personalId } =
 		selectedContact;
 
 	const goBackHandler = () => navigate("/contacts", { replace: true });
@@ -308,11 +308,11 @@ function ContactDetails() {
 					<span className={`material-icons-sharp ${styles.iconCard}`}>
 						face
 					</span>
-					<h2>{`${first_name} ${last_name}`}</h2>
+					<h2>{`${firstName} ${lastName}`}</h2>
 				</div>
-				<p>Teléfono: {phone_number}</p>
+				<p>Teléfono: {phoneNumber}</p>
 				<p>Email: {email}</p>
-				<p>DUI {personal_id || "05709686-8"}</p>
+				<p>DUI {personalId || "05709686-8"}</p>
 			</Card>
 			<Card className={`${styles.card} ${styles.courses}`}>
 				<div className={styles.cardHeader}>

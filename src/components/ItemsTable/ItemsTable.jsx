@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 //react router
 import { useNavigate } from "react-router-dom";
 
@@ -15,15 +15,16 @@ import Checkbox from "../Checkbox/Checkbox";
 import GlobalFilter from "../GlobalFilter/GlobalFilter";
 //redux
 import { useAppDispatch } from "../../hooks/storeHooks";
-import { contactsActions } from "../../store/contacts/contactsSlice";
 //styles
 import styles from "./itemsTable.module.scss";
 
 function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
+	const [cellData, setCellData] = useState({});
 	const columns = useMemo(() => COLUMNS, [COLUMNS]);
 	const data = useMemo(() => stateData, [stateData]);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const memoizedCellData = useMemo(() => cellData, [cellData]);
 
 	const {
 		getTableProps,
@@ -76,9 +77,11 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 	// dispatch(contactsActions.onSelectFlatRows(selectedFlatRows));
 
 	//getting cell value to enable first name and last name to be clickable and navigate to the contacts details component
+
 	const getCellValue = cell => {
 		console.log(cell.row.values);
 		const selectedRowId = cell.row.values.id;
+
 		if (
 			cell.column.Header === "Nombre" ||
 			cell.column.Header === "Apellido"
@@ -100,6 +103,17 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 
 	console.log("running table");
 	console.log(selectedFlatRows);
+
+	const getCellData = cell => {
+		const cellData = cell.row.values;
+		console.log(cellData);
+		setCellData(cellData);
+	};
+
+	const onMouseEnterHandler = e => {
+		console.log(cellData);
+		console.log("on mouse enter");
+	};
 
 	return (
 		<>
@@ -139,6 +153,7 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 										<td
 											{...cell.getCellProps()}
 											onClick={() => getCellValue(cell)}
+											onMouseEnter={() => getCellData(cell)}
 										>
 											{cell.render("Cell")}
 										</td>

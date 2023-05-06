@@ -25,9 +25,9 @@ type groupProps = {
 }
 
 function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
-	const toEditGroup = useAppSelector(({ groups }) => groupId ? groups.groups[groupId] : null)
+	const toEditGroup = useAppSelector(({ groups }) => groupId ? groups.groups[groupId] : null);
 	const dispatch = useAppDispatch();
-	// const toEditGroup = useAppSelector(({ groups }) => groups.isEditing)
+
 	const {
 		register,
 		handleSubmit,
@@ -56,7 +56,6 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 			schedule: data.schedule
 		};
 
-		console.log(`El tipo de data es ${typeof groupData}`);
 		console.log(groupData);
 		dispatch(addGroup(groupData));
 		reset()
@@ -78,30 +77,8 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 			//geting data from store
 			(Object.keys(toEditGroup) as Array<keyof Group>).forEach(field => setValue(field, toEditGroup[field]));
 		}
-	}, [])
-
-	//onClick={handleSubmit(submitButtonHandler)}
-
-	// const submitButtonHandler:SubmitHandler<newGroup>  = (data) => {
-	// 	// const buttonName = event.target.getAttribute("id");
-
-	// 	const groupData = {
-	// 		id: crypto.randomUUID(),
-	// 		groupName: data.groupName,
-	// 		description: data.description,
-	// 		members: data.members,
-	// 		price: data.price,
-	// 		startDate: data.startDate,
-	// 		endDate: data.endDate,
-	// 		schedule: data.schedule
-	// 	};
-
-	// 	console.log(`El tipo de data es ${typeof groupData}`);
-	// 	console.log(groupData);
-	// 	dispatch(groupsActions.addGroup(groupData));
-	// 	reset();
-	// 	onHideCreateContact();
-	// }
+		console.log('effect runnning')
+	}, [setValue, editMode, toEditGroup])
 
 	return (
 		<Modal className={styles.modal} onHideCart={onHideCreateGroup}>	

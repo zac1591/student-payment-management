@@ -1,60 +1,74 @@
+import { useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 
 //redux
-import { useDispatch } from "react-redux";
-import { contactsActions } from "../../store/contacts/contactsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
+import { addContact, editContact } from "../../store/contacts/contactsSlice";
 //react hook form
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 //component
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Modal from "../Modal/Modal";
 import RadioButton from "../RadioButton/RadioButton";
+//utils
+import { strToDate } from "../../utils/utils";
 // import CustomDatePicker from "../CustomDatePicker/CustomDatePicker";
 //styles
 import styles from "./CreateContact.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
+import { Contact } from "../../types";
 
-function CreateContact({ onHideCreateContact }) {
-	// const [startDate, setStartDate] = useState({ fields: {} });
+type AddEditContactProps = {
+	onHideCreateContact: () => void,
+	editMode: boolean,
+	contactId?: string
+}
 
-	// const dateChangeHandler = (datePickerName, dateValue) => {
-	// 	setStartDate(prevState => {
-	// 		return {
-	// 			...prevState,
-	// 			[datePickerName]: dateValue,
-	// 		};
-	// 	});
-	// };
-
-	const dispatch = useDispatch();
+function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditContactProps) {
+	const dispatch = useAppDispatch();
 	const {
 		register,
 		handleSubmit,
-		resetField,
+		reset,
+		setValue,
 		control,
 		formState: { errors },
-	} = useForm();
+	} = useForm<Contact>();
 
-	const submitButtonHandler = (data, event) => {
-		event.preventDefault();
+	const toEditContact = useAppSelector(({ contacts }) => contactId ? contacts.contacts.find(contact => contact.id === contactId) : null);
+
+	const submitButtonHandler: SubmitHandler<Contact> = (data, event: React.BaseSyntheticEvent<object, any, any> | undefined) => {
+		event?.preventDefault();
 		// const buttonName = event.target.getAttribute("id");
+		return editMode ? updateContact(data) : createContact(data)
+		
+	};
 
+	const createContact = (data: Contact) => {
 		const leadData = {
-			id: Math.random() * 100,
-			first_name: data.firstName,
-			last_name: data.lastName,
-			email: data.email,
-			phone_number: data.phone,
-			scholarship: data.scholarship,
+			...data,
+			id: crypto.randomUUID(),
 		};
 
 		console.log(data);
-		dispatch(contactsActions.addLead(leadData));
-		event.target.reset();
+		dispatch(addContact(leadData));
+		reset();
 		onHideCreateContact();
-	};
+	}
+
+	const updateContact = (data: Contact) => {
+		dispatch(editContact(data));
+		reset();
+		onHideCreateContact();
+	}
+
+	useEffect(()=> {
+		if(editMode && toEditContact !== null && toEditContact !== undefined) {
+			(Object.keys(toEditContact) as Array<keyof Contact>).forEach(field => setValue(field, toEditContact[field]))
+		}
+	}, [editMode, toEditContact, setValue])
 
 	//onClick={handleSubmit(submitButtonHandler)}
 	return (
@@ -136,14 +150,14 @@ function CreateContact({ onHideCreateContact }) {
 						<div className={styles.formControl}>
 							<p>Fecha de Nacimiento</p>
 							<Controller
-								name="dateOfBirth"
+								name="DOB"
 								control={control}
 								rules={{ required: true }}
 								render={({ field: { value, onChange, ...rest } }) => (
 									<ReactDatePicker
 										{...rest}
 										placeholderText="Seleccionar fecha"
-										selected={value}
+										selected={value ? strToDate(value) : undefined}
 										onChange={e => onChange(e)}
 										peekNextMonth
 										showMonthDropdown
@@ -180,7 +194,7 @@ function CreateContact({ onHideCreateContact }) {
 									<ReactDatePicker
 										{...rest}
 										placeholderText="Seleccionar fecha"
-										selected={value}
+										selected={strToDate(value)}
 										onChange={e => onChange(e)}
 										peekNextMonth
 										showMonthDropdown
@@ -201,7 +215,7 @@ function CreateContact({ onHideCreateContact }) {
 									<ReactDatePicker
 										{...rest}
 										placeholderText="Seleccionar fecha"
-										selected={value}
+										selected={strToDate(value)}
 										onChange={e => onChange(e)}
 										peekNextMonth
 										showMonthDropdown
