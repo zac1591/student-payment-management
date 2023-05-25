@@ -52,6 +52,11 @@
    flex-wrap: wrap;
    gap: 2rem;
    justify-content: space-around;
+
+   small {
+      color: $color-danger;
+   }
+
    @media screen and (min-width: 1200px) {
         flex-wrap: nowrap;
    }

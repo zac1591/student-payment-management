@@ -20,7 +20,7 @@ const f = new Intl.DateTimeFormat("en-us", {
 
 const MOCK_DATA = [
 	{
-		id: window.crypto.randomUUID(),
+		id: "m-001",
 		title: "Pago pendiente de diciembre",
 		message: "Cliente se compromete a pagar mensualidad el dia 27 de enero.",
 		date: f.format(today),
@@ -30,24 +30,24 @@ const MOCK_DATA = [
 		finances: {
 			payments: [
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-001",
 					description: "Some payment description",
 					amount: "150",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-002",
 					description: "Some other description",
 					amount: "400",
 				},
 			],
 			debts: [
 				{
-					id: crypto.randomUUID(),
+					id: "dt-001",
 					description: "Some debts description",
 					amount: "200",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "dt-002",
 					description: "Some other description",
 					amount: "300",
 				},
@@ -55,7 +55,7 @@ const MOCK_DATA = [
 		},
 	},
 	{
-		id: window.crypto.randomUUID(),
+		id: "m-002",
 		title: "Reclamo curso TEM",
 		message: "Cliente expresa que instructor luce como bolito de apopa",
 		date: f.format(today),
@@ -65,24 +65,24 @@ const MOCK_DATA = [
 		finances: {
 			payments: [
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-003",
 					description: "Some payment description",
 					amount: "150",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-004",
 					description: "Some other description",
 					amount: "400",
 				},
 			],
 			debts: [
 				{
-					id: crypto.randomUUID(),
+					id: "dt-003",
 					description: "Some debts description",
 					amount: "200",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "dt-004",
 					description: "Some other description",
 					amount: "300",
 				},
@@ -90,7 +90,7 @@ const MOCK_DATA = [
 		},
 	},
 	{
-		id: window.crypto.randomUUID(),
+		id: "m-003",
 		title: "Cliente paga anticipado",
 		message: "Cliente pagó 3 cuotas adelantadas",
 		date: f.format(today),
@@ -100,24 +100,24 @@ const MOCK_DATA = [
 		finances: {
 			payments: [
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-005",
 					description: "Some payment description",
 					amount: "150",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-006",
 					description: "Some other description",
 					amount: "400",
 				},
 			],
 			debts: [
 				{
-					id: crypto.randomUUID(),
+					id: "dt-005",
 					description: "Some debts description",
 					amount: "200",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "dt-006",
 					description: "Some other description",
 					amount: "300",
 				},
@@ -125,7 +125,7 @@ const MOCK_DATA = [
 		},
 	},
 	{
-		id: window.crypto.randomUUID(),
+		id: "m-004",
 		title: "Cliente paga anticipado",
 		message: "Cliente pagó 3 cuotas adelantadas",
 		date: f.format(today),
@@ -135,24 +135,24 @@ const MOCK_DATA = [
 		finances: {
 			payments: [
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-007",
 					description: "Some payment description",
 					amount: "150",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-008",
 					description: "Some other description",
 					amount: "400",
 				},
 			],
 			debts: [
 				{
-					id: crypto.randomUUID(),
+					id: "dt-007",
 					description: "Some debts description",
 					amount: "200",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "dt-008",
 					description: "Some other description",
 					amount: "300",
 				},
@@ -160,7 +160,7 @@ const MOCK_DATA = [
 		},
 	},
 	{
-		id: window.crypto.randomUUID(),
+		id: "m-005",
 		title: "Cliente no contento con el servicio",
 		message: "Some random complaint",
 		date: f.format(today),
@@ -170,24 +170,24 @@ const MOCK_DATA = [
 		finances: {
 			payments: [
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-009",
 					description: "Some payment description",
 					amount: "150",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-010",
 					description: "Some other description",
 					amount: "400",
 				},
 			],
 			debts: [
 				{
-					id: crypto.randomUUID(),
+					id: "dt-009",
 					description: "Some debts description",
 					amount: "220",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "dt-010",
 					description: "Some other description",
 					amount: "305",
 				},
@@ -196,7 +196,7 @@ const MOCK_DATA = [
 	},
 
 	{
-		id: window.crypto.randomUUID(),
+		id: "m-006",
 		title: "Cliente no contento con el servicio",
 		message: "Some random complaint",
 		date: f.format(today),
@@ -206,24 +206,24 @@ const MOCK_DATA = [
 		finances: {
 			payments: [
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-011",
 					description: "Some payment description",
 					amount: "350",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "pmt-012",
 					description: "Some other description",
 					amount: "100",
 				},
 			],
 			debts: [
 				{
-					id: crypto.randomUUID(),
+					id: "dt-013",
 					description: "Some debts description",
 					amount: "230",
 				},
 				{
-					id: crypto.randomUUID(),
+					id: "dt-014",
 					description: "Some other description",
 					amount: "370",
 				},
@@ -235,12 +235,12 @@ const MOCK_DATA = [
 //Temporaty mock data
 const payments = [
 	{
-		id: crypto.randomUUID(),
+		id: "pym-001",
 		description: "Some payment description",
 		amount: "150",
 	},
 	{
-		id: crypto.randomUUID(),
+		id: "pym-002",
 		description: "Some other description",
 		amount: "400",
 	},
@@ -248,12 +248,12 @@ const payments = [
 
 const debts = [
 	{
-		id: crypto.randomUUID(),
+		id: "dts-001",
 		description: "Some debts description",
 		amount: "200",
 	},
 	{
-		id: crypto.randomUUID(),
+		id: "dts-002",
 		description: "Some other description",
 		amount: "300",
 	},
@@ -261,15 +261,15 @@ const debts = [
 
 const tabsConfig = [
 	{
-		id: crypto.randomUUID(),
+		id: "payments-id",
 		title: "Pagos",
 	},
 	{
-		id: crypto.randomUUID(),
+		id: "dts-id",
 		title: "Deudas",
 	},
 	{
-		id: crypto.randomUUID(),
+		id: "all-entries-id",
 		title: "Todo",
 	},
 ]; //an array of objects describing the name of each nav element
@@ -281,10 +281,12 @@ function ContactDetails() {
 	const navigate = useNavigate();
 
 	//useParams returns a string
-	const selectedContact = contacts.find(({ id }) => id === params.userId);
+	const idParams = +params.userId;
+
+	const selectedContact = contacts.find(({ id }) => id === idParams);
 	console.log(selectedContact);
 
-	const { firstName, lastName, phoneNumber, email, personalId } =
+	const { firstName, lastName, phoneNumber, email, personalId, groups } =
 		selectedContact;
 
 	const goBackHandler = () => navigate("/contacts", { replace: true });
@@ -330,7 +332,7 @@ function ContactDetails() {
 					</span>
 					<h2>subscripciones</h2>
 				</div>
-				<ClosableTag tagName="PEM Premium Anual" />
+				<ClosableTag tagName={groups} />
 			</Card>
 			<Card className={`${styles.card} ${styles.balances}`}>
 				<div className={styles.cardHeader}>
@@ -408,7 +410,7 @@ function ContactDetails() {
 				</div> */}
 			</Card>
 			<div className={styles.messagesArea}>
-				<div className={styles.messagesGrid}>
+				<div className={`${styles.messagesGrid} ${styles.scrollable}`}>
 					{MOCK_DATA.map(message => (
 						<MessageCard
 							key={message.id}

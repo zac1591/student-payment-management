@@ -1,3 +1,5 @@
+import IndeterminateCheckbox from "../components/UI/IndeterminateCheckbox/IndeterminateCheckbox";
+
 export const COLUMNS = [
   {
     Header: "Id",
@@ -42,41 +44,61 @@ export const COLUMNS = [
 
 export const newColumns = [
   {
-    Header: "Id",
-    accessor: "id",
-    disableFilters: true,
-    sticky: "left",
+    id: "select",
+    header: ({ table }) => (
+      <IndeterminateCheckbox {
+        ...{ checked: table.getIsAllRowsSelected(), indeterminate: table.getIsSomeRowsSelected(), onChange: table.getToggleAllRowsSelectedHandler()} 
+      } />
+    ),
+
+    cell: ({ row }) => (
+      <IndeterminateCheckbox
+        {...{
+          checked: row.getIsSelected(),
+          disabled: !row.getCanSelect(),
+          indeterminate: row.getIsSomeSelected(),
+          onChange: row.getToggleSelectedHandler(),
+        }}
+      />
+    )
+    
   },
   {
-    Header: "Nombre",
-    accessor: "first_name",
+    header: "Nombre",
+    id: 'firstName',
+    accessorKey: "firstName",
     sticky: "left"
   },
   {
-    Header: "Apellido",
-    accessor: "last_name",
+    header: "Apellido",
+    id: 'lastName',
+    accessorKey: "lastName",
     sticky: "left"
   },
   {
-    Header: "Correo",
-    accessor: "email"
+    header: "Correo",
+    id: 'email',
+    accessorKey: "email"
   },
   {
-    Header: "Teléfono",
-    accessor: "phone_number"
+    header: "Teléfono",
+    id: 'phoneNumber',
+    accessorKey: "phoneNumber"
   },
   {
-    Header: "Becado",
-    accessor: "scholarship",
-    Cell: ({ value }) => value ? 'Si': 'No'
+    header: "Becado",
+    id: 'scholarship',
+    accessorKey: "scholarship",
+    cell: info => info.getValue() ? 'Si' : 'No'
   },
   {
-    Header: "Cuota Mensual Asignada",
-    accessor: "assigned_monthly_payment"
+    header: "Grupos",
+    id: 'groups',
+    accessorKey: "groups",
   },
   {
-    Header: "Acciones",
-    accessor: "actions",
-    disableFilters: true
-  }                                                                         
+    header: "Cuota Mensual",
+    id: 'assignedMonthlyPayment',
+    accessorKey: "assignedMonthlyPayment"
+  }                                                                        
 ]

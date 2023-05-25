@@ -18,7 +18,13 @@ import { useAppDispatch } from "../../hooks/storeHooks";
 //styles
 import styles from "./itemsTable.module.scss";
 
-function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
+function ItemsTable({
+	COLUMNS,
+	stateData,
+	navigatesTo,
+	onSelectCheckboxContact,
+	onSelectedRow,
+}) {
 	const [cellData, setCellData] = useState({});
 	const columns = useMemo(() => COLUMNS, [COLUMNS]);
 	const data = useMemo(() => stateData, [stateData]);
@@ -60,7 +66,7 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 						Cell: ({ row }) => (
 							<Checkbox
 								{...row.getToggleRowSelectedProps()}
-								onClick={onSelectContact}
+								onClick={onSelectCheckboxContact}
 							/>
 						),
 					},
@@ -79,7 +85,7 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 	//getting cell value to enable first name and last name to be clickable and navigate to the contacts details component
 
 	const getCellValue = cell => {
-		console.log(cell.row.values);
+		// console.log(cell.row.values);
 		const selectedRowId = cell.row.values.id;
 
 		if (
@@ -102,17 +108,14 @@ function ItemsTable({ COLUMNS, stateData, navigatesTo, onSelectContact }) {
 	const { pageIndex, pageSize, globalFilter } = state;
 
 	console.log("running table");
+	console.log(`SelectedFlatRowsLog:`);
 	console.log(selectedFlatRows);
+	onSelectedRow(selectedFlatRows);
 
 	const getCellData = cell => {
 		const cellData = cell.row.values;
-		console.log(cellData);
-		setCellData(cellData);
-	};
-
-	const onMouseEnterHandler = e => {
-		console.log(cellData);
-		console.log("on mouse enter");
+		// console.log(cellData);
+		// setCellData(cellData);
 	};
 
 	return (

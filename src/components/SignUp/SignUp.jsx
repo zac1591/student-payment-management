@@ -82,7 +82,7 @@ function SignUp() {
 					<h1 style={{ color: "#008B95", letterSpacing: "1.5px" }}>CRM</h1>
 				</header>
 				<h1 className={styles.headerLogin}>Sign Up</h1>
-				<form onSubmit={handleSubmit(signUpHandler)}>
+				<form onSubmit={handleSubmit(signUpHandler)} noValidate>
 					<Input
 						label="Full Name"
 						id="displayName"

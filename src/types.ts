@@ -6,9 +6,9 @@ export type Group = {
 	price: number,
 	members: string[],
 	startDate: string,
-	endDate:  string,
+	endDate: string,
 	schedule: string,
-	
+
 }
 
 export type masive = {
@@ -19,22 +19,20 @@ export type masive = {
 }
 
 export type Contact = {
-	id: string,
+	id: number,
 	firstName: string,
-	lastName:string,
+	lastName: string,
 	personalId?: string,
 	phoneNumber?: string,
 	email: string,
 	country?: string,
-	address?:string,
+	address?: string,
 	department?: string,
 	DOB?: string,
 	gender?: string,
 	scholarship: boolean,
-	assignedMonthlyPayment: string,
-	firstPaymentDate: string,
-	lastPaymentDate: string,
 	groups?: string
+	accessLevel: string
 
 }
 

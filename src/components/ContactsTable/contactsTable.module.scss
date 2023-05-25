@@ -1,0 +1,86 @@
+@use "../../../sass//abstracts/variables" as *;
+
+.table {
+	margin: 1rem auto;
+	background: $color-white;
+	width: 100%;
+	border-radius: $card-border-radius;
+	padding: $card-padding;
+	text-align: center;
+	box-shadow: $box-shadow;
+	transition: all 300ms ease;
+
+	&:hover {
+		box-shadow: none;
+	}
+
+	thead tr th {
+		color: $color-primary;
+	}
+
+	.isSortable {
+		cursor: pointer;
+	}
+
+
+	tbody tr td {
+		height: 2.8rem;
+		border-bottom: 1px solid $color-light;
+		color: $color-dark-variant;
+		transition: ease 200ms;
+
+	}
+
+	tbody tr {
+		cursor: pointer;
+
+		&:hover {
+			// background-color: $color-background;
+			font-weight: 600;
+		}
+	}
+
+	tr:last-child td {
+		border-bottom: none;
+	}
+}
+
+.hoverToOpen {
+	background-color: $color-primary;
+}
+
+.pagination {
+	margin: auto;
+	padding: 0.3rem 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	width: 51%;
+	gap: 0.8rem;
+	margin-top: 2.3rem;
+	background: rgba($color-primary, 0.1);
+	border-radius: 1rem;
+
+
+	button {
+		background: none;
+		border: none;
+		cursor: pointer;
+	}
+
+	.arrow {
+		color: $color-primary-light;
+		transition: all ease-out 0.3s;
+
+		&:hover {
+			color: $color-primary;
+		}
+	}
+
+	.selectPage {
+		color: $color-primary;
+		background: none;
+		border: none;
+	}
+}

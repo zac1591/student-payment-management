@@ -7,8 +7,11 @@ import groupsReducer from './groups/groupsSlice';
 const middlewares = [logger]
 
 const store = configureStore({
-    reducer: { contacts: contactsReducer, groups: groupsReducer },
-    middleware: middlewares
+    reducer: {
+        contacts: contactsReducer,
+        groups: groupsReducer
+    },
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(middlewares)
 })
 
 //following example found in docs

@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useAsyncDebounce } from "react-table";
+import { useState, useEffect } from "react";
+// import { useAsyncDebounce } from "react-table";
+import useDebounce from "../../hooks/use-debounce";
 import { useForm } from "react-hook-form";
 //components
 import Input from "../Input/Input";
@@ -8,18 +9,22 @@ import styles from "./globalFilter.module.scss";
 
 function GlobalFilter({ filter, setFilter }) {
 	const [value, setValue] = useState(filter);
-
 	const { register } = useForm();
+	const debounced = useDebounce(value, 300);
 
-	const onChangeHandler = useAsyncDebounce(
-		value => setFilter(value || undefined),
-		1000
-	);
+	// const onChangeHandler = useAsyncDebounce(
+	// 	value => setFilter(value || undefined),
+	// 	1000
+	// );
+	useEffect(() => {
+		setFilter(debounced);
+	}, [debounced, setFilter]);
 
 	const inputHandler = e => {
 		setValue(e.target.value);
-		onChangeHandler(e.target.value);
+		// onChangeHandler(e.target.value);
 	};
+
 	return (
 		<div className={styles.globalFilter}>
 			<span

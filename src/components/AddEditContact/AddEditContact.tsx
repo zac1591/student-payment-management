@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
-
 //redux
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
-import { addContact, editContact } from "../../store/contacts/contactsSlice";
+import { editContact } from "../../store/contacts/contactsSlice";
+import { addNewContact } from "../../store/contacts/thunks-contacts";
 //react hook form
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-
 //component
 import Button from "../Button/Button";
 import Input from "../Input/Input";
@@ -14,19 +13,23 @@ import Modal from "../Modal/Modal";
 import RadioButton from "../RadioButton/RadioButton";
 //utils
 import { strToDate } from "../../utils/utils";
-// import CustomDatePicker from "../CustomDatePicker/CustomDatePicker";
 //styles
-import styles from "./CreateContact.module.scss";
+import styles from "./addEditContact.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
+//types
 import { Contact } from "../../types";
 
 type AddEditContactProps = {
-	onHideCreateContact: () => void,
-	editMode: boolean,
-	contactId?: string
-}
+	onHideCreateContact: () => void;
+	editMode: boolean;
+	contactId?: number;
+};
 
-function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditContactProps) {
+function AddEditContact({
+	onHideCreateContact,
+	editMode,
+	contactId,
+}: AddEditContactProps) {
 	const dispatch = useAppDispatch();
 	const {
 		register,
@@ -37,46 +40,52 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 		formState: { errors },
 	} = useForm<Contact>();
 
-	const toEditContact = useAppSelector(({ contacts }) => contactId ? contacts.contacts.find(contact => contact.id === contactId) : null);
+	const toEditContact = useAppSelector(({ contacts }) =>
+		contactId
+			? contacts.contacts.find(contact => contact.id === contactId)
+			: null
+	);
 
-	const submitButtonHandler: SubmitHandler<Contact> = (data, event: React.BaseSyntheticEvent<object, any, any> | undefined) => {
+	const submitButtonHandler: SubmitHandler<Contact> = (
+		data,
+		event: React.BaseSyntheticEvent<object, any, any> | undefined
+	) => {
 		event?.preventDefault();
 		// const buttonName = event.target.getAttribute("id");
-		return editMode ? updateContact(data) : createContact(data)
-		
+		console.log("Does this work?");
+		return editMode ? updateContact(data) : createContact(data);
 	};
 
 	const createContact = (data: Contact) => {
-		const leadData = {
-			...data,
-			id: crypto.randomUUID(),
-		};
-
 		console.log(data);
-		dispatch(addContact(leadData));
+		dispatch(addNewContact(data));
 		reset();
 		onHideCreateContact();
-	}
+	};
 
 	const updateContact = (data: Contact) => {
 		dispatch(editContact(data));
 		reset();
 		onHideCreateContact();
-	}
+	};
 
-	useEffect(()=> {
-		if(editMode && toEditContact !== null && toEditContact !== undefined) {
-			(Object.keys(toEditContact) as Array<keyof Contact>).forEach(field => setValue(field, toEditContact[field]))
+	useEffect(() => {
+		if (editMode && toEditContact !== null && toEditContact !== undefined) {
+			(Object.keys(toEditContact) as Array<keyof Contact>).forEach(field =>
+				setValue(field, toEditContact[field])
+			);
 		}
-	}, [editMode, toEditContact, setValue])
+	}, [editMode, toEditContact, setValue]);
 
-	//onClick={handleSubmit(submitButtonHandler)}
 	return (
-		<Modal className={styles.modal}>
+		<Modal
+			className={`${styles.modal} ${styles.scrollable}`}
+			onHideCart={onHideCreateContact}
+		>
 			<div className={styles.header}>
 				<h3>Nuevo Contácto</h3>
 			</div>
-			<form onSubmit={handleSubmit(submitButtonHandler)}>
+			<form onSubmit={handleSubmit(submitButtonHandler)} noValidate>
 				<div className={styles.flexContainer}>
 					<div className={styles.splitForm}>
 						<Input
@@ -87,6 +96,7 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 							required
 							type="text"
 						/>
+						<small>{errors.firstName?.message}</small>
 						<Input
 							label="Apellido"
 							name="lastName"
@@ -95,6 +105,7 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 							required
 							type="text"
 						/>
+						<small>{errors.lastName?.message}</small>
 						<Input
 							label="DUI"
 							name="personalId"
@@ -103,15 +114,16 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 							required
 							type="text"
 						/>
-
+						<small>{errors.personalId?.message}</small>
 						<Input
 							label="Teléfono"
-							name="phone"
-							id="phone"
+							name="phoneNumber"
+							id="phoneNumber"
 							register={register}
 							required
 							type="text"
 						/>
+						<small>{errors.phoneNumber?.message}</small>
 						<Input
 							label="Correo"
 							name="email"
@@ -120,6 +132,7 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 							required
 							type="email"
 						/>
+						<small>{errors.email?.message}</small>
 						<Input
 							label="País"
 							name="country"
@@ -128,6 +141,7 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 							required
 							type="text"
 						/>
+						<small>{errors.country?.message}</small>
 						<Input
 							label="Dirección"
 							name="address"
@@ -136,6 +150,7 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 							required
 							type="text"
 						/>
+						<small>{errors.address?.message}</small>
 					</div>
 					<div className={styles.splitForm}>
 						<Input
@@ -146,7 +161,7 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 							required
 							type="text"
 						/>
-
+						<small>{errors.department?.message}</small>
 						<div className={styles.formControl}>
 							<p>Fecha de Nacimiento</p>
 							<Controller
@@ -174,17 +189,17 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 							name="gender"
 							register={register}
 							id="genero"
-							options={{ masculino: "masculino", femenino: "femenino" }}
+							options={{ masculino: "Masculino", femenino: "Femenino" }}
 						/>
 						<RadioButton
 							label="Becado"
 							name="scholarship"
 							register={register}
 							id="scholarship"
-							options={{ si: "si", no: "no" }}
+							options={{ si: true, no: false }}
 						/>
 
-						<div className={styles.formControl}>
+						{/* <div className={styles.formControl}>
 							<p>Fecha de Primera Cuota</p>
 							<Controller
 								name="firstPaymentDate"
@@ -225,12 +240,12 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 									/>
 								)}
 							/>
-						</div>
+						</div> */}
 
 						<Input
 							label="Cursos Suscrito"
-							name="enrolledCourse"
-							id="enrolledCourse"
+							name="groups"
+							id="groups"
 							register={register}
 							required
 							type="text"
@@ -263,4 +278,4 @@ function CreateContact({ onHideCreateContact, editMode, contactId }: AddEditCont
 	);
 }
 
-export default CreateContact;
+export default AddEditContact;

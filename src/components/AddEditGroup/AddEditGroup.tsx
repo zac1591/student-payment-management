@@ -85,7 +85,7 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 			<div className={styles.header}>
 				<h3>{editMode ? 'Editar Grupo': 'Nuevo Grupo'}</h3>
 			</div>
-			<form onSubmit={handleSubmit(submitHandler)}>
+			<form onSubmit={handleSubmit(submitHandler)} noValidate>
 				<div className={styles.flexContainer}>
 					<div className={styles.splitForm}>
 						<Input
@@ -146,6 +146,7 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 									/>
 								)}
 							/>
+							<small>{errors.startDate?.message}</small>
 						</div>
 						
 						<div className={styles.formControl}>
@@ -168,6 +169,7 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 									/>
 								)}
 							/>
+							<small>{errors.endDate?.message}</small>
 						</div>
 						<Input
 							label="Horario"
@@ -177,6 +179,7 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 							required
 							type="text"
 						/>
+						<small>{errors.schedule?.message}</small>
 					</div>
 				</div>
 

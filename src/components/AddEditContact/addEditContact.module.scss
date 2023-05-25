@@ -11,9 +11,36 @@
       top: 10%; 
       left: 19%;
       transform: translate(20%, -19%);
-      overflow-y: hidden;
+      overflow-y: auto;
 
  }
+}
+
+.scrollable {
+   overflow-y: auto;
+   // max-height: 280px;
+   /*scrollbar*/
+   /* width */
+   &::-webkit-scrollbar {
+      width: 3px;
+      
+   }
+   
+   /* Track */
+   &::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+   }
+   
+   /* Handle */
+   &::-webkit-scrollbar-thumb {
+      background: $color-primary;
+      border-radius: 20px;
+   }
+   
+   /* Handle on hover */
+   &::-webkit-scrollbar-thumb:hover {
+      background: $color-warning; 
+   }
 }
 
 .formControl {
@@ -56,6 +83,10 @@
    @media screen and (min-width: 1200px) {
         flex-wrap: nowrap;
         width: 100%;
+   }
+
+   small {
+      color: $color-danger;
    }
 }
 
