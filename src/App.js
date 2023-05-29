@@ -16,6 +16,7 @@ import Authentication from "./pages/Authentication/Authentication";
 import Finances from "./pages/Finances/Finances";
 import Groups from "./pages/Groups/Groups";
 import NothingToSee from "./pages/NothingToSee/NothingToSee";
+import UsersAndGroups from "./pages/UsersAndGroups/UsersAndGroups";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 				<Route path="/user-preferences" element={<UserPreferences />} >
 					<Route path="general-settings" element={<GeneralSettings />} />
 					<Route path='security' element={<Security />} />
+					<Route path='users-and-groups' element={<UsersAndGroups />} />
 				</Route>
 				<Route path="*" element={<NothingToSee />} />
 			</Routes>

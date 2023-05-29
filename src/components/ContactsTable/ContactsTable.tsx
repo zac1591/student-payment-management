@@ -11,6 +11,7 @@ import {
 	getSortedRowModel,
 	SortingState,
 	Row,
+	Cell,
 } from "@tanstack/react-table";
 //types
 import { Contact } from "../../types";
@@ -58,16 +59,17 @@ function ContactsTable({
 
 	const navigate = useNavigate();
 
-	const getRowOriginalValue = (rowContact: Row<Contact>): void => {
+	const getRowOriginalValue = (headerId: string, rowInfo: Contact): void => {
 		//lifting state up. All row information is contained within.
 		//Currently I only care about the rowContact.original object since is the contact data
 		// onSelectContact(rowContact);
-		table.getAllColumns().forEach(column => {
-			console.log(rowContact);
-			navigate(`/${navigatesTo}/${rowContact.original.id}`, {
-				replace: true,
-			});
-		});
+		console.log(headerId);
+		console.log(rowInfo);
+
+		//redirects to contact detail page when clicking anyware on the row exept the checkbox
+		if (headerId !== "select") {
+			navigate(`/${navigatesTo}/${rowInfo.id}`, { replace: true });
+		}
 	};
 
 	// console.log(table.getSelectedRowModel().flatRows.map(row => row.original))
@@ -120,12 +122,17 @@ function ContactsTable({
 						</thead>
 						<tbody>
 							{table.getRowModel().rows.map(row => (
-								<tr
-									key={row.id}
-									onClick={() => getRowOriginalValue(row)}
-								>
+								<tr key={row.id}>
 									{row.getVisibleCells().map(cell => (
-										<td key={cell.id}>
+										<td
+											key={cell.id}
+											onClick={() =>
+												getRowOriginalValue(
+													cell.column.id,
+													row.original
+												)
+											}
+										>
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext()

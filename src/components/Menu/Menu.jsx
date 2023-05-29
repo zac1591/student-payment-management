@@ -28,17 +28,20 @@ function MainMenu() {
 						General
 					</NavLink>
 					<NavLink className={activeLink} to="/actividad">
-						Notification
+						Notificaciones
 					</NavLink>
 					<NavLink className={activeLink} to="/user-preferences/security">
-						Security
+						Seguridad
 					</NavLink>
 					<span className={styles.navigationTitle}>Account and Setup</span>
 					<NavLink className={activeLink} to="/agenda">
 						Account Defaults
 					</NavLink>
-					<NavLink className={activeLink} to="/notas">
-						Users & teams
+					<NavLink
+						className={activeLink}
+						to="/user-preferences/users-and-groups"
+					>
+						Usuarios y Grupos
 					</NavLink>
 					<span className={styles.navigationTitle}>Data Management</span>
 					<NavLink className={activeLink} to="/caja">

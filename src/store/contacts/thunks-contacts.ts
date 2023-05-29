@@ -9,9 +9,7 @@ export const fetchContacts = createAsyncThunk('contacts/fetchContacts', async ()
          method: 'GET',
          headers: { 'Content-Type': 'application/json' }
       })
-
       const contactsList = await response.json()
-
       return contactsList as Contact[]
 
    } catch (err: any) {

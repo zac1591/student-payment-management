@@ -93,47 +93,6 @@ function Contacts() {
 
 	/*Ends contact's options button*/
 
-	//testing
-	/*useEffect(() => {
-		const getData = async () => {
-			const response = await fetch(
-				"http://localhost:8000/api/usuarios/list/",
-				{
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-			const data = await response.json();
-			// console.log(data.data);
-			const contactsShapedData = data.data.map((contact: any) => {
-				let normalizedData: Contact = {
-					id: `00${contact.id}`,
-					firstName: contact.attributes.first_name,
-					lastName: contact.attributes.last_name,
-					personalId: contact.attributes.personal_id,
-					phoneNumber: contact.attributes.phone_number,
-					email: contact.attributes.email,
-					country: contact.attributes.country,
-					address: contact.attributes.address,
-					department: contact.attributes.department,
-					scholarship: contact.attributes.scholarship,
-					accessLevel: contact.attributes.access_level,
-					assignedMonthlyPayment: "200",
-					firstPaymentDate: "2023-5-4",
-					lastPaymentDate: "2023-3/24",
-				};
-
-				return normalizedData;
-			});
-
-			setContactsList(contactsShapedData);
-		};
-
-		getData();
-	}, []);*/
-
 	useEffect(() => {
 		if (contactStatus === "idle") {
 			dispatch(fetchContacts());
