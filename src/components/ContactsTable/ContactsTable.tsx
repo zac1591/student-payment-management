@@ -20,6 +20,8 @@ import GlobalFilter from "../GlobalFilter/GlobalFilter";
 
 //styles
 import styles from "./contactsTable.module.scss";
+import ReadOnlyRow from "./ReadOnlyRow";
+import EditableRow from "./EditableRow";
 
 type ContactsTableProps = {
 	columns: ColumnDef<Contact>[];
@@ -37,6 +39,8 @@ function ContactsTable({
 	const [rowSelection, setRowSelection] = useState({});
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);
+	const [isHovering, setIsHovering] = useState(false);
+	const [editContactId, setEditContactId] = useState<null | number>(null);
 	const columnsData = useMemo<ColumnDef<Contact>[]>(() => columns, [columns]);
 	const table = useReactTable({
 		data: stateData,
@@ -59,14 +63,25 @@ function ContactsTable({
 
 	const navigate = useNavigate();
 
-	const getRowOriginalValue = (headerId: string, rowInfo: Contact): void => {
-		//lifting state up. All row information is contained within.
-		//Currently I only care about the rowContact.original object since is the contact data
-		// onSelectContact(rowContact);
-		console.log(headerId);
-		console.log(rowInfo);
+	//handlers
 
-		//redirects to contact detail page when clicking anyware on the row exept the checkbox
+	const onMouseEnterHandler = (id: number) => {
+		setIsHovering(true);
+		setEditContactId(id);
+		console.log("hovering on");
+		console.log(id);
+		//receive id from row.original.id
+	};
+	const onMouseLeaveHandler = () => {
+		setIsHovering(false);
+		console.log("hovering off");
+	};
+
+	const viewContactDetailsHandler = (
+		headerId: string,
+		rowInfo: Contact
+	): void => {
+		//redirects to contact detail page when clicking anywhere on the row except the checkbox
 		if (headerId !== "select") {
 			navigate(`/${navigatesTo}/${rowInfo.id}`, { replace: true });
 		}
@@ -121,26 +136,46 @@ function ContactsTable({
 							))}
 						</thead>
 						<tbody>
-							{table.getRowModel().rows.map(row => (
-								<tr key={row.id}>
-									{row.getVisibleCells().map(cell => (
-										<td
-											key={cell.id}
-											onClick={() =>
-												getRowOriginalValue(
-													cell.column.id,
-													row.original
-												)
-											}
-										>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext()
-											)}
-										</td>
-									))}
-								</tr>
-							))}
+							{table.getRowModel().rows.map(row =>
+								// <tr
+								// 	key={row.id}
+								// 	onMouseEnter={e => onMouseEnterHandler(e)}
+								// 	onMouseLeave={onMouseLeaveHandler}
+								// 	style={{ position: "relative" }}
+								// >
+								// 	{row.getVisibleCells().map(cell => (
+								// 		<td
+								// 			key={cell.id}
+								// 			onClick={() =>
+								// 				viewContactDetailsHandler(
+								// 					cell.column.id,
+								// 					row.original
+								// 				)
+								// 			}
+								// 		>
+								// 			{flexRender(
+								// 				cell.column.columnDef.cell,
+								// 				cell.getContext()
+								// 			)}
+								// 		</td>
+								// 	))}
+								// </tr>
+								row.original.id === editContactId && isHovering ? (
+									<EditableRow
+										row={row}
+										onMouseEnter={() => onMouseEnterHandler}
+										onMouseLeave={onMouseLeaveHandler}
+										onViewContactHandler={viewContactDetailsHandler}
+									/>
+								) : (
+									<ReadOnlyRow
+										row={row}
+										onMouseEnter={onMouseEnterHandler}
+										onMouseLeave={onMouseLeaveHandler}
+										onViewContactHandler={viewContactDetailsHandler}
+									/>
+								)
+							)}
 						</tbody>
 					</table>
 					<div className={styles.pagination}>

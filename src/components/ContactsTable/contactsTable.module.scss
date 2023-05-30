@@ -1,6 +1,7 @@
 @use "../../../sass//abstracts/variables" as *;
 
 .table {
+	position: relative;
 	margin: 1rem auto;
 	background: $color-white;
 	width: 100%;
@@ -38,6 +39,21 @@
 			// background-color: $color-background;
 			font-weight: 600;
 		}
+	}
+
+	.contactActions {
+		transform: scale(0);
+		width: 15%;
+		height: 40px;
+		position: absolute;
+		background: tomato;
+		right: 0;
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	.contactActions.show {
+		transform: scale(1);
 	}
 
 	tr:last-child td {
