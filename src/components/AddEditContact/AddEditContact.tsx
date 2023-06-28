@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 //redux
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
-import { editContact } from "../../store/contacts/contactsSlice";
-import { addNewContact } from "../../store/contacts/thunks-contacts";
+import {
+	addNewContact,
+	editContact,
+} from "../../store/contacts/thunks-contacts";
 //react hook form
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 //component
@@ -52,7 +54,6 @@ function AddEditContact({
 	) => {
 		event?.preventDefault();
 		// const buttonName = event.target.getAttribute("id");
-		console.log("Does this work?");
 		return editMode ? updateContact(data) : createContact(data);
 	};
 
@@ -165,7 +166,7 @@ function AddEditContact({
 						<div className={styles.formControl}>
 							<p>Fecha de Nacimiento</p>
 							<Controller
-								name="DOB"
+								name="dob"
 								control={control}
 								rules={{ required: true }}
 								render={({ field: { value, onChange, ...rest } }) => (
@@ -184,6 +185,7 @@ function AddEditContact({
 							/>
 						</div>
 
+						{/* come back to refactor radio button component */}
 						<RadioButton
 							label="Genero"
 							name="gender"
@@ -191,13 +193,13 @@ function AddEditContact({
 							id="genero"
 							options={{ masculino: "Masculino", femenino: "Femenino" }}
 						/>
-						<RadioButton
+						{/* <RadioButton
 							label="Becado"
 							name="scholarship"
 							register={register}
 							id="scholarship"
 							options={{ si: true, no: false }}
-						/>
+						/> */}
 
 						{/* <div className={styles.formControl}>
 							<p>Fecha de Primera Cuota</p>
@@ -243,12 +245,12 @@ function AddEditContact({
 						</div> */}
 
 						<Input
-							label="Cursos Suscrito"
-							name="groups"
-							id="groups"
+							label="Nivel de acceso"
+							name="accessLevel"
+							id="accessLevel"
 							register={register}
 							required
-							type="text"
+							type="select"
 						/>
 					</div>
 				</div>

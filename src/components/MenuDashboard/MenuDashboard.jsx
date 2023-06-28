@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styles from "./menuDashboard.module.scss";
 
 function MenuDashboard() {
+	const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : null);
 	return (
 		<aside className={styles.aside}>
 			{/* <div className={styles.top}>
@@ -15,37 +16,41 @@ function MenuDashboard() {
 			</div> */}
 
 			<div className={styles.sidebar}>
-				<Link to="/">
+				<NavLink to="/" className={activeLink}>
 					<span className="material-icons-sharp">grid_view </span>
 					<h3>Dashboard</h3>
-				</Link>
-				<Link to="/contacts" className="active">
+				</NavLink>
+				<NavLink to="/contacts" className={activeLink}>
 					<span className="material-icons-sharp">person_outline</span>
 					<h3>Personas</h3>
-				</Link>
-				<Link to="/groups">
+				</NavLink>
+				<NavLink to="/courses" className={activeLink}>
+					<span className="material-icons-sharp">school</span>
+					<h3>Cursos</h3>
+				</NavLink>
+				<NavLink to="/groups" className={activeLink}>
 					<span className="material-icons-sharp">groups</span>
 					<h3>Grupos</h3>
-				</Link>
-				<Link to="/finances">
+				</NavLink>
+				<NavLink to="/finances" className={activeLink}>
 					<span className="material-icons-sharp">receipt_long</span>
 					<h3>Finanzas</h3>
-				</Link>
-				<Link to="">
+				</NavLink>
+				{/* <NavLink to="" className={activeLink}>
 					<span className="material-icons-sharp"> mail_outline </span>
 					<h3>Tickets</h3>
 					<span className={styles["message-count"]}>26</span>
-				</Link>
-				{/* <Link to="">
+				</NavLink> */}
+				{/* <NavLink to="">
 					<span className="material-icons-sharp">inventory</span>
 					<h3>Products</h3>
-				</Link> */}
-				<Link to="">
+				</NavLink> */}
+				{/* <NavLink to="" className={activeLink}>
 					<span className="material-icons-sharp">
 						report_gmailerrorred
 					</span>
 					<h3>Reportes</h3>
-				</Link>
+				</NavLink> */}
 				<Link to="">
 					<span className="material-icons-sharp">add</span>
 					<h3>Agregar Usuario</h3>

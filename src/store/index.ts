@@ -3,13 +3,15 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import contactsReducer from './contacts/contactsSlice';
 import groupsReducer from './groups/groupsSlice';
+import courseReducer from './courses/coursesSlice'
 
 const middlewares = [logger]
 
 const store = configureStore({
     reducer: {
         contacts: contactsReducer,
-        groups: groupsReducer
+        groups: groupsReducer,
+        courses: courseReducer
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(middlewares)
 })

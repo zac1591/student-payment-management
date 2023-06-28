@@ -60,6 +60,7 @@
 		a.active {
 			background: v.$color-light;
 			color: v.$color-primary;
+			border-radius: 0 v.$border-radius-4 0 0;
 			margin-left: 0;
 		}
 

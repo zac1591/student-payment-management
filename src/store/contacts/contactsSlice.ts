@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchContacts, addNewContact } from "./thunks-contacts";
+import { fetchContacts, addNewContact, deleteContact, editContact } from "./thunks-contacts";
 //mock data
-import { contacts } from "../../mock_contacts";
+// import { contacts } from "../../mock_contacts";
 import { Contact } from "../../types";
 
 type ContactSliceType = {
@@ -11,7 +11,6 @@ type ContactSliceType = {
 }
 
 const INITIAL_STATE: ContactSliceType = {
-	// contactsNew: contacts,
 	contacts: [],
 	status: 'idle',
 	error: null
@@ -27,20 +26,20 @@ const contactsSlice = createSlice({
 		// 	state.contacts = [...state.contacts, action.payload]
 
 		// },
-		editContact(state, action: PayloadAction<Contact>) {
-			//come back to check this code and improve it
-			const updatedContact = state.contacts.find(contact => contact.id === action.payload.id);
-			state.contacts = state.contacts.filter(contact => contact.id !== updatedContact?.id)
-			if (updatedContact)
-				state.contacts = [...state.contacts, updatedContact]
+		// editContact(state, action: PayloadAction<Contact>) {
+		// 	//come back to check this code and improve it
+		// 	const updatedContact = state.contacts.find(({ id }) => id === action.payload.id);
+		// 	state.contacts = state.contacts.filter(({ id }) => id !== updatedContact?.id)
+		// 	if (updatedContact)
+		// 		state.contacts = [...state.contacts, updatedContact]
 
-		},
-		removeContact(state, action: PayloadAction<number>) {
-			// state.contacts = state.contacts.filter((contact) => contact.id !== +action.payload)
-			console.log(action.payload)
-			state.contacts = state.contacts.filter(contact => contact.id !== action.payload)
+		// },
+		// removeContact(state, action: PayloadAction<number>) {
+		// 	// state.contacts = state.contacts.filter((contact) => contact.id !== +action.payload)
+		// 	console.log(action.payload)
+		// 	state.contacts = state.contacts.filter(contact => contact.id !== action.payload)
 
-		}
+		// }
 	},
 	extraReducers(builder) {
 		builder
@@ -58,12 +57,32 @@ const contactsSlice = createSlice({
 				state.error = action.error.message
 			})
 			.addCase(addNewContact.fulfilled, (state, action) => {
-				console.log(action.payload)
+				state.status = 'success'
 				state.contacts.push(action.payload)
+			})
+			.addCase(editContact.fulfilled, (state, action) => {
+				//selecting contact to be edited
+				const updatedContact = state.contacts.find(({ id }) => id === action.payload.id);
+				//returning new array without the to be edited contact
+				state.contacts = state.contacts.filter(({ id }) => id !== updatedContact?.id);
+				//appending updated contact
+				if (updatedContact)
+					state.contacts = [...state.contacts, updatedContact];
+			})
+			.addCase(deleteContact.fulfilled, (state, action) => {
+				console.log(action.payload)
+				if (!action.payload) {
+					console.log('Delete could not complete')
+				}
+				const updatedContacts = state.contacts.filter(({ id }) => id !== action.payload)
+				state.contacts = updatedContacts
+			})
+			.addCase(deleteContact.rejected, (state, action) => {
+				state.status = 'failed'
+				state.error = action.error.message
 			})
 	}
 })
 
 
 export default contactsSlice.reducer;
-export const { editContact, removeContact } = contactsSlice.actions;

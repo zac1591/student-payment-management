@@ -17,13 +17,14 @@ import Finances from "./pages/Finances/Finances";
 import Groups from "./pages/Groups/Groups";
 import NothingToSee from "./pages/NothingToSee/NothingToSee";
 import UsersAndGroups from "./pages/UsersAndGroups/UsersAndGroups";
+import Courses from "./pages/Courses/Courses";
 
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Header />
-			
+
 			<Routes>
 				<Route path="/" element={<Dashboard />} />
 
@@ -35,6 +36,7 @@ function App() {
 				<Route path="/contacts/:userId" element={<ContactDetails />} />
 				<Route path="/groups" element={<Groups />} />
 				<Route path="/finances" element={<Finances />} />
+				<Route path="/courses" element={<Courses />} />
 
 				<Route path="/user-preferences" element={<UserPreferences />} >
 					<Route path="general-settings" element={<GeneralSettings />} />

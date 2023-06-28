@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import styles from "../RadioButton/radioButton.module.scss";
 
 function RadioButton({ label, options, name, register, ...otherInputProps }) {
@@ -13,8 +12,12 @@ function RadioButton({ label, options, name, register, ...otherInputProps }) {
 					optionStr = option;
 				}
 				return (
-					<Fragment key={optionStr}>
-						<label htmlFor={otherInputProps.id}>{optionStr}</label>
+					<label
+						htmlFor={optionStr}
+						className={styles.radiobuttonLabel}
+						key={optionStr}
+					>
+						{optionStr}
 						<input
 							type="radio"
 							{...register(name, {
@@ -22,8 +25,11 @@ function RadioButton({ label, options, name, register, ...otherInputProps }) {
 							})}
 							{...otherInputProps}
 							value={option}
+							id={optionStr}
+							className={styles.radiobuttonInput}
 						/>
-					</Fragment>
+						<span className={styles.customRadiobutton}></span>
+					</label>
 				);
 			})}
 		</div>

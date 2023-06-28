@@ -1,6 +1,5 @@
 import { useAppSelector } from "../../hooks/storeHooks";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 //components
 import Card from "../../components/Card/Card";
@@ -278,7 +277,6 @@ function ContactDetails() {
 	const [showAddNewMessage, setIsShowAddNewMessage] = useState(false);
 	const contacts = useAppSelector(({ contacts }) => contacts.contacts);
 	const params = useParams();
-	const navigate = useNavigate();
 
 	//useParams returns a string
 	const idParams = +params.userId;
@@ -289,11 +287,11 @@ function ContactDetails() {
 	const { firstName, lastName, phoneNumber, email, personalId, groups } =
 		selectedContact;
 
-	const goBackHandler = () => navigate("/contacts", { replace: true });
-
 	return (
 		<section className={styles.gridContainer}>
-			<GoBack className={styles.goBackArrow} onClick={goBackHandler} />
+			<Link to="/contacts">
+				<GoBack className={styles.goBackArrow} />
+			</Link>
 			{/* <div
 				style={{
 					display: "flex",

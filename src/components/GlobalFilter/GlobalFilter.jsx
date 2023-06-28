@@ -7,7 +7,7 @@ import Input from "../Input/Input";
 
 import styles from "./globalFilter.module.scss";
 
-function GlobalFilter({ filter, setFilter }) {
+function GlobalFilter({ filter, setFilter, label }) {
 	const [value, setValue] = useState(filter);
 	const { register } = useForm();
 	const debounced = useDebounce(value, 300);
@@ -34,7 +34,7 @@ function GlobalFilter({ filter, setFilter }) {
 				search
 			</span>
 			<Input
-				label="Buscar Nombres, Apellidos..."
+				label={label}
 				id="searchBar"
 				name="searchBar"
 				register={register}

@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-//react router
-import { useNavigate } from "react-router-dom";
 //components
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
 import AddEditContact from "../../components/AddEditContact/AddEditContact";
-// import ItemsTable from "../../components/ItemsTable/ItemsTable";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
 import ContactOptions from "../../components/ContactOptions/ContactOptions";
+import ContactsTable from "../../components/ContactsTable/ContactsTable";
 import { Jelly } from "@uiball/loaders";
 
 //mock data
@@ -16,9 +14,7 @@ import styles from "./contacts.module.scss";
 
 //redux
 import { useAppSelector, useAppDispatch } from "../../hooks/storeHooks";
-// import { removeContact, editContact } from "../../store/contacts/contactsSlice";
 import { fetchContacts } from "../../store/contacts/thunks-contacts";
-import ContactsTable from "../../components/ContactsTable/ContactsTable";
 //types
 import { Contact } from "../../types";
 
@@ -26,12 +22,14 @@ function Contacts() {
 	const dispatch = useAppDispatch();
 	const [createContact, setCreateContact] = useState(false);
 	const [showContactsOption, setShowContactsOption] = useState(false);
-
-	const navigate = useNavigate();
+	const [showEditModal, setShowEditModal] = useState(false);
+	const [idContactToEdit, setIdContactToEdit] = useState<number | undefined>(
+		undefined
+	);
 
 	const showCreateContactHandler = () => setCreateContact(true);
 	const hideCreateContactHandler = () => setCreateContact(false);
-	const selectContactHandler = () =>
+	const showContactsOptionHandler = () =>
 		setShowContactsOption(showContact => !showContact);
 
 	const contactStatus = useAppSelector(state => state.contacts.status);
@@ -62,8 +60,10 @@ function Contacts() {
 	// 	setCellData(cellData);
 	// };
 
-	const editContactHandler = () => {
-		console.log("clicking editing button");
+	const editContactHandler = (id: number) => {
+		console.log(`${id} being read from contacts component`);
+		setIdContactToEdit(id);
+		setShowEditModal(true);
 	};
 
 	const deleteContactHandler = () => {
@@ -86,7 +86,7 @@ function Contacts() {
 		{
 			btnName: "Editar",
 			iconLabel: "edit_note",
-			onClick: editContactHandler,
+			onClick: () => {},
 		},
 		{ btnName: "Borrar", iconLabel: "remove", onClick: deleteContactHandler },
 	];
@@ -126,14 +126,14 @@ function Contacts() {
 				columns={newColumns}
 				stateData={contactsFromRedux}
 				navigatesTo="contacts"
-				onSelectContact={() => console.log("onSelectContact Fn prop")}
+				onSelectContactToEdit={editContactHandler}
 			/>
 		);
 	} else if (contactStatus === "failed") {
 		loadingTableContent = (
 			<span>
-				Something went wrong! Please follow up error details: <br />{" "}
-				{contactsError}
+				Oops!! Esto no estaba previsto. Verifica el mensaje de error y
+				vuelve a intentarloz: <br /> {contactsError}
 			</span>
 		);
 	}
@@ -144,6 +144,14 @@ function Contacts() {
 				<AddEditContact
 					onHideCreateContact={hideCreateContactHandler}
 					editMode={false}
+				/>
+			)}
+
+			{showEditModal && (
+				<AddEditContact
+					onHideCreateContact={hideCreateContactHandler}
+					editMode={true}
+					contactId={idContactToEdit}
 				/>
 			)}
 

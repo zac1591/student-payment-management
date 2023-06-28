@@ -3,76 +3,83 @@ import { Group } from "./types";
 export const grupos = [
     {
         id: crypto.randomUUID(),
-        groupName: "PEM",
+        course: 'PEM',
+        groupName: "PEM Sabado mañana",
         description: "Some description for this group.",
-        price: 250,
         members: ["some-user-id", "another-user-id"],
-        startDate:  "3/15/2023",
-        endDate:"11/9/2023",
-        schedule: "Mie - Vie"
+        schedule: "8:00AM - 12:00PM",
+        professor: 'Edward Batres',
+        duration: 24,
+        capacity: 18
     },
     {
         id: crypto.randomUUID(),
-        groupName: "REM",
+        course: 'REM',
+        groupName: "REM Miercoles Tarde",
         description: "Some description for this group.",
-        price: 250,
         members: ["some-user-id", "another-user-id"],
-        startDate: "9/10/2023",
-        endDate: "11/9/2024",
-        schedule: "Mie - Vie"
+        schedule: "1:00PM - 5:00PM",
+        professor: 'Xavier Hernandez',
+        duration: 5,
+        capacity: 25
     },
     {
         id: crypto.randomUUID(),
-        groupName: "AMLS",
+        course: 'AMLS',
+        groupName: "AMLS Lun Mie Vie tarde",
         description: "Some description for this group.",
-        price: 250,
         members: ["some-user-id", "another-user-id"],
-        startDate: "7/5/2023",
-        endDate: "11/9/2023",
-        schedule: "Mie - Vie"
+        schedule: "1:00PM - 5:00PM",
+        professor: 'Xavier Hernandez',
+        duration: 12,
+        capacity: 20
     },
     {
         id: crypto.randomUUID(),
-        groupName: "TEM",
+        course: 'TEM',
+        groupName: "TEM Viernes",
         description: "Some description for this group.",
-        price: 250,
         members: ["some-user-id", "another-user-id"],
-        startDate: "7/5/2023",
-        endDate: "11/9/2023",
-        schedule: "Mie - Vie"
+        schedule: "8:00AM - 5:00PM",
+        professor: 'David Hernandez',
+        duration: 24,
+        capacity: 18
     },
     {
         id: crypto.randomUUID(),
-        groupName: "TEM",
+        course: 'TEM',
+        groupName: "TEM Miercoles",
         description: "Some description for this group.",
-        price: 250,
         members: ["some-user-id", "another-user-id"],
-        startDate: "7/5/2023",
-        endDate: "11/9/2023",
-        schedule: "Mie - Vie"
+        schedule: "8:00AM - 4:00PM",
+        professor: 'Oscar Hernandez',
+        duration: 24,
+        capacity: 25
     },
     {
         id: crypto.randomUUID(),
-        groupName: "TECC",
+        course: 'TECC',
+        groupName: "TECC martes matutino",
         description: "Some description for this group.",
-        price: 100,
         members: ["some-user-id", "another-user-id", "another-user-id", "another-user-id"],
-        startDate: "7/5/2023",
-        endDate: "11/9/2023",
-        schedule: "Mie - Vie"
+        schedule: "8:00AM - 12:00PM",
+        professor: 'Xavier Hernandez',
+        duration: 3,
+        capacity: 20
     },
     {
         id: crypto.randomUUID(),
-        groupName: "PHTLS",
+        course: 'PHTLS',
+        groupName: "PHTLS Jueves",
         description: "Some description for this group.",
-        price: 250,
         members: ["some-user-id", "another-user-id", "another-user-id"],
-        startDate: "7/5/2023",
-        endDate: "11/9/2023",
-        schedule: "Mie - Vie"
+        schedule: "8:00AM - 4:00PM",
+        professor: 'Abraham Hernandez',
+        duration: 6,
+        capacity: 20
     },
-    
-].reduce((collection, currentGroup)=> {
+
+].reduce((collection, currentGroup) => {
     collection[currentGroup.id] = currentGroup
     return collection
 }, ({} as Record<string, Group>))

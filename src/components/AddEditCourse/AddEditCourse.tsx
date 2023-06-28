@@ -1,0 +1,220 @@
+import { useEffect } from "react";
+import ReactDatePicker from "react-datepicker";
+//redux
+import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
+import { addGroup, submitEditedData } from "../../store/groups/groupsSlice";
+//react hook form
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+//component
+import Button from "../Button/Button";
+import Input from "../Input/Input";
+import Modal from "../Modal/Modal";
+import RadioButton from "../RadioButton/RadioButton";
+//types
+import { Course } from "../../types";
+//utils
+import { strToDate } from "../../utils/utils";
+//styles
+import styles from "./addEditCourse.module.scss";
+import "react-datepicker/dist/react-datepicker.css";
+
+type courseProps = {
+	onHideCreateCourse: () => void;
+	editMode: boolean;
+	courseId?: number;
+};
+
+function AddEditCourse({
+	onHideCreateCourse,
+	editMode,
+	courseId,
+}: courseProps) {
+	const toEditCourse = useAppSelector(({ courses }) =>
+		courseId ? courses.courses[courseId] : null
+	);
+	const dispatch = useAppDispatch();
+
+	const {
+		register,
+		handleSubmit,
+		control,
+		setValue,
+		formState: { errors },
+		reset,
+	} = useForm<Course>();
+
+	const submitHandler: SubmitHandler<Course> = (
+		data,
+		event: React.BaseSyntheticEvent<object, any, any> | undefined
+	) => {
+		event?.preventDefault();
+		// const buttonName = event.target.getAttribute("id");
+
+		return editMode ? updateCourse(data) : createCourse(data);
+	};
+
+	const createCourse = (data: Course) => {
+		const courseData = {
+			id: crypto.randomUUID(),
+			courseName: data.courseName,
+			coursePrice: data.coursePrice,
+			registrationFee: data.registrationFee,
+			startDate: data.startDate,
+			endDate: data.endDate,
+			isAvailable: data.isAvailable,
+		};
+
+		console.log(courseData);
+		// dispatch(addGroup(courseData));
+		reset();
+		onHideCreateCourse();
+	};
+
+	const updateCourse = (data: Course) => {
+		// console.log(data)
+		// dispatch(submitEditedData(data));
+		reset();
+		onHideCreateCourse();
+	};
+
+	//if form component is being used for editing an entry
+	useEffect(() => {
+		if (editMode && toEditCourse !== null) {
+			//set state with the given object and make the form aware of it so we can populate the to be edited data.
+
+			//geting data from store
+			(Object.keys(toEditCourse) as Array<keyof Course>).forEach(field =>
+				setValue(field, toEditCourse[field])
+			);
+		}
+		console.log("effect runnning");
+	}, [setValue, editMode, toEditCourse]);
+
+	return (
+		<Modal className={styles.modal} onHideCart={onHideCreateCourse}>
+			<div className={styles.header}>
+				<h3>{editMode ? "Editar Curso" : "Nuevo Curso"}</h3>
+			</div>
+			<form onSubmit={handleSubmit(submitHandler)} noValidate>
+				<div className={styles.flexContainer}>
+					<div className={styles.splitForm}>
+						<Input
+							label="Nombre del Curso"
+							name="courseName"
+							id="courseName"
+							register={register}
+							required
+							type="text"
+						/>
+						<small>{errors.courseName?.message}</small>
+						<Input
+							label="Precio"
+							name="coursePrice"
+							id="coursePrice"
+							register={register}
+							required
+							type="text"
+						/>
+						<small>{errors.coursePrice?.message}</small>
+						<Input
+							label="Matricula"
+							name="registrationFee"
+							id="registrationFee"
+							register={register}
+							required={false}
+							type="number"
+						/>
+						<small>{errors.registrationFee?.message}</small>
+						<Input
+							label="Descripción"
+							name="description"
+							id="description"
+							register={register}
+							required={false}
+							type="text"
+						/>
+						<small>{errors.courseDescription?.message}</small>
+					</div>
+					<div className={styles.splitForm}>
+						<div className={styles.formControl}>
+							<p>Fecha de inicio</p>
+							<Controller
+								name="startDate"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { value, onChange, ...rest } }) => (
+									<ReactDatePicker
+										{...rest}
+										placeholderText="Seleccionar fecha"
+										selected={strToDate(value)}
+										onChange={e => onChange(e)}
+										peekNextMonth
+										showMonthDropdown
+										showYearDropdown
+										dropdownMode="select"
+										className={styles.datePicker}
+									/>
+								)}
+							/>
+							<small>{errors.startDate?.message}</small>
+						</div>
+
+						<div className={styles.formControl}>
+							<p>Fecha de inicio</p>
+							<Controller
+								name="endDate"
+								control={control}
+								rules={{ required: true }}
+								render={({ field: { value, onChange, ...rest } }) => (
+									<ReactDatePicker
+										{...rest}
+										placeholderText="Seleccionar fecha"
+										selected={strToDate(value)}
+										onChange={e => onChange(e)}
+										peekNextMonth
+										showMonthDropdown
+										showYearDropdown
+										dropdownMode="select"
+										className={styles.datePicker}
+									/>
+								)}
+							/>
+							<small>{errors.endDate?.message}</small>
+						</div>
+						{/* come back to refactor radio button component */}
+						<RadioButton
+							label="Disponible"
+							name="isAvailable"
+							register={register}
+							id="isAvailable"
+							options={{ si: "Si", no: "No" }}
+						/>
+					</div>
+				</div>
+
+				<div className={styles.formActions}>
+					<Button
+						btnStylesConf={{
+							inverted: "inverted",
+							small: "small",
+							success: "success",
+						}}
+						id="create-contact"
+						type="submit"
+					>
+						Guardar
+					</Button>
+					<Button
+						btnStylesConf={{ small: "small" }}
+						type="button"
+						onClick={onHideCreateCourse}
+					>
+						Cancelar
+					</Button>
+				</div>
+			</form>
+		</Modal>
+	);
+}
+
+export default AddEditCourse;

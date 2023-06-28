@@ -1,12 +1,51 @@
+@use "../../../sass//abstracts/variables" as *;
+$background-color_1: #eee;
+$background-color_2: #ccc;
+$background-color_3: #2196f3;
+
 .formControl {
-    padding-bottom: 1rem;
+	padding-bottom: 1rem;
 
-    label {
-        margin: 0 1rem;
-    }
+	.radiobuttonInput {
+		visibility: hidden;
 
-    // label + inpuṭ[type="radio"] {
-    //     position: relative;
-    //     padding: 1rem;
-    // }
+		&:checked + .customRadiobutton {
+			border: 2px solid $color-primary;
+			background-color: $color-primary;
+
+			&::before {
+				content: "";
+				position: absolute;
+				display: block;
+				width: 7px;
+				height: 7px;
+				background-color: white;
+				border-radius: 50%;
+				top: 3px;
+				left: 3px;
+			}
+		}
+	}
+
+	.radiobuttonLabel {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		cursor: pointer;
+	}
+
+	.customRadiobutton {
+		position: relative;
+		height: 17px;
+		width: 17px;
+		border-radius: 50%;
+		cursor: pointer;
+		background-color: #d2c5ef;
+		display: inline-block;
+	}
+
+	// .radiobuttonInput:checked + .customRadiobutton {
+	// 	border: 2px solid #261ba4;
+	// 	background-color: #3f27b3;
+	// }
 }

@@ -24,42 +24,45 @@ What do I need to create a new groups?
 9. schedule
 */
 
-
 function Groups() {
 	const [isShowingModal, setIsShowingModal] = useState(false);
 	const groupsFromState = useAppSelector(({ groups }) => groups.groups);
 
-	const onShowModal: () => void = () => setIsShowingModal(true)
-	const onHideModal: () => void = () => setIsShowingModal(false)
-
+	const onShowModal: () => void = () => setIsShowingModal(true);
+	const onHideModal: () => void = () => setIsShowingModal(false);
 
 	return (
 		<section className={styles.container}>
-			{ isShowingModal && <AddEditGroup onHideCreateGroup={onHideModal} editMode={false} />}
-				<MenuDashboard />
-				<main>
-					<ActiveMenu
-						buttonLabel="Crear Grupo"
-						currentPageTitle="Grupos"
-						onShowItem={onShowModal}
-					/>
+			{isShowingModal && (
+				<AddEditGroup onHideCreateGroup={onHideModal} editMode={false} />
+			)}
+			<MenuDashboard />
+			<main>
+				<ActiveMenu
+					buttonLabel="Crear Grupo"
+					currentPageTitle="Grupos"
+					onShowItem={onShowModal}
+				/>
 
-					<div className={styles.kanvanContainer}>
-						{ Object.values(groupsFromState).map( group => (
-							<GroupCard key={group.id} groupProps = {{
+				<div className={styles.kanvanContainer}>
+					{Object.values(groupsFromState).map(group => (
+						<GroupCard
+							key={group.id}
+							groupProps={{
 								id: group.id,
 								groupName: group.groupName,
+								course: group.course,
 								description: group.description,
-								startDate: group.startDate,
-								endDate: group.endDate,
 								members: group.members,
-								price: group.price,
-								schedule: group.schedule
-								}}
-							/>
-						)) }
-					</div>
-				</main>
+								schedule: group.schedule,
+								professor: group.professor,
+								capacity: group.capacity,
+								duration: group.duration,
+							}}
+						/>
+					))}
+				</div>
+			</main>
 		</section>
 	);
 }

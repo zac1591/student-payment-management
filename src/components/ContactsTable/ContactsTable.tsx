@@ -10,8 +10,6 @@ import {
 	getFilteredRowModel,
 	getSortedRowModel,
 	SortingState,
-	Row,
-	Cell,
 } from "@tanstack/react-table";
 //types
 import { Contact } from "../../types";
@@ -22,19 +20,20 @@ import GlobalFilter from "../GlobalFilter/GlobalFilter";
 import styles from "./contactsTable.module.scss";
 import ReadOnlyRow from "./ReadOnlyRow";
 import EditableRow from "./EditableRow";
+import Card from "../Card/Card";
 
 type ContactsTableProps = {
 	columns: ColumnDef<Contact>[];
 	stateData: Contact[];
 	navigatesTo: string;
-	onSelectContact: (rowContact: Row<Contact>) => void;
+	onSelectContactToEdit: (id: number) => void;
 };
 
 function ContactsTable({
 	columns,
 	stateData,
 	navigatesTo,
-	onSelectContact,
+	onSelectContactToEdit,
 }: ContactsTableProps) {
 	const [rowSelection, setRowSelection] = useState({});
 	const [globalFilter, setGlobalFilter] = useState("");
@@ -64,17 +63,13 @@ function ContactsTable({
 	const navigate = useNavigate();
 
 	//handlers
-
 	const onMouseEnterHandler = (id: number) => {
 		setIsHovering(true);
 		setEditContactId(id);
-		console.log("hovering on");
-		console.log(id);
 		//receive id from row.original.id
 	};
 	const onMouseLeaveHandler = () => {
 		setIsHovering(false);
-		console.log("hovering off");
 	};
 
 	const viewContactDetailsHandler = (
@@ -85,6 +80,10 @@ function ContactsTable({
 		if (headerId !== "select") {
 			navigate(`/${navigatesTo}/${rowInfo.id}`, { replace: true });
 		}
+	};
+
+	const editContactHandler = (id: number) => {
+		onSelectContactToEdit(id);
 	};
 
 	// console.log(table.getSelectedRowModel().flatRows.map(row => row.original))
@@ -101,83 +100,93 @@ function ContactsTable({
 					<GlobalFilter
 						filter={globalFilter}
 						setFilter={setGlobalFilter}
+						label="Buscar Nombres, Apellidos..."
 					/>
-					<table className={styles.table}>
-						<thead>
-							{table.getHeaderGroups().map(headerGroup => (
-								<tr key={headerGroup.id}>
-									{headerGroup.headers.map(header => (
-										<th key={header.id} colSpan={header.colSpan}>
-											{header.isPlaceholder ? null : (
-												<div
-													{...{
-														className: header.column.getCanSort()
-															? styles.isSortable
-															: "",
-														onClick:
-															header.column.getToggleSortingHandler(),
-													}}
-												>
-													{flexRender(
-														header.column.columnDef.header,
-														header.getContext()
-													)}
-													{{
-														asc: " 🔼",
-														desc: " 🔽",
-													}[
-														header.column.getIsSorted() as string
-													] ?? null}
-												</div>
-											)}
-										</th>
-									))}
-								</tr>
-							))}
-						</thead>
-						<tbody>
-							{table.getRowModel().rows.map(row =>
-								// <tr
-								// 	key={row.id}
-								// 	onMouseEnter={e => onMouseEnterHandler(e)}
-								// 	onMouseLeave={onMouseLeaveHandler}
-								// 	style={{ position: "relative" }}
-								// >
-								// 	{row.getVisibleCells().map(cell => (
-								// 		<td
-								// 			key={cell.id}
-								// 			onClick={() =>
-								// 				viewContactDetailsHandler(
-								// 					cell.column.id,
-								// 					row.original
-								// 				)
-								// 			}
-								// 		>
-								// 			{flexRender(
-								// 				cell.column.columnDef.cell,
-								// 				cell.getContext()
-								// 			)}
-								// 		</td>
-								// 	))}
-								// </tr>
-								row.original.id === editContactId && isHovering ? (
-									<EditableRow
-										row={row}
-										onMouseEnter={() => onMouseEnterHandler}
-										onMouseLeave={onMouseLeaveHandler}
-										onViewContactHandler={viewContactDetailsHandler}
-									/>
-								) : (
-									<ReadOnlyRow
-										row={row}
-										onMouseEnter={onMouseEnterHandler}
-										onMouseLeave={onMouseLeaveHandler}
-										onViewContactHandler={viewContactDetailsHandler}
-									/>
-								)
-							)}
-						</tbody>
-					</table>
+					<Card className={styles.card}>
+						<table className={styles.table}>
+							<thead>
+								{table.getHeaderGroups().map(headerGroup => (
+									<tr key={headerGroup.id}>
+										{headerGroup.headers.map(header => (
+											<th key={header.id} colSpan={header.colSpan}>
+												{header.isPlaceholder ? null : (
+													<div
+														{...{
+															className:
+																header.column.getCanSort()
+																	? styles.isSortable
+																	: "",
+															onClick:
+																header.column.getToggleSortingHandler(),
+														}}
+													>
+														{flexRender(
+															header.column.columnDef.header,
+															header.getContext()
+														)}
+														{{
+															asc: " 🔼",
+															desc: " 🔽",
+														}[
+															header.column.getIsSorted() as string
+														] ?? null}
+													</div>
+												)}
+											</th>
+										))}
+									</tr>
+								))}
+							</thead>
+							<tbody>
+								{table.getRowModel().rows.map(row =>
+									// <tr
+									// 	key={row.id}
+									// 	onMouseEnter={e => onMouseEnterHandler(e)}
+									// 	onMouseLeave={onMouseLeaveHandler}
+									// 	style={{ position: "relative" }}
+									// >
+									// 	{row.getVisibleCells().map(cell => (
+									// 		<td
+									// 			key={cell.id}
+									// 			onClick={() =>
+									// 				viewContactDetailsHandler(
+									// 					cell.column.id,
+									// 					row.original
+									// 				)
+									// 			}
+									// 		>
+									// 			{flexRender(
+									// 				cell.column.columnDef.cell,
+									// 				cell.getContext()
+									// 			)}
+									// 		</td>
+									// 	))}
+									// </tr>
+									row.original.id === editContactId && isHovering ? (
+										<EditableRow
+											key={row.id}
+											row={row}
+											onMouseLeave={onMouseLeaveHandler}
+											onViewContactHandler={
+												viewContactDetailsHandler
+											}
+											onEditContactHandler={editContactHandler}
+										/>
+									) : (
+										<ReadOnlyRow
+											key={row.id}
+											row={row}
+											onMouseEnter={onMouseEnterHandler}
+											onMouseLeave={onMouseLeaveHandler}
+											onViewContactHandler={
+												viewContactDetailsHandler
+											}
+										/>
+									)
+								)}
+							</tbody>
+						</table>
+					</Card>
 					<div className={styles.pagination}>
 						<button
 							className="border rounded p-1"

@@ -1,14 +1,14 @@
 export type Group = {
 	// [index: string]: string | number | string[],
 	id: string,
+	course: string,
 	groupName: string,
 	description: string,
-	price: number,
 	members: string[],
-	startDate: string,
-	endDate: string,
+	professor: string,
 	schedule: string,
-
+	capacity: number,
+	duration: number
 }
 
 export type masive = {
@@ -28,12 +28,24 @@ export type Contact = {
 	country?: string,
 	address?: string,
 	department?: string,
-	DOB?: string,
+	dob?: string,
 	gender?: string,
 	scholarship: boolean,
 	groups?: string
 	accessLevel: string
 
+}
+
+
+export type Course = {
+	id: number,
+	courseName: string,
+	coursePrice: number,
+	registrationFee?: number,
+	courseDescription?: string,
+	startDate: string,
+	endDate: string,
+	isAvailable: boolean
 }
 
 /*
