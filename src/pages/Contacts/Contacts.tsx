@@ -20,21 +20,27 @@ import { Contact } from "../../types";
 
 function Contacts() {
 	const dispatch = useAppDispatch();
-	const [createContact, setCreateContact] = useState(false);
+	const [showAddContactModal, setShowAddContactModal] = useState(false);
+	const [showEditContactModal, setShowEditContactModal] = useState(false);
 	const [showContactsOption, setShowContactsOption] = useState(false);
-	const [showEditModal, setShowEditModal] = useState(false);
 	const [idContactToEdit, setIdContactToEdit] = useState<number | undefined>(
 		undefined
 	);
 
-	const showCreateContactHandler = () => setCreateContact(true);
-	const hideCreateContactHandler = () => setCreateContact(false);
-	const showContactsOptionHandler = () =>
-		setShowContactsOption(showContact => !showContact);
-
 	const contactStatus = useAppSelector(state => state.contacts.status);
 	const contactsFromRedux = useAppSelector(state => state.contacts.contacts);
 	const contactsError = useAppSelector(state => state.contacts.error);
+
+	//show/hide create contact handlers
+	const showAddContactHandler = () => setShowAddContactModal(true);
+	const hideAddContactHandler = () => setShowAddContactModal(false);
+	//show/hide edit contact handlers
+	const showEditContactHandler = () => setShowEditContactModal(true);
+	const hideEditContactHandler = () => setShowEditContactModal(false);
+	//options contact handler
+	const showContactsOptionHandler = () =>
+		setShowContactsOption(showContact => !showContact);
+
 	//table
 	// const columns = useMemo(() => newColumns, []);
 
@@ -63,7 +69,7 @@ function Contacts() {
 	const editContactHandler = (id: number) => {
 		console.log(`${id} being read from contacts component`);
 		setIdContactToEdit(id);
-		setShowEditModal(true);
+		showEditContactHandler();
 	};
 
 	const deleteContactHandler = () => {
@@ -140,16 +146,16 @@ function Contacts() {
 
 	return (
 		<section className={styles.container}>
-			{createContact && (
+			{showAddContactModal && (
 				<AddEditContact
-					onHideCreateContact={hideCreateContactHandler}
+					onHideCreateContact={hideAddContactHandler}
 					editMode={false}
 				/>
 			)}
 
-			{showEditModal && (
+			{showEditContactModal && (
 				<AddEditContact
-					onHideCreateContact={hideCreateContactHandler}
+					onHideCreateContact={hideEditContactHandler}
 					editMode={true}
 					contactId={idContactToEdit}
 				/>
@@ -159,7 +165,7 @@ function Contacts() {
 			<main>
 				<ActiveMenu
 					buttonLabel="Crear Contacto"
-					onShowItem={showCreateContactHandler}
+					onShowItem={showAddContactHandler}
 					currentPageTitle="Contactos"
 				/>
 				{showContactsOption && (

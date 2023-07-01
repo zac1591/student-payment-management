@@ -44,23 +44,24 @@ const contactsSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(fetchContacts.pending, (state, action) => {
-				state.status = 'loading'
+				state.status = 'loading';
 			})
 			.addCase(fetchContacts.fulfilled, (state, action) => {
-				state.status = 'success'
+				state.status = 'success';
 				//Add any fetched contacts to the array
-				state.contacts = action.payload
+				state.contacts = action.payload;
 
 			})
 			.addCase(fetchContacts.rejected, (state, action) => {
-				state.status = 'failed'
-				state.error = action.error.message
+				state.status = 'failed';
+				state.error = action.error.message;
 			})
 			.addCase(addNewContact.fulfilled, (state, action) => {
-				state.status = 'success'
-				state.contacts.push(action.payload)
+				state.status = 'success';
+				state.contacts.push(action.payload);
 			})
 			.addCase(editContact.fulfilled, (state, action) => {
+				state.status = 'success';
 				//selecting contact to be edited
 				const updatedContact = state.contacts.find(({ id }) => id === action.payload.id);
 				//returning new array without the to be edited contact
@@ -70,16 +71,17 @@ const contactsSlice = createSlice({
 					state.contacts = [...state.contacts, updatedContact];
 			})
 			.addCase(deleteContact.fulfilled, (state, action) => {
-				console.log(action.payload)
+				state.status = 'success';
+				// console.log(action.payload)
 				if (!action.payload) {
-					console.log('Delete could not complete')
+					console.log('Delete could not complete');
 				}
-				const updatedContacts = state.contacts.filter(({ id }) => id !== action.payload)
-				state.contacts = updatedContacts
+				const updatedContacts = state.contacts.filter(({ id }) => id !== action.payload);
+				state.contacts = updatedContacts;
 			})
 			.addCase(deleteContact.rejected, (state, action) => {
-				state.status = 'failed'
-				state.error = action.error.message
+				state.status = 'failed';
+				state.error = action.error.message;
 			})
 	}
 })
