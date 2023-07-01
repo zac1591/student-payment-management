@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import ReactDatePicker from "react-datepicker";
+// import ReactDatePicker from "react-datepicker";
 //redux
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
-import { addGroup, submitEditedData } from "../../store/groups/groupsSlice";
+// import { addGroup, submitEditedData } from "../../store/groups/groupsSlice";
+import { addNewGroup, editGroup } from "../../store/groups/thunks-groups";
 //react hook form
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 //component
@@ -12,7 +13,7 @@ import Modal from "../Modal/Modal";
 //types
 import { Group } from "../../types";
 //utils
-import { strToDate } from "../../utils/utils";
+// import { strToDate } from "../../utils/utils";
 //styles
 import styles from "./addEditGroup.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,7 +21,7 @@ import "react-datepicker/dist/react-datepicker.css";
 type groupProps = {
 	onHideCreateGroup: () => void;
 	editMode: boolean;
-	groupId?: string;
+	groupId?: number;
 };
 
 function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
@@ -49,27 +50,26 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 	};
 
 	const createGroup = (data: Group) => {
-		const groupData = {
-			id: crypto.randomUUID(),
-			groupName: data.groupName,
-			course: data.course,
-			description: data.description,
-			members: data.members,
-			schedule: data.schedule,
-			professor: data.professor,
-			capacity: data.capacity,
-			duration: data.duration,
-		};
+		// const groupData = {
+		// 	id: crypto.randomUUID(),
+		// 	groupName: data.groupName,
+		// 	course: data.course,
+		// 	description: data.description,
+		// 	schedule: data.schedule,
+		// 	professor: data.professor,
+		// 	capacity: data.capacity,
+		// 	duration: data.duration,
+		// };
 
-		console.log(groupData);
-		dispatch(addGroup(groupData));
+		console.log(data);
+		dispatch(addNewGroup(data));
 		reset();
 		onHideCreateGroup();
 	};
 
 	const updateGroup = (data: Group) => {
 		// console.log(data)
-		dispatch(submitEditedData(data));
+		dispatch(editGroup(data));
 		reset();
 		onHideCreateGroup();
 	};
@@ -106,8 +106,8 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 						<small>{errors.groupName?.message}</small>
 						<Input
 							label="Curso"
-							name="courseName"
-							id="courseName"
+							name="course"
+							id="course"
 							register={register}
 							required
 							type="text"
@@ -122,7 +122,7 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 							type="text"
 						/>
 						<small>{errors.description?.message}</small>
-						<Input
+						{/* <Input
 							label="Agregar miembros"
 							name="members"
 							id="members"
@@ -130,7 +130,7 @@ function AddEditGroup({ onHideCreateGroup, editMode, groupId }: groupProps) {
 							required
 							type="text"
 						/>
-						<small>{errors.members?.message}</small>
+						<small>{errors.members?.message}</small> */}
 					</div>
 					<div className={styles.splitForm}>
 						{/* <div className={styles.formControl}>

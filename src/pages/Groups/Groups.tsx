@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //components
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
 
 //redux
-import { useAppSelector } from "../../hooks/storeHooks";
+import { useAppSelector, useAppDispatch } from "../../hooks/storeHooks";
+import { fetchGroups } from "../../store/groups/thunks-groups";
 //styles
 import styles from "./groups.module.scss";
 import AddEditGroup from "../../components/AddEditGroup/AddEditGroup";
@@ -27,9 +28,17 @@ What do I need to create a new groups?
 function Groups() {
 	const [isShowingModal, setIsShowingModal] = useState(false);
 	const groupsFromState = useAppSelector(({ groups }) => groups.groups);
+	const groupsStatus = useAppSelector(({ groups }) => groups.status);
+	const dispatch = useAppDispatch();
 
 	const onShowModal: () => void = () => setIsShowingModal(true);
 	const onHideModal: () => void = () => setIsShowingModal(false);
+
+	useEffect(() => {
+		if (groupsStatus === "idle") {
+			dispatch(fetchGroups());
+		}
+	}, [groupsStatus, dispatch]);
 
 	return (
 		<section className={styles.container}>
@@ -53,7 +62,6 @@ function Groups() {
 								groupName: group.groupName,
 								course: group.course,
 								description: group.description,
-								members: group.members,
 								schedule: group.schedule,
 								professor: group.professor,
 								capacity: group.capacity,

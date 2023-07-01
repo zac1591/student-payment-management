@@ -1,10 +1,9 @@
 export type Group = {
 	// [index: string]: string | number | string[],
-	id: string,
+	id: number,
 	course: string,
 	groupName: string,
 	description: string,
-	members: string[],
 	professor: string,
 	schedule: string,
 	capacity: number,

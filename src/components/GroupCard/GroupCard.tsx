@@ -1,14 +1,14 @@
 import { useState } from "react";
 //redux
 import { useAppDispatch } from "../../hooks/storeHooks";
-import { removeGroup } from "../../store/groups/groupsSlice";
+import { deleteGroup } from "../../store/groups/thunks-groups";
 //types
 import { Group } from "../../types";
 //components
 import Card from "../Card/Card";
 import ContextMenu from "../../components/ContextMenu/ContextMenu";
 //utils
-import { formatter } from "../../utils/utils";
+// import { formatter } from "../../utils/utils";
 //styles
 import styles from "./groupCard.module.scss";
 import AddEditGroup from "../AddEditGroup/AddEditGroup";
@@ -27,7 +27,7 @@ function GroupCard({ groupProps }: groupCardPropsType) {
 	};
 
 	const deleteHandler = (): void => {
-		dispatch(removeGroup(groupProps.id));
+		dispatch(deleteGroup(groupProps.id));
 	};
 
 	const GroupContextMenu = [
@@ -85,8 +85,15 @@ function GroupCard({ groupProps }: groupCardPropsType) {
 						<span>Instructor:</span> {groupProps.professor}
 					</p>
 					<hr />
-					<p>
-						<span>Miembros Activos:</span> {groupProps.members.length}
+					<p
+						onClick={() =>
+							alert(
+								"A list of members and some action will be displayed here"
+							)
+						}
+						style={{ cursor: "pointer" }}
+					>
+						<span>Miembros Activos:</span> 45
 					</p>
 					<p>
 						<span>Capacidad:</span> {groupProps.capacity}
