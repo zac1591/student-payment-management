@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 //redux
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
-import { addGroup, submitEditedData } from "../../store/groups/groupsSlice";
+import { updateCourse } from "../../store/courses/coursesSlice";
+import { addNewCourse } from "../../store/courses/thunks-courses";
 //react hook form
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 //component
@@ -50,29 +51,19 @@ function AddEditCourse({
 		event?.preventDefault();
 		// const buttonName = event.target.getAttribute("id");
 
-		return editMode ? updateCourse(data) : createCourse(data);
+		return editMode ? updateCourseHandler(data) : createCourseHandler(data);
 	};
 
-	const createCourse = (data: Course) => {
-		const courseData = {
-			id: crypto.randomUUID(),
-			courseName: data.courseName,
-			coursePrice: data.coursePrice,
-			registrationFee: data.registrationFee,
-			startDate: data.startDate,
-			endDate: data.endDate,
-			isAvailable: data.isAvailable,
-		};
-
-		console.log(courseData);
-		// dispatch(addGroup(courseData));
+	const createCourseHandler = (data: Course) => {
+		console.log(data);
+		dispatch(addNewCourse(data));
 		reset();
 		onHideCreateCourse();
 	};
 
-	const updateCourse = (data: Course) => {
+	const updateCourseHandler = (data: Course) => {
 		// console.log(data)
-		// dispatch(submitEditedData(data));
+		dispatch(updateCourse(data));
 		reset();
 		onHideCreateCourse();
 	};
@@ -113,7 +104,7 @@ function AddEditCourse({
 							id="coursePrice"
 							register={register}
 							required
-							type="text"
+							type="number"
 						/>
 						<small>{errors.coursePrice?.message}</small>
 						<Input
@@ -127,8 +118,8 @@ function AddEditCourse({
 						<small>{errors.registrationFee?.message}</small>
 						<Input
 							label="Descripción"
-							name="description"
-							id="description"
+							name="courseDescription"
+							id="courseDescription"
 							register={register}
 							required={false}
 							type="text"
@@ -160,7 +151,7 @@ function AddEditCourse({
 						</div>
 
 						<div className={styles.formControl}>
-							<p>Fecha de inicio</p>
+							<p>Fecha de Finalización</p>
 							<Controller
 								name="endDate"
 								control={control}
@@ -187,7 +178,7 @@ function AddEditCourse({
 							name="isAvailable"
 							register={register}
 							id="isAvailable"
-							options={{ si: "Si", no: "No" }}
+							options={{ si: true, no: false }}
 						/>
 					</div>
 				</div>

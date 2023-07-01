@@ -2,7 +2,7 @@ import { Group } from "./types";
 
 export const grupos = [
     {
-        id: crypto.randomUUID(),
+        id: 1,
         course: 'PEM',
         groupName: "PEM Sabado mañana",
         description: "Some description for this group.",
@@ -13,7 +13,7 @@ export const grupos = [
         capacity: 18
     },
     {
-        id: crypto.randomUUID(),
+        id: 2,
         course: 'REM',
         groupName: "REM Miercoles Tarde",
         description: "Some description for this group.",
@@ -24,7 +24,7 @@ export const grupos = [
         capacity: 25
     },
     {
-        id: crypto.randomUUID(),
+        id: 3,
         course: 'AMLS',
         groupName: "AMLS Lun Mie Vie tarde",
         description: "Some description for this group.",
@@ -35,7 +35,7 @@ export const grupos = [
         capacity: 20
     },
     {
-        id: crypto.randomUUID(),
+        id: 4,
         course: 'TEM',
         groupName: "TEM Viernes",
         description: "Some description for this group.",
@@ -46,7 +46,7 @@ export const grupos = [
         capacity: 18
     },
     {
-        id: crypto.randomUUID(),
+        id: 5,
         course: 'TEM',
         groupName: "TEM Miercoles",
         description: "Some description for this group.",
@@ -57,7 +57,7 @@ export const grupos = [
         capacity: 25
     },
     {
-        id: crypto.randomUUID(),
+        id: 6,
         course: 'TECC',
         groupName: "TECC martes matutino",
         description: "Some description for this group.",
@@ -68,7 +68,7 @@ export const grupos = [
         capacity: 20
     },
     {
-        id: crypto.randomUUID(),
+        id: 7,
         course: 'PHTLS',
         groupName: "PHTLS Jueves",
         description: "Some description for this group.",
@@ -82,4 +82,14 @@ export const grupos = [
 ].reduce((collection, currentGroup) => {
     collection[currentGroup.id] = currentGroup
     return collection
+}, ({} as Record<number, Group>))
+
+
+/*
+.reduce((collection, currentGroup) => {
+    collection[currentGroup.id] = currentGroup
+    return collection
 }, ({} as Record<string, Group>))
+
+The original id was an uuid (string), therefore inside the Record utility was defined as string
+*/

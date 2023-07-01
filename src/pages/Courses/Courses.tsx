@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //components
 import CourseTable from "../../components/CoursesTable/CourseTable";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
 import AddEditCourse from "../../components/AddEditCourse/AddEditCourse";
 //redux
-import { useAppSelector } from "../../hooks/storeHooks";
+import { useAppSelector, useAppDispatch } from "../../hooks/storeHooks";
+import { fetchCourses } from "../../store/courses/thunks-courses";
 //styles
 import styles from "./courses.module.scss";
 //react table
@@ -14,10 +15,19 @@ import { columns } from "../../table-columns/COURSES_COLUMNS";
 function Courses() {
 	const [createCourseModal, setCreateCourseModal] = useState(false);
 	const coursesFromState = useAppSelector(({ courses }) => courses.courses);
+	const coursesStatus = useAppSelector(({ courses }) => courses.status);
+	const dispatch = useAppDispatch();
 
 	//handlers
 	const showCreateCourseHandler = () => setCreateCourseModal(true);
 	const hideCreateCourseHandler = () => setCreateCourseModal(false);
+
+	useEffect(() => {
+		if (coursesStatus === "idle") {
+			dispatch(fetchCourses());
+		}
+	}, [coursesStatus, dispatch]);
+
 	return (
 		<section className={styles.container}>
 			{createCourseModal && (
