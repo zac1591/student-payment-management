@@ -18,6 +18,8 @@ import Groups from "./pages/Groups/Groups";
 import NothingToSee from "./pages/NothingToSee/NothingToSee";
 import UsersAndGroups from "./pages/UsersAndGroups/UsersAndGroups";
 import Courses from "./pages/Courses/Courses";
+import Debts from "./pages/Debts/Debts";
+import RecurringDebts from "./pages/RecurringDebts/RecurringDebts";
 
 
 function App() {
@@ -35,8 +37,10 @@ function App() {
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/contacts/:userId" element={<ContactDetails />} />
 				<Route path="/groups" element={<Groups />} />
-				<Route path="/finances" element={<Finances />} />
 				<Route path="/courses" element={<Courses />} />
+				<Route path="/finances" element={<Finances />} />
+				<Route path="/debts" element={<Debts />} />
+				<Route path="/recurring-debts" element={<RecurringDebts />} />
 
 				<Route path="/user-preferences" element={<UserPreferences />} >
 					<Route path="general-settings" element={<GeneralSettings />} />

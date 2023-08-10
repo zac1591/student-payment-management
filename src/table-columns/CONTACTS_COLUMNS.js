@@ -28,7 +28,7 @@ export const COLUMNS = [
   {
     Header: "Becado",
     accessor: "scholarship",
-    Cell: ({ value }) => value ? 'Si': 'No'
+    Cell: ({ value }) => value ? 'Si' : 'No'
   },
   {
     Header: "Cuota Mensual Asignada",
@@ -39,7 +39,7 @@ export const COLUMNS = [
     accessor: "actions",
     disableFilters: true
   }
-  
+
 ];
 
 export const newColumns = [
@@ -47,7 +47,7 @@ export const newColumns = [
     id: "select",
     header: ({ table }) => (
       <IndeterminateCheckbox {
-        ...{ checked: table.getIsAllRowsSelected(), indeterminate: table.getIsSomeRowsSelected(), onChange: table.getToggleAllRowsSelectedHandler()} 
+        ...{ checked: table.getIsAllRowsSelected(), indeterminate: table.getIsSomeRowsSelected(), onChange: table.getToggleAllRowsSelectedHandler() }
       } />
     ),
 
@@ -61,7 +61,7 @@ export const newColumns = [
         }}
       />
     )
-    
+
   },
   {
     header: "Nombre",
@@ -76,6 +76,11 @@ export const newColumns = [
     sticky: "left"
   },
   {
+    header: 'Identificación',
+    id: 'personalId',
+    accessorKey: 'personalId'
+  },
+  {
     header: "Correo",
     id: 'email',
     accessorKey: "email"
@@ -86,19 +91,8 @@ export const newColumns = [
     accessorKey: "phoneNumber"
   },
   {
-    header: "Becado",
-    id: 'scholarship',
-    accessorKey: "scholarship",
-    cell: info => info.getValue() ? 'Si' : 'No'
-  },
-  {
-    header: "Grupos",
-    id: 'groups',
-    accessorKey: "groups",
-  },
-  {
-    header: "Cuota Mensual",
-    id: 'assignedMonthlyPayment',
-    accessorKey: "assignedMonthlyPayment"
-  }                                                                        
+    header: 'Role',
+    id: 'accessLevel',
+    accessorKey: 'accessLevel'
+  }
 ]

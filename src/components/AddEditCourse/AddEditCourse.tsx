@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 //redux
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
-import { updateCourse } from "../../store/courses/coursesSlice";
-import { addNewCourse } from "../../store/courses/thunks-courses";
+import { addNewCourse, editCourse } from "../../store/courses/thunks-courses";
 //react hook form
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 //component
@@ -31,7 +30,7 @@ function AddEditCourse({
 	courseId,
 }: courseProps) {
 	const toEditCourse = useAppSelector(({ courses }) =>
-		courseId ? courses.courses[courseId] : null
+		courseId ? courses.courses.find(course => course.id === courseId) : null
 	);
 	const dispatch = useAppDispatch();
 
@@ -62,15 +61,15 @@ function AddEditCourse({
 	};
 
 	const updateCourseHandler = (data: Course) => {
-		// console.log(data)
-		dispatch(updateCourse(data));
+		console.log(data);
+		dispatch(editCourse(data));
 		reset();
 		onHideCreateCourse();
 	};
 
 	//if form component is being used for editing an entry
 	useEffect(() => {
-		if (editMode && toEditCourse !== null) {
+		if (editMode && toEditCourse !== null && toEditCourse !== undefined) {
 			//set state with the given object and make the form aware of it so we can populate the to be edited data.
 
 			//geting data from store
@@ -172,14 +171,14 @@ function AddEditCourse({
 							/>
 							<small>{errors.endDate?.message}</small>
 						</div>
-						{/* come back to refactor radio button component */}
-						<RadioButton
+						{/* come back to refactor radio button component as it doesn not working when editing */}
+						{/* <RadioButton
 							label="Disponible"
 							name="isAvailable"
 							register={register}
 							id="isAvailable"
 							options={{ si: true, no: false }}
-						/>
+						/> */}
 					</div>
 				</div>
 

@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 //components
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
 import AddEditContact from "../../components/AddEditContact/AddEditContact";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
 import ContactOptions from "../../components/ContactOptions/ContactOptions";
-import ContactsTable from "../../components/ContactsTable/ContactsTable";
+import Table from "../../components/Table/Table";
 import { Jelly } from "@uiball/loaders";
 
-//mock data
+//table columns
 import { newColumns } from "../../table-columns/CONTACTS_COLUMNS";
 //styles
 import styles from "./contacts.module.scss";
 
 //redux
 import { useAppSelector, useAppDispatch } from "../../hooks/storeHooks";
-import { fetchContacts } from "../../store/contacts/thunks-contacts";
+import {
+	fetchContacts,
+	deleteContact,
+} from "../../store/contacts/thunks-contacts";
 //types
 import { Contact } from "../../types";
 
@@ -30,11 +34,12 @@ function Contacts() {
 	const contactStatus = useAppSelector(state => state.contacts.status);
 	const contactsFromRedux = useAppSelector(state => state.contacts.contacts);
 	const contactsError = useAppSelector(state => state.contacts.error);
+	const navigate = useNavigate();
 
-	//show/hide create contact handlers
+	//show/hide create modal contact handlers
 	const showAddContactHandler = () => setShowAddContactModal(true);
 	const hideAddContactHandler = () => setShowAddContactModal(false);
-	//show/hide edit contact handlers
+	//show/hide edit modal contact handlers
 	const showEditContactHandler = () => setShowEditContactModal(true);
 	const hideEditContactHandler = () => setShowEditContactModal(false);
 	//options contact handler
@@ -49,14 +54,13 @@ function Contacts() {
 	// 	navigate(`/contacts/${rowContact.original.id}`, { replace: true });
 	// };
 
-	//this code requires debugging and refactoring in order to make it work as intended
+	//Handlers
 
-	const viewContactHandler = () => {
-		// if(selectedFlatRows.length == 1) {
-		// 	console.log(selectedFlatRows)
-		// 	const idRow = selectedFlatRows[0].values.id;
-		// 	navigate(`/contacts/${idRow}`, { replace: true });
-		// }
+	const viewContactHandler = (headerId: string, rowInfo: Contact) => {
+		//redirects to contact detail page when clicking anywhere on the row except the checkbox
+		if (headerId !== "select") {
+			navigate(`/contacts/${rowInfo.id}`, { replace: true });
+		}
 		console.log("Viewwing contact");
 	};
 
@@ -67,18 +71,15 @@ function Contacts() {
 	// };
 
 	const editContactHandler = (id: number) => {
-		console.log(`${id} being read from contacts component`);
 		setIdContactToEdit(id);
 		showEditContactHandler();
 	};
 
-	const deleteContactHandler = () => {
-		// const idRow = selectedFlatRows[0].values.id;
-		// dispatch(removeContact(idRow))
-		console.log("Deleting contact");
+	const deleteContactHandler = (id: number) => {
+		dispatch(deleteContact(id));
 	};
 
-	/*Bigin contact's options button*/
+	/*Begin contact's options button*/
 
 	type ButtonConfigTypes = {
 		btnName: string;
@@ -87,17 +88,30 @@ function Contacts() {
 	};
 
 	let contactsButtonConfig: ButtonConfigTypes[] = [];
-	contactsButtonConfig = [
-		{ btnName: "Ver", iconLabel: "visibility", onClick: viewContactHandler },
-		{
-			btnName: "Editar",
-			iconLabel: "edit_note",
-			onClick: () => {},
-		},
-		{ btnName: "Borrar", iconLabel: "remove", onClick: deleteContactHandler },
-	];
+	// contactsButtonConfig = [
+	// 	{ btnName: "Ver", iconLabel: "visibility", onClick: viewContactHandler },
+	// 	{
+	// 		btnName: "Editar",
+	// 		iconLabel: "edit_note",
+	// 		onClick: () => {},
+	// 	},
+	// 	{ btnName: "Borrar", iconLabel: "remove", onClick: deleteContactHandler },
+	// ];
 
 	/*Ends contact's options button*/
+
+	// testing endpoint
+	useEffect(() => {
+		async function getStudentDetails() {
+			let response = await fetch(
+				"http://localhost:8000/api/v1/inscriptions/user-inscriptions"
+			);
+			let data = await response.json();
+			console.log(data);
+		}
+
+		getStudentDetails();
+	}, []);
 
 	useEffect(() => {
 		if (contactStatus === "idle") {
@@ -105,6 +119,7 @@ function Contacts() {
 		}
 	}, [contactStatus, dispatch]);
 
+	//Handling UI state
 	let loadingTableContent;
 
 	if (contactStatus === "loading") {
@@ -128,18 +143,27 @@ function Contacts() {
 		);
 	} else if (contactStatus === "success") {
 		loadingTableContent = (
-			<ContactsTable
+			// <ContactsTable
+			// 	columns={newColumns}
+			// 	stateData={contactsFromRedux}
+			// 	navigatesTo="contacts"
+			// 	onEditRow={editContactHandler}
+			// 	onDeleteRow={deleteContactHandler}
+			// />
+			<Table
 				columns={newColumns}
 				stateData={contactsFromRedux}
-				navigatesTo="contacts"
-				onSelectContactToEdit={editContactHandler}
+				onViewRow={viewContactHandler}
+				onEditRow={editContactHandler}
+				onDeleteRow={deleteContactHandler}
+				globalFilterLabel="Buscar Contactos"
 			/>
 		);
 	} else if (contactStatus === "failed") {
 		loadingTableContent = (
 			<span>
 				Oops!! Esto no estaba previsto. Verifica el mensaje de error y
-				vuelve a intentarloz: <br /> {contactsError}
+				vuelve a intentarlo: <br /> {contactsError}
 			</span>
 		);
 	}

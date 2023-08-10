@@ -1,38 +1,39 @@
-@use '../../../../sass/abstracts/variables' as *;
+@use "../../../../sass/abstracts/variables" as *;
 
- .tabNavItem {
-    width: 50%;
-    // padding: 1rem;
-    list-style: none;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.7s;
-    border-bottom-left-radius: 2rem;
-    border-top-left-radius: 2rem;
+.tabNavItem {
+	width: 50%;
+	height: 1.8rem;
+	line-height: 1.8;
+	font-size: 0.9rem;
+	list-style: none;
+	text-align: center;
+	cursor: pointer;
+	transition: all ease 0.4s;
+	border-bottom-left-radius: 2rem;
+	border-top-left-radius: 2rem;
 
-    &:first-child {
-      border-bottom-left-radius: 2rem;
-      border-top-left-radius: 2rem;
-    }
-    
-    &:last-child {
-      border-bottom-right-radius: 2rem;
-      border-top-right-radius: 2rem;
-    }
-    
-    &:hover {
-      background: rgba(50, 224, 196, 0.25);
-    }
-    
-    &.active {
-      background: $color-primary;
-      color: #fff;
-    }
+	&:first-child {
+		border-bottom-left-radius: 2rem;
+		border-top-left-radius: 2rem;
+	}
 
-    
-  }
-  
-  /*Extend support for many tabs*/
+	&:last-child {
+		border-bottom-right-radius: 2rem;
+		border-top-right-radius: 2rem;
+	}
+
+	&:hover {
+		background: rgba(50, 224, 196, 0.25);
+	}
+
+	&.active {
+		background: $color-primary;
+		color: #fff;
+		font-weight: bold;
+	}
+}
+
+/*Extend support for many tabs*/
 //    li {
 //     width: 50%;
 //     padding: 1rem;

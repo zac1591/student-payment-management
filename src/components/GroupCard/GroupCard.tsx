@@ -62,7 +62,9 @@ function GroupCard({ groupProps }: groupCardPropsType) {
 				/>
 			)}
 			<Card className={styles.card}>
-				{showContextMenu && <ContextMenu options={GroupContextMenu} />}
+				{showContextMenu && (
+					<ContextMenu key={groupProps.id} options={GroupContextMenu} />
+				)}
 				<div className={styles.header}>
 					<div className={styles.groupName}>
 						<span className={`material-icons-sharp ${styles.groupIcon}`}>
@@ -71,8 +73,10 @@ function GroupCard({ groupProps }: groupCardPropsType) {
 						<h3>{groupProps.groupName}</h3>
 					</div>
 					<span
+						tabIndex={0}
 						className={`material-icons-sharp ${styles.optionsIcon}`}
 						onClick={onShowOptionsContextHandler}
+						onBlur={() => setContextMenu(false)}
 					>
 						more_horiz
 					</span>

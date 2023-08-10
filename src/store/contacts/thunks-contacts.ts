@@ -2,12 +2,13 @@ import { Contact } from "../../types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { formatDate } from "../../utils/utils";
 
-const BASE_URL = 'http://localhost:8000/api/v1/'
+const BASE_URL = 'http://localhost:8000/api/v1'
+const CRUD = `${BASE_URL}/users`
 
 //this thunk is being use to display students information but is intended to be used in the users component which is not built yet
 export const fetchContacts = createAsyncThunk('contacts/fetchContacts', async () => {
    try {
-      const response = await fetch(`${BASE_URL}user/list/`, {
+      const response = await fetch(`${CRUD}/`, {
          method: 'GET',
          headers: { 'Content-Type': 'application/json' }
       });
@@ -27,7 +28,6 @@ export const addNewContact = createAsyncThunk('contacts/addNewContact', async (n
       personal_id: newContact.personalId,
       dob: formatDate(newContact.dob),
       gender: newContact.gender,
-      scholarship: newContact.scholarship,
       phone_number: newContact.phoneNumber,
       email: newContact.email,
       address: newContact.address,
@@ -35,7 +35,7 @@ export const addNewContact = createAsyncThunk('contacts/addNewContact', async (n
       country: newContact.country,
       access_level: newContact.accessLevel
    }
-   const response = await fetch(`${BASE_URL}user/`, {
+   const response = await fetch(`${CRUD}/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataToSend)
@@ -54,7 +54,6 @@ export const editContact = createAsyncThunk('contacts/editContact', async (conta
       personal_id: contact.personalId,
       dob: formatDate(contact.dob),
       gender: contact.gender,
-      scholarship: contact.scholarship,
       phone_number: contact.phoneNumber,
       email: contact.email,
       address: contact.address,
@@ -62,24 +61,24 @@ export const editContact = createAsyncThunk('contacts/editContact', async (conta
       country: contact.country,
       access_level: contact.accessLevel
    }
-   const response = await fetch(`${BASE_URL}user/${contact.id}`, {
+   const response = await fetch(`${CRUD}/${contact.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedContact)
    });
 
-   const data = await response.json()
-   console.log(data)
-   return data
+   const data = await response.json();
+   console.log(data);
+   return data;
 })
 
 
 export const deleteContact = createAsyncThunk('contacts/deleteContact', async (id: number) => {
-   await fetch(`${BASE_URL}user/${id}`, {
+   await fetch(`${CRUD}/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(id)
-   })
+   });
 
-   return id
+   return id;
 });

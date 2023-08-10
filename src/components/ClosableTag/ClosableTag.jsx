@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./closableTag.module.scss";
 
 function ClosableTag(props) {

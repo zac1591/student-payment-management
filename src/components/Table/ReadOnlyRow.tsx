@@ -1,21 +1,20 @@
 import { Row, flexRender } from "@tanstack/react-table";
-import { Contact } from "../../types";
 
 //event parameter type e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
 
-type ReadOnlyRowTypes = {
-	row: Row<Contact>;
+type ReadOnlyRowTypes<T> = {
+	row: Row<T>;
 	onMouseEnter: (number: number) => void;
 	onMouseLeave: () => void;
-	onViewContactHandler: (headerId: string, rowInfo: Contact) => void;
+	onViewRowHandler: (headerId: string, rowInfo: T) => void;
 };
 
-function ReadOnlyRow({
+function ReadOnlyRow<T extends { id: number }>({
 	row,
 	onMouseEnter,
 	onMouseLeave,
-	onViewContactHandler,
-}: ReadOnlyRowTypes) {
+	onViewRowHandler,
+}: ReadOnlyRowTypes<T>) {
 	return (
 		<tr
 			key={row.id}
@@ -26,9 +25,7 @@ function ReadOnlyRow({
 			{row.getVisibleCells().map(cell => (
 				<td
 					key={cell.id}
-					onClick={() =>
-						onViewContactHandler(cell.column.id, row.original)
-					}
+					onClick={() => onViewRowHandler(cell.column.id, row.original)}
 				>
 					{flexRender(cell.column.columnDef.cell, cell.getContext())}
 				</td>

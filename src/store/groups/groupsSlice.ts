@@ -56,7 +56,10 @@ const groupsSlice = createSlice({
 			})
 			.addCase(addNewGroup.fulfilled, (state, action) => {
 				state.status = 'success';
-				state.groups = { ...state.groups, [action.payload.id]: action.payload }
+				if (action.payload) {
+					state.groups = { ...state.groups, [action.payload.id]: action.payload }
+				}
+
 			})
 			.addCase(addNewGroup.rejected, (state, action) => {
 				state.status = 'failed';

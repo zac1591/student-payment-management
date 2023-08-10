@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchCourses, addNewCourse } from './thunks-courses'
+import { fetchCourses, addNewCourse, editCourse, deleteCourse as removeCourse } from './thunks-courses'
 import { Course } from "../../types";
 
 type CourseSliceType = {
@@ -42,13 +42,13 @@ const courseSlice = createSlice({
       // addCourse(state, action: PayloadAction<Course>) {
       //    state.courses = [...state.courses, action.payload]
       // },
-      updateCourse(state, action: PayloadAction<Course>) {
-         state.courses = state.courses.filter(course => course.id !== action.payload.id)
-         state.courses = [...state.courses, action.payload]
-      },
-      deleteCourse(state, action: PayloadAction<number>) {
-         state.courses = state.courses.filter(course => course.id !== action.payload)
-      }
+      // updateCourse(state, action: PayloadAction<Course>) {
+      //    state.courses = state.courses.filter(course => course.id !== action.payload.id)
+      //    state.courses = [...state.courses, action.payload]
+      // },
+      // deleteCourse(state, action: PayloadAction<number>) {
+      //    state.courses = state.courses.filter(course => course.id !== action.payload)
+      // }
    },
    extraReducers(builder) {
       builder
@@ -71,8 +71,26 @@ const courseSlice = createSlice({
             state.status = "failed";
             state.error = action.error.message;
          })
+         .addCase(editCourse.fulfilled, (state, action) => {
+            state.status = 'success';
+            //selecting course from state to be edited
+            const selectedCourse = state.courses.find(({ id }) => id !== action.payload.id);
+
+            if (selectedCourse) {
+               //returning new array without the to be edited course
+               state.courses = state.courses.filter(({ id }) => id !== selectedCourse?.id);
+               state.courses = [...state.courses, action.payload];
+            }
+         })
+         .addCase(editCourse.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+         })
+         .addCase(removeCourse.fulfilled, (state, action) => {
+            state.status = 'success';
+            state.courses = state.courses.filter(course => course.id !== action.payload);
+         })
    },
 });
 
 export default courseSlice.reducer
-export const { updateCourse, deleteCourse } = courseSlice.actions

@@ -31,7 +31,7 @@ const contactsSlice = createSlice({
 		// 	const updatedContact = state.contacts.find(({ id }) => id === action.payload.id);
 		// 	state.contacts = state.contacts.filter(({ id }) => id !== updatedContact?.id)
 		// 	if (updatedContact)
-		// 		state.contacts = [...state.contacts, updatedContact]
+		// 		state.contacts = [...state.contacts, action.payload]
 
 		// },
 		// removeContact(state, action: PayloadAction<number>) {
@@ -63,12 +63,14 @@ const contactsSlice = createSlice({
 			.addCase(editContact.fulfilled, (state, action) => {
 				state.status = 'success';
 				//selecting contact to be edited
-				const updatedContact = state.contacts.find(({ id }) => id === action.payload.id);
-				//returning new array without the to be edited contact
-				state.contacts = state.contacts.filter(({ id }) => id !== updatedContact?.id);
+				const selectedContact = state.contacts.find(({ id }) => id === action.payload.id);
 				//appending updated contact
-				if (updatedContact)
-					state.contacts = [...state.contacts, updatedContact];
+				if (selectedContact) {
+					state.contacts = state.contacts.filter(({ id }) => id !== selectedContact?.id);
+					//returning new array without the to be edited contact
+					state.contacts = [...state.contacts, action.payload];
+				}
+
 			})
 			.addCase(deleteContact.fulfilled, (state, action) => {
 				state.status = 'success';

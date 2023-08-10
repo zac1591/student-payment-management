@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import contactsReducer from './contacts/contactsSlice';
 import groupsReducer from './groups/groupsSlice';
 import courseReducer from './courses/coursesSlice'
+import debtsReducer from './Debts/debtsSlice'
 
 const middlewares = [logger]
 
@@ -11,7 +12,8 @@ const store = configureStore({
     reducer: {
         contacts: contactsReducer,
         groups: groupsReducer,
-        courses: courseReducer
+        courses: courseReducer,
+        debts: debtsReducer
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(middlewares)
 })

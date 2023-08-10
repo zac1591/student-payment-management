@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 //components
-import CourseTable from "../../components/CoursesTable/CourseTable";
+
+import Table from "../../components/Table/Table";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
 import AddEditCourse from "../../components/AddEditCourse/AddEditCourse";
 //redux
 import { useAppSelector, useAppDispatch } from "../../hooks/storeHooks";
-import { fetchCourses } from "../../store/courses/thunks-courses";
+import { fetchCourses, deleteCourse } from "../../store/courses/thunks-courses";
 //styles
 import styles from "./courses.module.scss";
 //react table
@@ -14,6 +15,10 @@ import { columns } from "../../table-columns/COURSES_COLUMNS";
 
 function Courses() {
 	const [createCourseModal, setCreateCourseModal] = useState(false);
+	const [showEditCourseModal, setShowEditCourseModal] = useState(false);
+	const [idCourseToEdit, setIdCourseToEdit] = useState<number | undefined>(
+		undefined
+	);
 	const coursesFromState = useAppSelector(({ courses }) => courses.courses);
 	const coursesStatus = useAppSelector(({ courses }) => courses.status);
 	const dispatch = useAppDispatch();
@@ -21,6 +26,18 @@ function Courses() {
 	//handlers
 	const showCreateCourseHandler = () => setCreateCourseModal(true);
 	const hideCreateCourseHandler = () => setCreateCourseModal(false);
+
+	const showEditCourseHandler = () => setShowEditCourseModal(true);
+	const hideEditCourseHandler = () => setShowEditCourseModal(false);
+
+	const editCourseHandler = (id: number) => {
+		setIdCourseToEdit(id);
+		showEditCourseHandler();
+	};
+
+	const deleteContactHandler = (id: number) => {
+		dispatch(deleteCourse(id));
+	};
 
 	useEffect(() => {
 		if (coursesStatus === "idle") {
@@ -36,6 +53,14 @@ function Courses() {
 					editMode={false}
 				/>
 			)}
+
+			{showEditCourseModal && (
+				<AddEditCourse
+					onHideCreateCourse={hideEditCourseHandler}
+					editMode={true}
+					courseId={idCourseToEdit}
+				/>
+			)}
 			<MenuDashboard />
 			<main>
 				<ActiveMenu
@@ -43,13 +68,19 @@ function Courses() {
 					currentPageTitle="Cursos"
 					onShowItem={showCreateCourseHandler}
 				/>
-				<CourseTable
+				{/* <CourseTable
 					columns={columns}
 					navigatesTo="course"
 					stateData={coursesFromState}
-					onSelectCourseToEdit={() =>
-						console.log("selecting course to edit")
-					}
+					onEditRow={editCourseHandler}
+					onDeleteRow={deleteContactHandler}
+				/> */}
+				<Table
+					columns={columns}
+					stateData={coursesFromState}
+					onEditRow={editCourseHandler}
+					onDeleteRow={deleteContactHandler}
+					globalFilterLabel="Burcar Cursos"
 				/>
 			</main>
 		</section>

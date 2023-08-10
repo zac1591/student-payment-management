@@ -11,7 +11,6 @@ const TabNavItem = ({ id, title, activeTab, setActiveTab }) => {
 			className={`${styles.tabNavItem} ${
 				activeTab === id ? styles.active : ""
 			}`}
-			style={{ fontSize: "0.9rem" }}
 		>
 			{title}
 		</li>

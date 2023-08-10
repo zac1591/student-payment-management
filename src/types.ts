@@ -10,7 +10,7 @@ export type Group = {
 	duration: number
 }
 
-export type masive = {
+export type BulkSearch = {
 	grupos: string,
 	importe: string,
 	importe_amount: string
@@ -29,7 +29,6 @@ export type Contact = {
 	department?: string,
 	dob?: string,
 	gender?: string,
-	scholarship: boolean,
 	groups?: string
 	accessLevel: string
 
@@ -46,6 +45,11 @@ export type Course = {
 	endDate: string,
 	isAvailable: boolean
 }
+
+export type SelectOption = {
+	label: string;
+	value: string | number;
+};
 
 /*
 

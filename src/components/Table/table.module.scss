@@ -79,11 +79,15 @@
 
 	.contactActions {
 		position: absolute;
+		padding: 1rem;
+		border-radius: 15px;
 		right: 10px;
-		// filter: drop-shadow(0px 0px 2px #7380ec);
+		box-shadow: $box-shadow-accent;
+		background: #fff;
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+		z-index: 5;
 
 		span {
 			color: $color-primary;

@@ -4,15 +4,14 @@ import { formatDate } from "../../utils/utils";
 
 
 //endponts
-const BASE_URL = 'http://localhost:8000/api/v1/';
-const COURSES_LIST = `${BASE_URL}course/list/`;
-const ADD_COURSE = `${BASE_URL}course/`;
+const BASE_URL = 'http://localhost:8000/api/v1';
+const CRUD = `${BASE_URL}/courses`;
 //end
 
 //fetching courses from backend
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
    try {
-      const response = await fetch(COURSES_LIST, {
+      const response = await fetch(`${CRUD}/`, {
          method: 'GET',
          headers: { 'Content-type': 'application/json' }
       });
@@ -37,7 +36,7 @@ export const addNewCourse = createAsyncThunk('courses/addNewCourse', async (newC
       is_available: newCourse.isAvailable
    }
 
-   const response = await fetch(ADD_COURSE, {
+   const response = await fetch(`${CRUD}/`, {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(dataToSend)
@@ -45,5 +44,45 @@ export const addNewCourse = createAsyncThunk('courses/addNewCourse', async (newC
 
    const courseData = await response.json();
    return courseData as Course;
-})
+});
+
+
+//editing course
+export const editCourse = createAsyncThunk('courses/editCourse', async (course: Course) => {
+   const dataToSend = {
+      course_name: course.courseName,
+      course_price: course.coursePrice,
+      registration_fee: course.registrationFee,
+      course_description: course.courseDescription,
+      start_date: formatDate(course.startDate),
+      end_date: formatDate(course.endDate),
+      is_available: true
+   }
+
+   const response = await fetch(`${CRUD}/${course.id}`, {
+      method: 'PUT',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(dataToSend)
+   })
+
+   if (!response.ok) {
+      console.log(response.status)
+      throw new Error('Algo salió mal')
+   }
+
+   const data = await response.json();
+   return data;
+});
+
+
+//delete course
+export const deleteCourse = createAsyncThunk('courses/deleteCourse', async (id: number) => {
+   await fetch(`${CRUD}/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(id)
+   });
+
+   return id;
+});
 

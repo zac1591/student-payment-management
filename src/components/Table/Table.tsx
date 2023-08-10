@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 //tanstack table
 import {
 	useReactTable,
@@ -11,36 +10,39 @@ import {
 	getSortedRowModel,
 	SortingState,
 } from "@tanstack/react-table";
-//types
-import { Course } from "../../types";
+
 //components
 import GlobalFilter from "../GlobalFilter/GlobalFilter";
-
-//styles
-import styles from "./courseTable.module.scss";
-// import ReadOnlyRow from "./ReadOnlyRow";
-// import EditableRow from "./EditableRow";
+import ReadOnlyRow from "./ReadOnlyRow";
+import EditableRow from "./EditableRow";
 import Card from "../Card/Card";
 
-type CoursesTableProps = {
-	columns: ColumnDef<Course>[];
-	stateData: Course[];
-	navigatesTo: string;
-	onSelectCourseToEdit: (id: number) => void;
+//styles
+import styles from "./table.module.scss";
+
+type TableProps<T> = {
+	columns: ColumnDef<T>[];
+	stateData: T[];
+	globalFilterLabel: string;
+	onViewRow?: (headerId: string, rowInfo: T) => void;
+	onEditRow: (id: number) => void;
+	onDeleteRow: (id: number) => void;
 };
 
-function CourseTable({
+function Table<T extends { id: number }>({
 	columns,
 	stateData,
-	navigatesTo,
-	onSelectCourseToEdit,
-}: CoursesTableProps) {
+	globalFilterLabel,
+	onViewRow,
+	onEditRow,
+	onDeleteRow,
+}: TableProps<T>) {
 	const [rowSelection, setRowSelection] = useState({});
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [isHovering, setIsHovering] = useState(false);
 	const [editContactId, setEditContactId] = useState<null | number>(null);
-	const columnsData = useMemo<ColumnDef<Course>[]>(() => columns, [columns]);
+	const columnsData = useMemo<ColumnDef<T>[]>(() => columns, [columns]);
 	const table = useReactTable({
 		data: stateData,
 		columns: columnsData,
@@ -57,10 +59,8 @@ function CourseTable({
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
-		debugTable: true,
+		debugTable: false,
 	});
-
-	const navigate = useNavigate();
 
 	//handlers
 	const onMouseEnterHandler = (id: number) => {
@@ -72,18 +72,10 @@ function CourseTable({
 		setIsHovering(false);
 	};
 
-	const viewContactDetailsHandler = (
-		headerId: string,
-		rowInfo: Course
-	): void => {
-		//redirects to contact detail page when clicking anywhere on the row except the checkbox
-		if (headerId !== "select") {
-			navigate(`/${navigatesTo}/${rowInfo.id}`, { replace: true });
+	const viewRowDetailsHandler = (headerId: string, rowInfo: T): void => {
+		if (onViewRow) {
+			onViewRow(headerId, rowInfo);
 		}
-	};
-
-	const editCourseHandler = (id: number) => {
-		onSelectCourseToEdit(id);
 	};
 
 	// console.log(table.getSelectedRowModel().flatRows.map(row => row.original))
@@ -93,14 +85,14 @@ function CourseTable({
 		<>
 			{stateData.length === 0 ? (
 				<h2 style={{ textAlign: "center", marginTop: "2rem" }}>
-					No hay contáctos para mostrar
+					No hay elementos para mostrar
 				</h2>
 			) : (
 				<>
 					<GlobalFilter
 						filter={globalFilter}
 						setFilter={setGlobalFilter}
-						label="Buscar Cursos"
+						label={globalFilterLabel}
 					/>
 					<Card className={styles.card}>
 						<table className={styles.table}>
@@ -138,53 +130,49 @@ function CourseTable({
 								))}
 							</thead>
 							<tbody>
-								{table.getRowModel().rows.map(
-									row => (
-										<tr
+								{table.getRowModel().rows.map(row =>
+									// <tr
+									// 	key={row.id}
+									// 	onMouseEnter={e => onMouseEnterHandler(45)}
+									// 	onMouseLeave={onMouseLeaveHandler}
+									// 	style={{ position: "relative" }}
+									// >
+									// 	{row.getVisibleCells().map(cell => (
+									// 		<td
+									// 			key={cell.id}
+									// 			onClick={() =>
+									// 				viewContactDetailsHandler(
+									// 					cell.column.id,
+									// 					row.original
+									// 				)
+									// 			}
+									// 		>
+									// 			{flexRender(
+									// 				cell.column.columnDef.cell,
+									// 				cell.getContext()
+									// 			)}
+									// 		</td>
+									// 	))}
+									// </tr>
+
+									row.original.id === editContactId && isHovering ? (
+										<EditableRow
 											key={row.id}
-											onMouseEnter={e => onMouseEnterHandler(45)}
+											row={row}
 											onMouseLeave={onMouseLeaveHandler}
-											style={{ position: "relative" }}
-										>
-											{row.getVisibleCells().map(cell => (
-												<td
-													key={cell.id}
-													onClick={() =>
-														viewContactDetailsHandler(
-															cell.column.id,
-															row.original
-														)
-													}
-												>
-													{flexRender(
-														cell.column.columnDef.cell,
-														cell.getContext()
-													)}
-												</td>
-											))}
-										</tr>
+											onViewRowHandler={viewRowDetailsHandler}
+											onEditRowHandler={id => onEditRow(id)}
+											onDeleteRowHandler={id => onDeleteRow(id)}
+										/>
+									) : (
+										<ReadOnlyRow
+											key={row.id}
+											row={row}
+											onMouseEnter={onMouseEnterHandler}
+											onMouseLeave={onMouseLeaveHandler}
+											onViewRowHandler={viewRowDetailsHandler}
+										/>
 									)
-									// row.original.id === editContactId && isHovering ? (
-									// 	<EditableRow
-									// 		key={row.id}
-									// 		row={row}
-									// 		onMouseLeave={onMouseLeaveHandler}
-									// 		onViewContactHandler={
-									// 			viewContactDetailsHandler
-									// 		}
-									// 		onEditContactHandler={editContactHandler}
-									// 	/>
-									// ) : (
-									// 	<ReadOnlyRow
-									// 		key={row.id}
-									// 		row={row}
-									// 		onMouseEnter={onMouseEnterHandler}
-									// 		onMouseLeave={onMouseLeaveHandler}
-									// 		onViewContactHandler={
-									// 			viewContactDetailsHandler
-									// 		}
-									// 	/>
-									// )
 								)}
 							</tbody>
 						</table>
@@ -272,4 +260,4 @@ function CourseTable({
 	);
 }
 
-export default CourseTable;
+export default Table;

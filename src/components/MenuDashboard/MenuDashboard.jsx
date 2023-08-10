@@ -17,11 +17,11 @@ function MenuDashboard() {
 
 			<div className={styles.sidebar}>
 				<NavLink to="/" className={activeLink}>
-					<span className="material-icons-sharp">grid_view </span>
+					<span className="material-icons-sharp">dashboard </span>
 					<h3>Dashboard</h3>
 				</NavLink>
 				<NavLink to="/contacts" className={activeLink}>
-					<span className="material-icons-sharp">person_outline</span>
+					<span className="material-icons-sharp">people_alt</span>
 					<h3>Personas</h3>
 				</NavLink>
 				<NavLink to="/courses" className={activeLink}>
@@ -32,25 +32,25 @@ function MenuDashboard() {
 					<span className="material-icons-sharp">groups</span>
 					<h3>Grupos</h3>
 				</NavLink>
+
 				<NavLink to="/finances" className={activeLink}>
-					<span className="material-icons-sharp">receipt_long</span>
+					<span className="material-icons-sharp">line_axis</span>
 					<h3>Finanzas</h3>
+					{/* <span className="material-icons-sharp">expand_more</span> */}
 				</NavLink>
-				{/* <NavLink to="" className={activeLink}>
-					<span className="material-icons-sharp"> mail_outline </span>
-					<h3>Tickets</h3>
+				<NavLink to="/debts" className={activeLink}>
+					<span className="material-icons-sharp"> receipt </span>
+					<h3>Deudas</h3>
 					<span className={styles["message-count"]}>26</span>
-				</NavLink> */}
-				{/* <NavLink to="">
+				</NavLink>
+				<NavLink to="/recurring-debts">
 					<span className="material-icons-sharp">inventory</span>
-					<h3>Products</h3>
-				</NavLink> */}
-				{/* <NavLink to="" className={activeLink}>
-					<span className="material-icons-sharp">
-						report_gmailerrorred
-					</span>
-					<h3>Reportes</h3>
-				</NavLink> */}
+					<h3>Deudas Recurrentes</h3>
+				</NavLink>
+				<NavLink to="/payments" className={activeLink}>
+					<span className="material-icons-sharp">payment</span>
+					<h3>Pagos</h3>
+				</NavLink>
 				<Link to="">
 					<span className="material-icons-sharp">add</span>
 					<h3>Agregar Usuario</h3>
