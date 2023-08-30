@@ -74,7 +74,7 @@ const courseSlice = createSlice({
          .addCase(editCourse.fulfilled, (state, action) => {
             state.status = 'success';
             //selecting course from state to be edited
-            const selectedCourse = state.courses.find(({ id }) => id !== action.payload.id);
+            const selectedCourse = state.courses.find(({ id }) => id === action.payload.id);
 
             if (selectedCourse) {
                //returning new array without the to be edited course
