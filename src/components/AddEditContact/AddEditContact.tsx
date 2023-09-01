@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 //redux
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHooks";
@@ -12,20 +12,56 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Modal from "../Modal/Modal";
-import RadioButton from "../RadioButton/RadioButton";
+import RadioButtonGroup from "../RadioButtonGroup/RadioButtonGroup";
+import Select from "../UI/Select/Select";
 //utils
 import { strToDate } from "../../utils/utils";
 //styles
 import styles from "./addEditContact.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 //types
-import { Contact } from "../../types";
+import { Contact, SelectOption } from "../../types";
 
 type AddEditContactProps = {
 	onHideCreateContact: () => void;
 	editMode: boolean;
 	contactId?: number;
 };
+
+const genderOptions = [
+	{ label: "Male", name: "gender" },
+	{ label: "Female", name: "gender" },
+];
+
+const accessLevelConfig = [
+	{ label: "Usuario", value: "user" },
+	{ label: "Cliente", value: "customer" },
+	{ label: "Administrador", value: "admin" },
+];
+
+//mock data
+const countryDepartmentsConfig = [
+	{ label: "Ahuachapán", value: "ahuachapán" },
+	{ label: "Cabañas", value: "cabañas" },
+	{ label: "Chalatenango", value: "chalatenango" },
+	{ label: "Cuscatlán", value: "cuscatlán" },
+	{ label: "La Libertad", value: "la libertad" },
+	{ label: "La Paz", value: "la paz" },
+	{ label: "La Unión", value: "la unión" },
+	{ label: "Morazán", value: "morazán" },
+	{ label: "San Miguel", value: "san miguel" },
+	{ label: "San Salvador", value: "san salvador" },
+	{ label: "San Vicente", value: "san vicente" },
+	{ label: "Santa Ana", value: "santa ana" },
+	{ label: "Sonsonate", value: "sonsonate" },
+	{ label: "Usulután", value: "usulután" },
+];
+
+const countriesConfig = [
+	{ label: "El Salvador", value: "el salvador" },
+	{ label: "Costa Rica", value: "costa rica" },
+	{ label: "Guatemala", value: "guatemala" },
+];
 
 function AddEditContact({
 	onHideCreateContact,
@@ -39,18 +75,41 @@ function AddEditContact({
 		reset,
 		setValue,
 		control,
-		formState: { errors },
-	} = useForm<Contact>();
+		formState: { errors, isValid },
+	} = useForm<Contact>({ mode: "onChange" });
 
 	const toEditContact = useAppSelector(({ contacts }) =>
 		contactId
 			? contacts.contacts.find(contact => contact.id === contactId)
-			: null
+			: null,
 	);
+
+	const [specimen, setSpecimen] = useState(genderOptions[0].label);
+	const [accessLevel, setAccessLevel] = useState<SelectOption | undefined>(
+		accessLevelConfig[0],
+	);
+	const [countryDept, setCountryDept] = useState<SelectOption | undefined>(
+		countryDepartmentsConfig[9],
+	);
+
+	const [country, setCountry] = useState<SelectOption | undefined>(
+		countriesConfig[0],
+	);
+
+	console.log(isValid);
+	console.log(specimen);
+
+	//handlers
+
+	const radioButtonChangeHandler = (
+		e: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		setSpecimen(e.target.value);
+	};
 
 	const submitButtonHandler: SubmitHandler<Contact> = (
 		data,
-		event: React.BaseSyntheticEvent<object, any, any> | undefined
+		event: React.BaseSyntheticEvent<object, any, any> | undefined,
 	) => {
 		event?.preventDefault();
 		// const buttonName = event.target.getAttribute("id");
@@ -73,7 +132,7 @@ function AddEditContact({
 	useEffect(() => {
 		if (editMode && toEditContact !== null && toEditContact !== undefined) {
 			(Object.keys(toEditContact) as Array<keyof Contact>).forEach(field =>
-				setValue(field, toEditContact[field])
+				setValue(field, toEditContact[field]),
 			);
 		}
 	}, [editMode, toEditContact, setValue]);
@@ -134,13 +193,23 @@ function AddEditContact({
 							type="email"
 						/>
 						<small>{errors.email?.message}</small>
-						<Input
-							label="País"
+
+						<Controller
 							name="country"
-							id="country"
-							register={register}
-							required
-							type="text"
+							control={control}
+							render={field => (
+								<Select
+									{...field}
+									options={countriesConfig}
+									value={country}
+									onChange={country => {
+										setCountry(country);
+										if (country?.value) {
+											setValue("country", country.value.toString());
+										}
+									}}
+								/>
+							)}
 						/>
 						<small>{errors.country?.message}</small>
 						<Input
@@ -154,13 +223,25 @@ function AddEditContact({
 						<small>{errors.address?.message}</small>
 					</div>
 					<div className={styles.splitForm}>
-						<Input
-							label="Departamento"
+						<Controller
 							name="department"
-							id="department"
-							register={register}
-							required
-							type="text"
+							control={control}
+							render={field => (
+								<Select
+									{...field}
+									options={countryDepartmentsConfig}
+									value={countryDept}
+									onChange={department => {
+										setCountryDept(department);
+										if (department?.value) {
+											setValue(
+												"department",
+												department.value.toString(),
+											);
+										}
+									}}
+								/>
+							)}
 						/>
 						<small>{errors.department?.message}</small>
 						<div className={styles.formControl}>
@@ -183,74 +264,37 @@ function AddEditContact({
 									/>
 								)}
 							/>
+							<small>{errors.dob?.message}</small>
 						</div>
 
-						{/* come back to refactor radio button component */}
-						<RadioButton
-							label="Genero"
-							name="gender"
-							register={register}
-							id="genero"
-							options={{ masculino: "Masculino", femenino: "Femenino" }}
-						/>
-						{/* <RadioButton
-							label="Becado"
-							name="scholarship"
-							register={register}
-							id="scholarship"
-							options={{ si: true, no: false }}
-						/> */}
-
-						{/* <div className={styles.formControl}>
-							<p>Fecha de Primera Cuota</p>
-							<Controller
-								name="firstPaymentDate"
-								control={control}
-								rules={{ required: true }}
-								render={({ field: { value, onChange, ...rest } }) => (
-									<ReactDatePicker
-										{...rest}
-										placeholderText="Seleccionar fecha"
-										selected={strToDate(value)}
-										onChange={e => onChange(e)}
-										peekNextMonth
-										showMonthDropdown
-										showYearDropdown
-										dropdownMode="select"
-										className={styles.datePicker}
-									/>
-								)}
+						<div className="radiobuttons">
+							<RadioButtonGroup
+								label="Género"
+								options={genderOptions}
+								onChange={radioButtonChangeHandler}
+								register={register}
 							/>
 						</div>
-						<div className={styles.formControl}>
-							<p>Fecha de la Última Cuota</p>
-							<Controller
-								name="lastPaymentDate"
-								control={control}
-								rules={{ required: true }}
-								render={({ field: { value, onChange, ...rest } }) => (
-									<ReactDatePicker
-										{...rest}
-										placeholderText="Seleccionar fecha"
-										selected={strToDate(value)}
-										onChange={e => onChange(e)}
-										peekNextMonth
-										showMonthDropdown
-										showYearDropdown
-										dropdownMode="select"
-										className={styles.datePicker}
-									/>
-								)}
-							/>
-						</div> */}
 
-						<Input
-							label="Nivel de acceso"
+						<Controller
 							name="accessLevel"
-							id="accessLevel"
-							register={register}
-							required
-							type="select"
+							control={control}
+							render={field => (
+								<Select
+									{...field}
+									options={accessLevelConfig}
+									value={accessLevel}
+									onChange={access => {
+										setAccessLevel(access);
+										if (access?.value) {
+											setValue(
+												"accessLevel",
+												access.value.toString(),
+											);
+										}
+									}}
+								/>
+							)}
 						/>
 					</div>
 				</div>
@@ -264,6 +308,7 @@ function AddEditContact({
 						}}
 						type="submit"
 						id="create-contact"
+						disabled={!isValid}
 					>
 						Guardar
 					</Button>
