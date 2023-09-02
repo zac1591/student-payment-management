@@ -34,9 +34,9 @@ const genderOptions = [
 ];
 
 const accessLevelConfig = [
-	{ label: "Usuario", value: "user" },
-	{ label: "Cliente", value: "customer" },
-	{ label: "Administrador", value: "admin" },
+	{ label: "Usuario", value: 0 },
+	{ label: "Administrador", value: 1 },
+	{ label: "Cliente", value: 2 },
 ];
 
 //mock data
@@ -84,7 +84,7 @@ function AddEditContact({
 			: null,
 	);
 
-	const [specimen, setSpecimen] = useState(genderOptions[0].label);
+	const [gender, setGender] = useState(genderOptions[1].label);
 	const [accessLevel, setAccessLevel] = useState<SelectOption | undefined>(
 		accessLevelConfig[0],
 	);
@@ -97,14 +97,13 @@ function AddEditContact({
 	);
 
 	console.log(isValid);
-	console.log(specimen);
 
 	//handlers
 
 	const radioButtonChangeHandler = (
 		e: React.ChangeEvent<HTMLInputElement>,
 	) => {
-		setSpecimen(e.target.value);
+		setGender(e.target.value);
 	};
 
 	const submitButtonHandler: SubmitHandler<Contact> = (
@@ -124,16 +123,73 @@ function AddEditContact({
 	};
 
 	const updateContact = (data: Contact) => {
+		console.log(data);
 		dispatch(editContact(data));
 		reset();
 		onHideCreateContact();
 	};
 
+	// const validateControlledField = (
+	// 	form: Contact,
+	// 	field: keyof Contact,
+	// 	fieldName: string,
+	// 	access: typeof accessLevel,
+	// ) => {
+	// 	if (!field) return;
+	// 	if (field === fieldName) {
+	// 		console.log(typeof form[field]);
+	// 		if (form[field] === 0) {
+	// 			setAccessLevel({
+	// 				label,
+	// 				value: +form[field],
+	// 			});
+	// 			setValue(fieldName, form[field]);
+	// 		} else if (form[field] === 1) {
+	// 			setAccessLevel({
+	// 				label,
+	// 				value: +form[field],
+	// 			});
+	// 			setValue(fieldName, form[field]);
+	// 		} else {
+	// 			setAccessLevel({
+	// 				label,
+	// 				value: +form[field],
+	// 			});
+	// 			setValue(fieldName, form[field]);
+	// 		}
+	// 	}
+	// };
+
 	useEffect(() => {
+		console.log(toEditContact);
 		if (editMode && toEditContact !== null && toEditContact !== undefined) {
-			(Object.keys(toEditContact) as Array<keyof Contact>).forEach(field =>
-				setValue(field, toEditContact[field]),
-			);
+			(Object.keys(toEditContact) as Array<keyof Contact>).forEach(field => {
+				//checking accessLevel to correctly update this field when editing
+				if (field === "accessLevel") {
+					console.log(typeof toEditContact[field]);
+					if (+toEditContact[field] === 0) {
+						setAccessLevel({
+							label: "Usuario",
+							value: toEditContact[field],
+						});
+						setValue("accessLevel", toEditContact[field]);
+					} else if (+toEditContact[field] === 1) {
+						setAccessLevel({
+							label: "Administrador",
+							value: +toEditContact[field],
+						});
+						setValue("accessLevel", toEditContact[field]);
+					} else {
+						setAccessLevel({
+							label: "Cliente",
+							value: toEditContact[field],
+						});
+						setValue("accessLevel", toEditContact[field]);
+					}
+				}
+
+				setValue(field, toEditContact[field]);
+			});
 		}
 	}, [editMode, toEditContact, setValue]);
 

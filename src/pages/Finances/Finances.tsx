@@ -45,6 +45,10 @@ const comparisonOptions = [
 	{ label: "Igual a", value: "equalsTo" },
 ];
 
+type SingleSearch = {
+	name: string;
+};
+
 function Finances() {
 	const [activeTab, setActiveTab] = useState(tabsConfig[0].id);
 	const [grupos, setGrupos] = useState<SelectOption | undefined>(
@@ -53,19 +57,47 @@ function Finances() {
 	const [comparisonOption, setComparisonOption] = useState<
 		SelectOption | undefined
 	>(comparisonOptions[0]);
+
+	//name option hook instance
+	const {
+		register: register1,
+		handleSubmit: handleSubmit1,
+
+		formState: { errors: errors1 },
+		reset: reset1,
+	} = useForm<SingleSearch>();
+
+	//bulk option hook instance
 	const {
 		register,
 		handleSubmit,
 		control,
+		setValue,
 		formState: { errors },
-		reset,
-	} = useForm<BulkSearch>();
+	} = useForm<BulkSearch>({
+		defaultValues: {
+			groupName: "",
+			comparisonOption: "",
+			amountInGroup: "0",
+		},
+	});
 
-	const submitHandler = (
+	const submitHandlerSingleSearch: SubmitHandler<SingleSearch> = (
+		data: SingleSearch,
+		e: BaseSyntheticEvent<object, any, any> | undefined
+	) => {
+		e?.preventDefault();
+		e?.stopPropagation();
+		console.log(data);
+		reset1();
+	};
+
+	const submitHandler: SubmitHandler<BulkSearch> = (
 		data: BulkSearch,
 		e: BaseSyntheticEvent<object, any, any> | undefined
 	) => {
 		e?.preventDefault();
+		e?.stopPropagation();
 		console.log(data);
 	};
 	return (
@@ -123,19 +155,22 @@ function Finances() {
 					<div className={styles.outlet}>
 						<TabContent id={tabsConfig[0].id} activeTab={activeTab}>
 							<form
-								action=""
+								noValidate
 								style={{ marginBottom: "1.4rem" }}
-								onSubmit={e => e.preventDefault()}
+								onSubmit={handleSubmit1(submitHandlerSingleSearch)}
 							>
 								<Input
 									label="Nombre"
 									type="text"
 									id="name"
-									name="nombre"
-									register={register}
+									name="name"
+									register={register1}
 									required
 								/>
-								<Button btnStylesConf={{ small: "small" }}>
+								<Button
+									btnStylesConf={{ small: "small" }}
+									type="submit"
+								>
 									<div
 										style={{
 											display: "flex",
@@ -156,33 +191,63 @@ function Finances() {
 							</form>
 						</TabContent>
 						<TabContent id={tabsConfig[1].id} activeTab={activeTab}>
-							<form action="" onSubmit={handleSubmit(submitHandler)}>
+							<form onSubmit={handleSubmit(submitHandler)} noValidate>
 								<div className={styles.flexContainer}>
 									<div className={styles["form-control"]}>
-										<label htmlFor="groups">Grupos</label>
-										<Select
-											options={groupOptions}
-											value={grupos}
-											onChange={option => setGrupos(option)}
+										<label htmlFor="groupName">Grupos</label>
+										<Controller
+											name="groupName"
+											control={control}
+											render={field => (
+												<Select
+													{...field}
+													options={groupOptions}
+													value={grupos}
+													onChange={newGroup => {
+														// onChange(newValue);
+														setGrupos(newGroup);
+														if (newGroup?.value) {
+															setValue(
+																"groupName",
+																newGroup.value.toString()
+															);
+														}
+													}}
+												/>
+											)}
 										/>
 									</div>
 
 									<div className={styles["form-control"]}>
 										<label htmlFor="importe">Importe</label>
-										<Select
-											options={comparisonOptions}
-											value={comparisonOption}
-											onChange={compOption =>
-												setComparisonOption(compOption)
-											}
+
+										<Controller
+											name="comparisonOption"
+											control={control}
+											render={field => (
+												<Select
+													{...field}
+													options={comparisonOptions}
+													value={comparisonOption}
+													onChange={newImpo => {
+														setComparisonOption(newImpo);
+														if (newImpo?.value) {
+															setValue(
+																"comparisonOption",
+																newImpo.value.toString()
+															);
+														}
+													}}
+												/>
+											)}
 										/>
 									</div>
 									<Input
 										className={styles.input}
 										label="Monto"
 										type="text"
-										id="amount"
-										name="amount"
+										id="amountInGroup"
+										name="amountInGroup"
 										register={register}
 										required
 									/>

@@ -4,15 +4,12 @@ import { useNavigate } from "react-router-dom";
 import ActiveMenu from "../../components/ActiveMenu/ActiveMenu";
 import AddEditContact from "../../components/AddEditContact/AddEditContact";
 import MenuDashboard from "../../components/MenuDashboard/MenuDashboard";
-import ContactOptions from "../../components/ContactOptions/ContactOptions";
 import Table from "../../components/Table/Table";
 import { Jelly } from "@uiball/loaders";
-
 //table columns
 import { newColumns } from "../../table-columns/CONTACTS_COLUMNS";
 //styles
 import styles from "./contacts.module.scss";
-
 //redux
 import { useAppSelector, useAppDispatch } from "../../hooks/storeHooks";
 import {
@@ -26,9 +23,8 @@ function Contacts() {
 	const dispatch = useAppDispatch();
 	const [showAddContactModal, setShowAddContactModal] = useState(false);
 	const [showEditContactModal, setShowEditContactModal] = useState(false);
-	const [showContactsOption, setShowContactsOption] = useState(false);
 	const [idContactToEdit, setIdContactToEdit] = useState<number | undefined>(
-		undefined
+		undefined,
 	);
 
 	const contactStatus = useAppSelector(state => state.contacts.status);
@@ -42,9 +38,6 @@ function Contacts() {
 	//show/hide edit modal contact handlers
 	const showEditContactHandler = () => setShowEditContactModal(true);
 	const hideEditContactHandler = () => setShowEditContactModal(false);
-	//options contact handler
-	const showContactsOptionHandler = () =>
-		setShowContactsOption(showContact => !showContact);
 
 	//table
 	// const columns = useMemo(() => newColumns, []);
@@ -61,7 +54,6 @@ function Contacts() {
 		if (headerId !== "select") {
 			navigate(`/contacts/${rowInfo.id}`, { replace: true });
 		}
-		console.log("Viewwing contact");
 	};
 
 	// const getCellData = cell => {
@@ -79,32 +71,11 @@ function Contacts() {
 		dispatch(deleteContact(id));
 	};
 
-	/*Begin contact's options button*/
-
-	type ButtonConfigTypes = {
-		btnName: string;
-		iconLabel: string;
-		onClick: () => void;
-	};
-
-	let contactsButtonConfig: ButtonConfigTypes[] = [];
-	// contactsButtonConfig = [
-	// 	{ btnName: "Ver", iconLabel: "visibility", onClick: viewContactHandler },
-	// 	{
-	// 		btnName: "Editar",
-	// 		iconLabel: "edit_note",
-	// 		onClick: () => {},
-	// 	},
-	// 	{ btnName: "Borrar", iconLabel: "remove", onClick: deleteContactHandler },
-	// ];
-
-	/*Ends contact's options button*/
-
 	// testing endpoint
 	useEffect(() => {
 		async function getStudentDetails() {
 			let response = await fetch(
-				"http://localhost:8000/api/v1/inscriptions/user-inscriptions"
+				"http://localhost:8000/api/v1/inscriptions/user-inscriptions",
 			);
 			let data = await response.json();
 			console.log(data);
@@ -143,13 +114,6 @@ function Contacts() {
 		);
 	} else if (contactStatus === "success") {
 		loadingTableContent = (
-			// <ContactsTable
-			// 	columns={newColumns}
-			// 	stateData={contactsFromRedux}
-			// 	navigatesTo="contacts"
-			// 	onEditRow={editContactHandler}
-			// 	onDeleteRow={deleteContactHandler}
-			// />
 			<Table
 				columns={newColumns}
 				stateData={contactsFromRedux}
@@ -192,16 +156,6 @@ function Contacts() {
 					onShowItem={showAddContactHandler}
 					currentPageTitle="Contactos"
 				/>
-				{showContactsOption && (
-					<ContactOptions buttonConfig={contactsButtonConfig} />
-				)}
-				{/* <ItemsTable
-					COLUMNS={COLUMNS}
-					stateData={leadsFromState}
-					navigatesTo="contacts"
-					onSelectCheckboxContact={selectContactHandler}
-					onSelectedRow={selectedRowHandler}
-				/> */}
 
 				{loadingTableContent}
 			</main>

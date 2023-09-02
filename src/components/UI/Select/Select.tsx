@@ -104,6 +104,7 @@ function Select({ multiple, value, onChange, options }: SelectProps) {
 							<button
 								key={v.value}
 								onClick={e => {
+									e.preventDefault();
 									e.stopPropagation();
 									selectOption(v);
 								}}
@@ -117,6 +118,7 @@ function Select({ multiple, value, onChange, options }: SelectProps) {
 			</span>
 			<button
 				onClick={e => {
+					e.preventDefault();
 					e.stopPropagation();
 					clearOptions();
 				}}

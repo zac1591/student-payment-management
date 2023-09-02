@@ -11,9 +11,10 @@ export type Group = {
 }
 
 export type BulkSearch = {
-	grupos: string,
-	importe: string,
-	importe_amount: string
+	groupName: string,
+	amountInGroup: string,
+	comparisonOption: string
+
 
 }
 
@@ -49,6 +50,18 @@ export type Course = {
 export type SelectOption = {
 	label: string;
 	value: string | number;
+};
+
+export type RadioButtonOptions = {
+	label: string;
+	name: string;
+	disabled?: boolean;
+}
+
+export type ButtonConfigTypes = {
+	btnName: string;
+	iconLabel: string;
+	onClick: () => void;
 };
 
 /*

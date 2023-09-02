@@ -13,7 +13,10 @@ function NothingToSee() {
 	};
 	return (
 		<section className={styles.wrapper}>
-			<Button small onClick={goBackHomeHandler}>
+			<Button
+				btnStylesConf={{ success: "success" }}
+				onClick={goBackHomeHandler}
+			>
 				Go Back Home
 			</Button>
 		</section>

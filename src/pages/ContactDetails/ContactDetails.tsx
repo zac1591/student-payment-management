@@ -8,7 +8,8 @@ import ClosableTag from "../../components/ClosableTag/ClosableTag";
 import MessageCard from "../../components/MessageCard/MessageCard";
 import AddNote from "../../components/AddNote/AddNote";
 import Tabs from "../../components/UI/Tabs/Tabs";
-
+//types
+import { Contact } from "../../types";
 import styles from "./contactDetails.module.scss";
 
 const today = new Date();
@@ -279,10 +280,16 @@ function ContactDetails() {
 	const params = useParams();
 
 	//useParams returns a string
-	const idParams = +params.userId;
+	//check if there is a better way to handle this check in typescript
+	const idParams = params.userId && +params.userId;
 
 	const selectedContact = contacts.find(({ id }) => id === idParams);
 	console.log(selectedContact);
+
+	if (!selectedContact) {
+		//I can return a component <p> No contact has been selected</p> in case no id has been passed down
+		return null;
+	}
 
 	const { firstName, lastName, phoneNumber, email, personalId, groups } =
 		selectedContact;
@@ -358,11 +365,7 @@ function ContactDetails() {
 					</span>
 					<h2>Historial</h2>
 				</div>
-				<Tabs
-					className={styles.historyTabs}
-					TabNavItemConfig={tabsConfig}
-					entries={{ payments, debts }}
-				/>
+				<Tabs TabNavItemConfig={tabsConfig} entries={{ payments, debts }} />
 				{/* <div className={`${styles.historyTabs} ${styles.tabs}`}>
 					<ul className={styles.nav}>
 						{tabsConfig.map(navEl => (

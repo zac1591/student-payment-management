@@ -3,49 +3,91 @@ $background-color_1: #eee;
 $background-color_2: #ccc;
 $background-color_3: #2196f3;
 
-.formControl {
-	padding-bottom: 1rem;
+.wrapper {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
 
-	.radiobuttonInput {
-		visibility: hidden;
+	.radio {
+		-webkit-appearance: none;
+		appearance: none;
+		margin: 0;
+		width: 1.5em;
+		height: 1.5em;
+		border: 2px solid $color-primary;
+		border-radius: 50%;
+		transition: all 0.1s ease-in-out;
 
-		&:checked + .customRadiobutton {
-			border: 2px solid $color-primary;
-			background-color: $color-primary;
+		&::after {
+			content: "";
+			display: block;
+			border-radius: 50%;
+			width: 0.75em;
+			height: 0.75em;
+			margin: 3px;
+		}
 
-			&::before {
-				content: "";
-				position: absolute;
-				display: block;
-				width: 7px;
-				height: 7px;
-				background-color: white;
-				border-radius: 50%;
-				top: 3px;
-				left: 3px;
+		&:checked {
+			&::after {
+				background-color: $color-primary;
+			}
+
+			&:hover {
+				background-color: $background-color_1;
+				border: 2px solid $color-primary;
+
+				&::after {
+					background-color: $background-color_3;
+				}
+			}
+		}
+
+		&:focus {
+			outline: 2px solid $color-success;
+		}
+
+		&:hover {
+			&::after {
+				background-color: $background-color_3;
+			}
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+			border: 2px solid $color-primary-variant;
+			background-color: $background-color_3;
+
+			&:hover {
+				&::after {
+					background-color: $color-primary;
+				}
+			}
+
+			&:checked {
+				&::after {
+					background-color: $background-color_3;
+				}
+
+				&:hover {
+					background-color: $color-primary;
+
+					&::after {
+						background-color: $background-color_3;
+					}
+				}
 			}
 		}
 	}
 
-	.radiobuttonLabel {
-		display: flex;
-		align-items: center;
-		gap: 5px;
-		cursor: pointer;
-	}
+	.label {
+		font-weight: 600;
+		font-size: 1rem;
+		color: $color-primary;
+		font-family: Arial, Helvetica, sans-serif;
 
-	.customRadiobutton {
-		position: relative;
-		height: 17px;
-		width: 17px;
-		border-radius: 50%;
-		cursor: pointer;
-		background-color: #d2c5ef;
-		display: inline-block;
+		&.disabled {
+			cursor: not-allowed;
+			color: $color-primary-light;
+		}
 	}
-
-	// .radiobuttonInput:checked + .customRadiobutton {
-	// 	border: 2px solid #261ba4;
-	// 	background-color: #3f27b3;
-	// }
 }
