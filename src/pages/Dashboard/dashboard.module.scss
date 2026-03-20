@@ -1,0 +1,75 @@
+@use "../../../sass/abstracts/variables" as *;
+@use "../../../sass/abstracts/mixins" as m;
+
+.dashboardWrapper {
+	width: 100%;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+
+	h2 {
+		margin: 0;
+		font-weight: 800;
+	}
+}
+
+// Estilo de tarjeta Bento
+.bentoCard {
+	border-radius: 20px !important;
+	box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.05);
+	border: none !important;
+
+	:global(.ant-card-head) {
+		border-bottom: none;
+		padding-top: 10px;
+		font-size: 1.2rem;
+	}
+}
+
+.insightsRow {
+	// Esto asegura que tus InsightCards hereden el look Bento
+	:global(.insight-card-class) {
+		// Ajusta al nombre real de clase de tu InsightCard
+		border-radius: 20px;
+		padding: 1.5rem;
+		background: white;
+		box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.05);
+	}
+}
+
+.warning {
+	color: #ffbb55;
+}
+
+.primary {
+	color: #7380ec;
+}
+
+.addBtn {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: transparent;
+	border: 2px dashed #7380ec;
+	color: #7380ec;
+	font-weight: 600;
+	transition: all 300ms ease;
+
+	&:hover {
+		background-color: #7380ec;
+		color: white;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1rem;
+	}
+}

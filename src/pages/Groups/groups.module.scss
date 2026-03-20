@@ -1,0 +1,26 @@
+.container {
+	display: grid;
+	width: 96%;
+	margin: 0 auto;
+	gap: 1.8rem;
+	grid-template-columns: 14rem auto;
+	// background: url("https://images.pexels.com/photos/673648/pexels-photo-673648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+	// background-size: cover;
+
+	main {
+		margin-top: 1.4rem;
+
+		.kanvanContainer {
+			position: relative;
+			width: 100%;
+			padding: 1rem 0;
+			// height: 70vh;
+			// overflow-y: auto;
+			// overflow-x: hidden;
+
+			display: grid;
+			gap: 1rem;
+			grid-template-columns: repeat(auto-fill, minmax(233px, 1fr));
+		}
+	}
+}

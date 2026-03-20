@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a description and amount 1`] = `
+<div
+  className="item"
+>
+  <span>
+    Some random description
+  </span>
+  <span>
+    255
+  </span>
+</div>
+`;

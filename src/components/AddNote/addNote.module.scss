@@ -1,0 +1,60 @@
+@use '../../../sass/abstracts/variables' as *;
+
+.card {
+    position: absolute;
+    right: 8.3rem;
+    bottom: 7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid rgba($color-primary, 0.3);
+    width: 50%;
+    height: auto;
+    min-height: 100px;
+    margin-top: 1rem;
+    background-color: rgb(253, 253, 253);
+    box-shadow: none;
+    filter: drop-shadow(0px 5px 2px rgba($color-primary, 0.1));
+    
+}
+
+.cardHeader {
+    width: 100%;
+    background-color: $color-primary;
+    border-radius: 10px 10px 0 0;
+    padding: 0.5rem;
+    
+    p {
+        color: #fff;
+        font-weight: 'Popppins';
+        font-weight: 600;
+        // text-transform: uppercase;
+        letter-spacing: 0.9px;
+    }
+}
+
+.cardBody {
+    width: 100%;
+    padding: 0 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid rgb(182, 180, 180);
+        outline: none;
+
+        &:focus {
+            border-bottom: 1px solid blue;
+        }
+    }
+}

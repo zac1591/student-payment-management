@@ -1,0 +1,21 @@
+.closableTag {
+    border: 1px solid #7380EC;
+    border-radius: 30px;
+
+
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .3rem;
+}
+
+.iconTag {
+    color: #7380EC;
+    font-size: 25px;
+    transition: all ease 0.3s;
+
+    &:hover {
+        color: #ec7391;
+        cursor: pointer;
+    }
+}

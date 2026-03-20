@@ -1,0 +1,16 @@
+@use '../../../sass/abstracts/variables' as *;
+
+.goBackArrow {
+    cursor: pointer;
+    color: $color-primary;
+    transform:translateX(0);
+    transition:transform 0.4s cubic-bezier(0,0,0,0) 0s;
+
+    &:hover {
+        color: $color-primary-variant;
+        transform:translateX(-0.4rem);
+        transition:transform 0.4s cubic-bezier(0,0,0,0) 0s;
+    }
+    
+}
+

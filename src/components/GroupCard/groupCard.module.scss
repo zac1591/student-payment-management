@@ -1,0 +1,101 @@
+@use "../../../sass/abstracts/variables" as *;
+
+.card {
+	position: relative;
+	// background-color: #fff;
+	min-width: $group-card-with;
+	min-height: 200px;
+	max-width: 300px;
+	transition: all ease-in-out 300ms;
+
+	background: #fff;
+
+	// blur background settings
+	// background: rgba(255,255,255,0.5);
+	// -webkit-backdrop-filter: blur(10px);
+	// backdrop-filter: blur(10px);
+	// border: 1px solid rgba(255,255,255,0.25);
+
+	&:hover {
+		box-shadow: none;
+	}
+
+	.header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: flex-start;
+		background: $color-primary;
+		padding: 0.7rem $card-padding-2;
+		border-radius: 15px 15px 0 0;
+		// min-height: 70px;
+		// min-height: 70px;
+		color: #fff;
+
+		// --mask: radial-gradient(
+		// 			38.01px at 50% calc(100% - 51px),
+		// 			#000 99%,
+		// 			#0000 101%
+		// 		)
+		// 		calc(50% - 34px) 0/68px 100%,
+		// 	radial-gradient(38.01px at 50% calc(100% + 34px), #0000 99%, #000 101%)
+		// 		50% calc(100% - 17px) / 68px 100% repeat-x;
+		// -webkit-mask: var(--mask);
+		// mask: var(--mask);
+
+		h3 {
+			font-size: 1rem;
+		}
+	}
+
+	.body {
+		display: grid;
+		gap: 0.2rem;
+		grid-template-columns: repeat(auto-fill 2, 1fr);
+		padding: 1rem $card-padding-2 $card-padding-2;
+
+		p {
+			font-size: 1rem;
+			font-weight: 400;
+		}
+
+		span {
+			font-weight: 600;
+		}
+
+		hr {
+			border: 0;
+			border-top: 0.5px solid $color-primary;
+			opacity: 0.5;
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	.groupName {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.groupIcon {
+		color: #fff;
+	}
+
+	.optionsIcon {
+		color: #fff;
+		opacity: 0.7;
+		cursor: pointer;
+		transition: all ease 0.3s;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+// .kanvan {
+// 	display: grid;
+// 	gap: 0.25rem;
+// 	grid-template-columns: repeat(auto-fill 2, 1fr);
+
+// }

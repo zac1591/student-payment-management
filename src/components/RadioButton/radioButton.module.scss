@@ -1,0 +1,93 @@
+@use "../../../sass//abstracts/variables" as *;
+$background-color_1: #eee;
+$background-color_2: #ccc;
+$background-color_3: #2196f3;
+
+.wrapper {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+
+	.radio {
+		-webkit-appearance: none;
+		appearance: none;
+		margin: 0;
+		width: 1.5em;
+		height: 1.5em;
+		border: 2px solid $color-primary;
+		border-radius: 50%;
+		transition: all 0.1s ease-in-out;
+
+		&::after {
+			content: "";
+			display: block;
+			border-radius: 50%;
+			width: 0.75em;
+			height: 0.75em;
+			margin: 3px;
+		}
+
+		&:checked {
+			&::after {
+				background-color: $color-primary;
+			}
+
+			&:hover {
+				background-color: $background-color_1;
+				border: 2px solid $color-primary;
+
+				&::after {
+					background-color: $background-color_3;
+				}
+			}
+		}
+
+		&:focus {
+			outline: 2px solid $color-success;
+		}
+
+		&:hover {
+			&::after {
+				background-color: $background-color_3;
+			}
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+			border: 2px solid $color-primary-variant;
+			background-color: $background-color_3;
+
+			&:hover {
+				&::after {
+					background-color: $color-primary;
+				}
+			}
+
+			&:checked {
+				&::after {
+					background-color: $background-color_3;
+				}
+
+				&:hover {
+					background-color: $color-primary;
+
+					&::after {
+						background-color: $background-color_3;
+					}
+				}
+			}
+		}
+	}
+
+	.label {
+		font-weight: 600;
+		font-size: 1rem;
+		color: $color-primary;
+		font-family: Arial, Helvetica, sans-serif;
+
+		&.disabled {
+			cursor: not-allowed;
+			color: $color-primary-light;
+		}
+	}
+}
